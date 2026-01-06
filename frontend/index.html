@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EnerLuma — Smart Energy Water Monitoring</title>
-    <link rel="icon" href="/vite.svg" />
+    <link rel="icon" href="/enerluma-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/landing.css">
     <meta name="robots" content="noindex">
@@ -38,5 +40,15 @@
       <div class="hero-right" aria-hidden="true"></div>
     </main>
 
+    <script>
+      const topbar = document.querySelector('.topbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 0) {
+          topbar.classList.add('scroll-shadow');
+        } else {
+          topbar.classList.remove('scroll-shadow');
+        }
+      });
+    </script>
   </body>
   </html>
