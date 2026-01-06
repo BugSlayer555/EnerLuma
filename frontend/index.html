@@ -2,12 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Home Dashboard</title>
+    <title>EnerLuma — Smart Energy Water Monitoring</title>
+    <link rel="icon" href="/vite.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/landing.css">
+    <meta name="robots" content="noindex">
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="/enerluma-logo.png" alt="EnerLuma logo" class="logo" />
+          <span class="brand-name">EnerLuma</span>
+        </div>
+        <nav class="nav">
+          <a href="/app.html">About</a>
+          <a href="/app.html">How it Works</a>
+          <a href="/app.html">Services</a>
+          <a href="/app.html">Contact Us</a>
+        </nav>
+        <a class="cta" href="/app.html">Get Started</a>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="hero-left">
+        <span class="badge">AI-Powered Sustainability Platform</span>
+        <h1 class="headline">Smart Energy</h1>
+        <h2 class="subhead">Water <span class="script">Monitoring</span></h2>
+        <p class="lead">Smart monitoring. Clear analytics. Real savings.</p>
+        <p class="desc">EnerLuma is a smart sustainability platform focused on monitoring and optimizing energy and water consumption in real time. Powered by AI-driven analytics, it transforms usage data into meaningful insights and actionable recommendations. EnerLuma helps users reduce waste, improve efficiency, and move toward a more sustainable future.</p>
+        <a class="explore" href="/app.html">Explore Dashboard</a>
+      </div>
+      <div class="hero-right" aria-hidden="true"></div>
+    </main>
+
   </body>
-</html>
+  </html>

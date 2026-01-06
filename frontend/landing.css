@@ -1,0 +1,56 @@
+:root{
+  --bg-light:#e9fdfc;
+  --teal-1:#0f6a66;
+  --teal-2:#4fe0de;
+  --accent:#1f6b6a;
+  --muted:#f4fbfb;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+body{background:linear-gradient(90deg,#ffffff 0%,rgba(12,162,160,0.04) 30%, rgba(6,192,191,0.09) 55%, rgba(1,182,178,0.95) 100%);color:#072a2b}
+.topbar{padding:14px 20px;position:relative}
+.topbar::before{content:"";position:absolute;left:8px;right:8px;top:8px;height:56px;background:linear-gradient(90deg, rgba(241,252,252,1) 0%, rgba(227,252,251,0.85) 40%, rgba(224,252,250,0.6) 100%);border-radius:40px;box-shadow:0 2px 8px rgba(6,99,98,0.06);z-index:0}
+.topbar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{height:72px}
+.brand-name{font-family:'Dancing Script', cursive;color:var(--teal-1);font-size:36px;letter-spacing:1px}
+.nav{display:flex;gap:28px;align-items:center;color:#08323a;font-weight:600}
+.nav a{opacity:.95;text-decoration:none;color:inherit}
+.cta{background:var(--teal-1);color:#e7f6f5;padding:10px 22px;border-radius:28px;font-weight:700;text-decoration:none}
+
+.hero{max-width:1200px;margin:36px auto;display:flex;gap:40px;align-items:flex-start;padding:30px}
+.hero-left{flex:1;max-width:640px}
+.badge{display:inline-block;background:var(--muted);padding:10px 16px;border-radius:24px;color:var(--teal-1);font-weight:700;margin-bottom:18px;font-size:14px}
+.headline{font-size:96px;line-height:0.86;margin:0;color:#05292a;font-weight:800;letter-spacing:-2px}
+.subhead{font-size:86px;margin:0;color:#8be0db;font-weight:700}
+.script{font-family:Pacifico, cursive;font-size:86px;display:inline-block;margin-left:8px;color:#2f6f6f;transform:translateY(6px)}
+.lead{font-weight:700;margin-top:18px;font-size:18px}
+.desc{color:#123;max-width:560px;line-height:1.6;margin-top:12px;font-size:15px}
+.explore{display:inline-block;margin-top:22px;background:var(--teal-1);color:#fff;padding:16px 34px;border-radius:44px;text-decoration:none;font-weight:800;box-shadow:0 6px 18px rgba(11,104,100,0.16)}
+
+.hero-right{flex:1;height:560px;border-radius:28px;background:radial-gradient(closest-side at 70% 40%, rgba(8,196,190,0.18) 0%, rgba(7,186,179,0.22) 18%, rgba(6,161,156,0.4) 48%, rgba(2,140,135,0.9) 100%);box-shadow:inset 0 40px 120px rgba(255,255,255,0.12)}
+
+/* tighter layout for desktop widths */
+@media(max-width:1200px){
+  .hero{padding:18px}
+}
+
+@media(max-width:900px){
+  .topbar-inner{padding:0 12px}
+  .hero{flex-direction:column;padding:24px}
+  .headline{font-size:56px}
+  .subhead{font-size:50px}
+  .script{font-size:48px}
+  .hero-right{width:100%;height:300px;margin-top:18px}
+}
+
+@media(max-width:420px){
+  .nav{display:none}
+  .cta{padding:8px 14px}
+  .headline{font-size:40px}
+  .subhead{font-size:36px}
+  .desc{font-size:14px}
+  .badge{font-size:13px;padding:8px 12px}
+  .logo{height:52px}
+  .brand-name{font-size:26px}
+}
