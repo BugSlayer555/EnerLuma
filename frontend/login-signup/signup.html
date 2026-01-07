@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EnerLuma — Sign Up</title>
+    <link rel="icon" href="/enerluma-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="auth.css">
+  </head>
+  <body class="auth-page">
+    <div class="auth-container">
+      <div class="auth-left">
+        <div class="auth-graphics">
+          <div class="graphic-element graphic-water"></div>
+          <div class="graphic-element graphic-energy"></div>
+          <div class="graphic-element graphic-home"></div>
+        </div>
+        <div class="auth-branding">
+          <img src="/enerluma-logo.png" alt="EnerLuma" class="auth-logo" />
+          <h1>EnerLuma</h1>
+          <p>Smart Energy & Water Monitoring</p>
+        </div>
+      </div>
+
+      <div class="auth-right">
+        <div class="auth-card">
+          <div class="auth-tabs">
+            <a class="auth-tab" href="/login-signup/auth.html" style="text-align:center;display:block;">Login</a>
+            <button class="auth-tab active">Sign Up</button>
+          </div>
+
+          <form id="signup-form" class="auth-form active" novalidate>
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Join the smart energy revolution</p>
+
+            <div class="form-group has-icon name">
+              <label for="signup-name">Full Name</label>
+              <input type="text" id="signup-name" placeholder="John Doe" required />
+              <div class="error-msg" id="signup-name-error" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group has-icon email">
+              <label for="signup-email">Email Address</label>
+              <input type="email" id="signup-email" placeholder="you@example.com" required />
+              <div class="error-msg" id="signup-email-error" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group has-icon password password-field">
+              <label for="signup-password">Password</label>
+              <input type="password" id="signup-password" placeholder="••••••••" required />
+              <button type="button" class="password-toggle" aria-label="Show password" data-target="signup-password">Show</button>
+              <div class="error-msg" id="signup-password-error" aria-live="polite"></div>
+            </div>
+
+            <div class="form-group has-icon password password-field">
+              <label for="signup-confirm">Confirm Password</label>
+              <input type="password" id="signup-confirm" placeholder="••••••••" required />
+              <button type="button" class="password-toggle" aria-label="Show password" data-target="signup-confirm">Show</button>
++              <div class="error-msg" id="signup-confirm-error" aria-live="polite"></div>
+            </div>
+
+            <label class="terms-checkbox">
+              <input type="checkbox" id="terms" required />
+              I agree to the <a href="#">Terms & Privacy Policy</a>
+            </label>
+
+            <button type="submit" class="auth-button">Create Account</button>
+
+            <p class="auth-footer">Already have an account? <a href="/login-signup/auth.html">Login</a></p>
+          </form>
+        </div>
+
+        <div class="auth-divider"><span>or continue with</span></div>
+        <div class="social-login">
+          <button class="social-button google" title="Login with Google"><span>Google</span></button>
+          <button class="social-button github" title="Login with GitHub"><span>GitHub</span></button>
+          <button class="social-button apple" title="Login with Apple"><span>Apple</span></button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // reuse the validation & password toggle logic from the auth page
+      const passwordToggles = document.querySelectorAll('.password-toggle');
+      passwordToggles.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.dataset.target;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          if (input.type === 'password') { input.type = 'text'; btn.textContent = 'Hide'; btn.setAttribute('aria-label','Hide password'); }
+          else { input.type = 'password'; btn.textContent = 'Show'; btn.setAttribute('aria-label','Show password'); }
+        });
+      });
+
+      function isValidEmail(email) { return /^\S+@\S+\.\S+$/.test(email); }
+      function showError(inputEl, message) { const id = inputEl.id + '-error'; const el = document.getElementById(id); if (el) el.textContent = message; inputEl.classList.add('input-error'); }
+      function clearError(inputEl) { const id = inputEl.id + '-error'; const el = document.getElementById(id); if (el) el.textContent = ''; inputEl.classList.remove('input-error'); }
+
+      const signupForm = document.getElementById('signup-form');
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('signup-name');
+        const email = document.getElementById('signup-email');
+        const pwd = document.getElementById('signup-password');
+        const confirm = document.getElementById('signup-confirm');
+        const terms = document.getElementById('terms');
+        let ok = true;
+        [name, email, pwd, confirm].forEach(clearError);
+        if (!name.value || name.value.trim().length < 2) { showError(name, 'Please enter your full name.'); ok = false; }
+        if (!email.value || !isValidEmail(email.value)) { showError(email, 'Please enter a valid email address.'); ok = false; }
+        if (!pwd.value || pwd.value.length < 8) { showError(pwd, 'Password must be at least 8 characters.'); ok = false; }
+        if (pwd.value !== confirm.value) { showError(confirm, 'Passwords do not match.'); ok = false; }
+        if (!terms.checked) { alert('Please accept the Terms & Privacy Policy to continue.'); ok = false; }
+        if (!ok) return;
+        // demo behavior: redirect to login with success
+        window.location.href = '/login-signup/auth.html';
+      });
+
+      document.querySelectorAll('input').forEach(input => input.addEventListener('input', () => clearError(input)));
+    </script>
+  </body>
+</html>
