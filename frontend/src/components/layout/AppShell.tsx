@@ -64,7 +64,7 @@ export default function AppShell({ children }: AppShellProps) {
         <Topbar onMenuClick={toggleSidebar} />
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 pt-16 p-4 md:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 pt-14 p-3 md:p-4 lg:p-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

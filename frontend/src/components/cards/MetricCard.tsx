@@ -150,7 +150,7 @@ function Sparkline({
   const pathData = `M ${points.join(' L ')}`
 
   return (
-    <div className="flex items-center justify-end mt-2">
+    <div className="flex items-center justify-end mt-1">
       <svg
         width={width}
         height={height}
@@ -201,12 +201,12 @@ export default function MetricCard({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-all duration-200 ${className}`}
+      className={`bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all duration-200 ${className}`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-3">
         {icon && (
-          <div className={`p-3 rounded-lg ${colors.bg}`}>{icon}</div>
+          <div className={`p-2 rounded-lg ${colors.bg}`}>{icon}</div>
         )}
         {delta !== undefined && (
           <div
@@ -225,9 +225,9 @@ export default function MetricCard({
       </div>
 
       {/* Value */}
-      <div className="space-y-1 mb-4">
-        <p className="text-sm text-gray-500 dark:text-gray-400">{title}</p>
-        <div className="flex items-baseline gap-2">
+      <div className="space-y-0.5 mb-3">
+        <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{title}</p>
+        <div className="flex items-baseline gap-1.5">
           <motion.p
             key={value}
             initial={{ opacity: 0, scale: 0.8 }}

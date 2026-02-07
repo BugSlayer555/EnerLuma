@@ -66,34 +66,34 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
   ]
 
   return (
-    <header className="sticky top-0 z-50 h-16 bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 backdrop-blur-sm shadow-md">
-      <div className="flex h-full items-center justify-between px-4 md:px-6">
+    <header className="fixed top-0 left-0 right-0 z-50 h-13 bg-black/10 dark:bg-gray-900/40 border-b border-gray-200/10 dark:border-gray-700/20 backdrop-blur-lg">
+      <div className="flex h-full items-center justify-between px-3 md:px-4">
         {/* Left side - Menu button and search */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
           <button
             onClick={onMenuClick}
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
             aria-label="Toggle sidebar"
           >
             <Menu className="w-5 h-5" />
           </button>
 
-          <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg max-w-md w-full">
-            <Search className="w-4 h-4 text-gray-400" />
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white/15 dark:bg-gray-700/40 rounded-lg max-w-md w-full backdrop-blur-sm border border-white/10">
+            <Search className="w-4 h-4 text-white/70" />
             <input
               type="text"
               placeholder="Search devices, rooms..."
-              className="flex-1 bg-transparent border-none outline-none text-sm text-gray-700 dark:text-gray-300 placeholder-gray-400"
+              className="flex-1 bg-transparent border-none outline-none text-sm text-white dark:text-gray-100 placeholder-white/60"
             />
           </div>
         </div>
 
         {/* Right side - Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-0.5">
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
             aria-label="Toggle theme"
           >
             {isDarkMode ? (
@@ -110,11 +110,11 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                 setNotificationsOpen(!notificationsOpen)
                 setUserMenuOpen(false)
               }}
-              className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="relative p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
               aria-label="Notifications"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white dark:ring-gray-800" />
+              <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full ring-1.5 ring-white dark:ring-gray-900" />
             </button>
 
             <AnimatePresence>
@@ -164,7 +164,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                 setUserMenuOpen(!userMenuOpen)
                 setNotificationsOpen(false)
               }}
-              className="flex items-center gap-2 p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="flex items-center gap-1.5 p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
               aria-label="User menu"
             >
               <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">

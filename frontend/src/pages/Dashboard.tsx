@@ -134,14 +134,14 @@ const cardVariants = {
 
 export default function Dashboard() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-3">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Dashboard Overview
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-0">
             Welcome back! Here&apos;s your home&apos;s consumption summary
           </p>
         </div>
@@ -152,16 +152,16 @@ export default function Dashboard() {
       </div>
 
       {/* Summary Metrics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {/* Energy Card */}
         <motion.div
           variants={cardVariants}
           initial="hidden"
           animate="visible"
           custom={0}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
               <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
               {Math.abs(summaryMetrics.energy.change)}%
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             <p className="text-sm text-gray-500 dark:text-gray-400">Energy Today</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {summaryMetrics.energy.today} {summaryMetrics.energy.unit}
@@ -197,9 +197,9 @@ export default function Dashboard() {
           initial="hidden"
           animate="visible"
           custom={1}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="p-3 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg">
               <Droplets className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
             </div>
@@ -218,7 +218,7 @@ export default function Dashboard() {
               {Math.abs(summaryMetrics.water.change)}%
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             <p className="text-sm text-gray-500 dark:text-gray-400">Water Today</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {summaryMetrics.water.today} {summaryMetrics.water.unit}
@@ -235,9 +235,9 @@ export default function Dashboard() {
           initial="hidden"
           animate="visible"
           custom={2}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
               <DollarSign className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
@@ -256,7 +256,7 @@ export default function Dashboard() {
               {Math.abs(summaryMetrics.totalCost.change)}%
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             <p className="text-sm text-gray-500 dark:text-gray-400">Total Cost Today</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
               ${summaryMetrics.totalCost.today.toFixed(2)}
@@ -271,14 +271,14 @@ export default function Dashboard() {
           initial="hidden"
           animate="visible"
           custom={3}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-shadow"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
               <Cpu className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             <p className="text-sm text-gray-500 dark:text-gray-400">Active Devices</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {summaryMetrics.activeDevices}/{summaryMetrics.totalDevices}
@@ -296,14 +296,14 @@ export default function Dashboard() {
       </div>
 
       {/* Real-time Indicators */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Real-Time Energy
             </h3>
@@ -322,9 +322,9 @@ export default function Dashboard() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Real-Time Water
             </h3>
@@ -341,15 +341,15 @@ export default function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
         {/* Energy Chart Placeholder */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Weekly Energy Usage
             </h3>
@@ -367,9 +367,9 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Weekly Water Usage
             </h3>
@@ -384,15 +384,15 @@ export default function Dashboard() {
       </div>
 
       {/* Alerts and Recommendations Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
         {/* Alerts Placeholder */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Recent Alerts
             </h3>
@@ -435,9 +435,9 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               AI Recommendations
             </h3>
