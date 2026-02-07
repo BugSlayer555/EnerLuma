@@ -76,7 +76,7 @@ body{background:#f5faf9;color:#072a2b}
 /* Increase hero height on laptop and larger screens so image fills viewport */
 @media (min-width: 1024px) {
   .hero-wrapper {
-    min-height: 97vh;
+    min-height: 98vh;
     padding: 80px 0 120px 0;
     background-position: center top;
   }
