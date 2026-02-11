@@ -115,11 +115,23 @@
         if (pwd.value !== confirm.value) { showError(confirm, 'Passwords do not match.'); ok = false; }
         if (!terms.checked) { alert('Please accept the Terms & Privacy Policy to continue.'); ok = false; }
         if (!ok) return;
-        // demo behavior: redirect to login with success
-        window.location.href = '/login-signup/auth.html';
+        // demo behavior: redirect to login with success (replace history so stack isn't polluted)
+        location.replace('/login-signup/auth.html');
       });
 
       document.querySelectorAll('input').forEach(input => input.addEventListener('input', () => clearError(input)));
+      // Intercept clicks to auth pages and use replace navigation to avoid stacking history
+      document.addEventListener('click', (e) => {
+        const a = e.target.closest && e.target.closest('a');
+        if (!a) return;
+        const href = a.getAttribute && a.getAttribute('href');
+        if (!href) return;
+        if (href.startsWith('/login-signup/')) {
+          if (location.pathname === href) { e.preventDefault(); return; }
+          e.preventDefault();
+          location.replace(href);
+        }
+      });
     </script>
   </body>
 </html>
