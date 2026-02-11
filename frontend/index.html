@@ -41,12 +41,15 @@
         </div>
         <div class="hero-right">
           <div class="laptop-mockup">
-            <div class="glow-line glow-top"></div>
-            <div class="glow-line glow-bottom"></div>
             <img src="/laptop_image.png" alt="Dashboard preview" class="laptop-image" />
-            <div class="floating-label ai-optimization">
+            <div class="floating-label badge-top-right">
               <span class="label-icon">🤖</span>
               <span class="label-text">AI Optimization</span>
+            </div>
+
+            <div class="floating-label badge-bottom-left">
+              <span class="label-icon">💡</span>
+              <span class="label-text">Smart Insights</span>
             </div>
           </div>
         </div>
@@ -232,6 +235,7 @@
           topbar.classList.remove('scroll-shadow');
         }
       });
+      // No replace interception on landing — allow normal navigation so back returns here
     </script>
     <!-- End Enhancements -->
   </body>
