@@ -1,212 +1,371 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EnerLuma — Authentication</title>
-    <link rel="icon" href="/enerluma-logo.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="auth.css">
-  </head>
-  <body class="auth-page">
-    <div class="auth-container">
-      <!-- Left Side: Graphics & Branding -->
-      <div class="auth-left">
-        <div class="auth-graphics">
-          <div class="graphic-element graphic-water"></div>
-          <div class="graphic-element graphic-energy"></div>
-          <div class="graphic-element graphic-home"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnerLuma — Authentication</title>
+  <link rel="icon" href="/enerluma-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="auth.css">
+</head>
+
+<body class="auth-page">
+  <div class="auth-container">
+    <!-- Left Side: Smart Home Illustration & Branding -->
+    <div class="auth-left">
+      <!-- Ambient background particles -->
+      <div class="ambient-particle particle-1"></div>
+      <div class="ambient-particle particle-2"></div>
+      <div class="ambient-particle particle-3"></div>
+      <div class="ambient-particle particle-4"></div>
+
+      <!-- Subtle Floating IoT Icons -->
+      <svg class="float-icon fi-home" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <path d="M20 6L4 18v16h12V24h8v10h12V18L20 6z" stroke="rgba(15,106,102,0.28)" stroke-width="1.2"
+          fill="rgba(77,212,220,0.08)" />
+        <rect x="16" y="24" width="8" height="10" stroke="rgba(15,106,102,0.20)" stroke-width="0.8" fill="none" />
+      </svg>
+      <svg class="float-icon fi-ripple" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="28" r="4" stroke="rgba(77,212,220,0.30)" stroke-width="1" fill="rgba(77,212,220,0.10)" />
+        <ellipse cx="20" cy="28" rx="10" ry="5" stroke="rgba(77,212,220,0.22)" stroke-width="0.8" fill="none" />
+        <ellipse cx="20" cy="28" rx="16" ry="8" stroke="rgba(77,212,220,0.14)" stroke-width="0.6" fill="none" />
+      </svg>
+      <svg class="float-icon fi-wave" viewBox="0 0 44 28" fill="none" aria-hidden="true">
+        <path d="M2 20Q8 8 14 14T26 10T38 16T42 12" stroke="rgba(15,106,102,0.25)" stroke-width="1.2" fill="none"
+          stroke-linecap="round" />
+        <path d="M2 24Q10 14 18 18T30 14T42 18" stroke="rgba(77,212,220,0.18)" stroke-width="0.9" fill="none"
+          stroke-linecap="round" />
+      </svg>
+      <svg class="float-icon fi-signal" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="22" r="2.5" fill="rgba(15,106,102,0.30)" />
+        <path d="M10 18a8 8 0 0112 0" stroke="rgba(15,106,102,0.22)" stroke-width="1" fill="none"
+          stroke-linecap="round" />
+        <path d="M6 14a14 14 0 0120 0" stroke="rgba(15,106,102,0.15)" stroke-width="0.8" fill="none"
+          stroke-linecap="round" />
+      </svg>
+      <svg class="float-icon fi-eco" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 26C8 14 24 8 24 8C24 8 20 26 8 26Z" fill="rgba(6,192,191,0.12)" stroke="rgba(15,106,102,0.25)"
+          stroke-width="0.9" />
+        <path d="M8 26C14 20 20 14 24 8" stroke="rgba(15,106,102,0.18)" stroke-width="0.7" fill="none" />
+      </svg>
+      <svg class="float-icon fi-node" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <circle cx="14" cy="14" r="3" fill="rgba(77,212,220,0.15)" stroke="rgba(77,212,220,0.30)" stroke-width="0.8" />
+        <line x1="14" y1="11" x2="14" y2="3" stroke="rgba(77,212,220,0.20)" stroke-width="0.6" />
+        <line x1="17" y1="14" x2="25" y2="14" stroke="rgba(77,212,220,0.20)" stroke-width="0.6" />
+        <line x1="11" y1="17" x2="5" y2="23" stroke="rgba(77,212,220,0.20)" stroke-width="0.6" />
+        <circle cx="14" cy="3" r="1.5" fill="rgba(77,212,220,0.18)" />
+        <circle cx="25" cy="14" r="1.5" fill="rgba(77,212,220,0.18)" />
+        <circle cx="5" cy="23" r="1.5" fill="rgba(77,212,220,0.18)" />
+      </svg>
+
+      <!-- Dashboard Preview -->
+      <div class="dashboard-preview">
+        <div class="preview-header">
+          <div class="preview-dot green"></div>
+          <div class="preview-dot yellow"></div>
+          <div class="preview-dot red"></div>
+          <span class="preview-title">EnerLuma Dashboard</span>
         </div>
-        <div class="auth-branding">
-          <img src="/enerluma-logo.png" alt="EnerLuma" class="auth-logo" />
-          <h1>EnerLuma</h1>
-          <p>Smart Energy & Water Monitoring</p>
+
+        <!-- Metric Cards Row -->
+        <div class="preview-metrics">
+          <div class="metric-card">
+            <div class="metric-icon energy-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-value">2.4<small>kWh</small></span>
+              <span class="metric-label">Energy Today</span>
+            </div>
+            <span class="metric-trend positive">↓ 12%</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon water-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M12 2C12 2 5 12 5 16a7 7 0 0014 0c0-4-7-14-7-14z" />
+              </svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-value">148<small>L</small></span>
+              <span class="metric-label">Water Usage</span>
+            </div>
+            <span class="metric-trend positive">↓ 8%</span>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-icon device-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M5 12.55a11 11 0 0114.08 0" />
+                <path d="M1.42 9a16 16 0 0121.16 0" />
+                <path d="M8.53 16.11a6 6 0 016.95 0" />
+                <circle cx="12" cy="20" r="1" />
+              </svg>
+            </div>
+            <div class="metric-data">
+              <span class="metric-value">7<small>/9</small></span>
+              <span class="metric-label">Devices Online</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Chart Area -->
+        <div class="preview-chart">
+          <div class="chart-header">
+            <span class="chart-title">Weekly Energy Trend</span>
+            <span class="chart-badge">Live</span>
+          </div>
+          <svg class="sparkline" viewBox="0 0 280 60" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(77,212,220,0.25)" />
+                <stop offset="100%" stop-color="rgba(77,212,220,0)" />
+              </linearGradient>
+            </defs>
+            <path d="M0 45 Q20 40 40 38 T80 30 T120 25 T160 20 T200 28 T240 18 T280 12" fill="none"
+              stroke="var(--accent-1)" stroke-width="2" />
+            <path d="M0 45 Q20 40 40 38 T80 30 T120 25 T160 20 T200 28 T240 18 T280 12 V60 H0 Z"
+              fill="url(#chartGrad)" />
+            <circle cx="280" cy="12" r="3" fill="var(--accent-1)">
+              <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite" />
+            </circle>
+          </svg>
         </div>
       </div>
 
-      <!-- Right Side: Auth Form -->
-      <div class="auth-right">
-        <div class="auth-card">
-          <!-- Tab Toggle -->
-          <div class="auth-tabs">
-            <button class="auth-tab active" data-tab="login">Login</button>
-            <a class="auth-tab" href="/login-signup/signup.html">Sign Up</a>
-          </div>
-
-          <!-- Login Form -->
-          <form id="login-form" class="auth-form active" novalidate>
-            <h2>Welcome Back</h2>
-            <p class="auth-subtitle">Access your EnerLuma dashboard</p>
-
-            <div class="form-group">
-              <label for="login-email">Email Address</label>
-              <input type="email" id="login-email" placeholder="you@example.com" required />
-              <div class="error-msg" id="login-email-error" aria-live="polite"></div>
-            </div>
-
-            <div class="form-group password-field">
-              <label for="login-password">Password</label>
-              <input type="password" id="login-password" placeholder="••••••••" required />
-              <button type="button" class="password-toggle" aria-label="Show password" data-target="login-password">Show</button>
-              <div class="error-msg" id="login-password-error" aria-live="polite"></div>
-            </div>
-
-            <div class="form-options">
-              <label class="remember-me">
-                <input type="checkbox" id="remember-me" />
-                Remember me
-              </label>
-              <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="auth-button">Login</button>
-
-            <p class="auth-footer">
-              Don't have an account? <a href="/login-signup/signup.html">Sign Up</a>
-            </p>
-          </form>
-        </div>
-
-        <!-- Divider -->
-        <div class="auth-divider">
-          <span>or continue with</span>
-        </div>
-
-        <!-- Social Login -->
-        <div class="social-login">
-          <button class="social-button google" title="Login with Google">
-            <span class="icon" aria-hidden="true">
-              <!-- Google G icon (SVG) -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-                <path d="M21.805 10.023h-9.78v3.954h5.602c-.242 1.502-1.632 4.404-5.602 4.404-3.368 0-6.114-2.77-6.114-6.184 0-3.414 2.746-6.184 6.114-6.184 1.918 0 3.194.819 3.928 1.507l2.673-2.574C17.454 3.01 15.39 2 12.025 2 6.92 2 2.8 6.086 2.8 11.203c0 5.117 4.12 9.203 9.225 9.203 5.32 0 8.81-3.732 8.81-8.997 0-.605-.07-1.07-.05-1.586z" fill="#4285F4"/>
-                <path d="M3.455 7.35l2.94 2.152C7.042 7.97 9.38 6.4 12.024 6.4c1.918 0 3.194.819 3.928 1.507l2.673-2.574C17.454 3.01 15.39 2 12.025 2 8.29 2 5.09 3.9 3.455 7.35z" fill="#34A853"/>
-              </svg>
-            </span>
-            <span>Continue with Google</span>
-          </button>
-
-          <button class="social-button apple" title="Login with Apple">
-            <span class="icon" aria-hidden="true">
-              <!-- Apple icon (SVG) -->
-              <svg width="18" height="20" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
-                <path d="M318.7 268.7c-.3-55.1 45.1-81.6 47.1-83  -25.6-37.4-65.5-42.5-79.7-43.3-33.9-3.4-66.1 20.1-83.4 20.1-17.5 0-44.5-19.6-73.2-19.1-37.6.5-72.2 22-91.4 55.8-39.1 67.9-10 168.4 28.1 223.7 18.6 26.2 40.6 55.6 69.5 54.5 27.2-1 37.5-17.6 70.5-17.6 32.8 0 42.3 17.6 70.7 17.1 29.4-.5 48-26.7 66.3-53 21-30.1 29.8-59.2 30.3-60.7- .7-.3-58.2-22.5-58.6-89.6z" fill="#ffffff"/>
-              </svg>
-            </span>
-            <span>Continue with Apple</span>
-          </button>
-        </div>
+      <!-- Branding -->
+      <div class="auth-branding">
+        <img src="/enerluma-logo.png" alt="EnerLuma" class="auth-logo" />
+        <h1>EnerLuma</h1>
+        <p>Smart Energy & Water Monitoring</p>
+        <span class="branding-tagline">AI-Powered • Real-time • Sustainable</span>
       </div>
     </div>
 
-    <script>
-      const tabs = document.querySelectorAll('.auth-tab');
-      const forms = document.querySelectorAll('.auth-form');
-      const passwordToggles = document.querySelectorAll('.password-toggle');
+    <!-- Right Side: Auth Form -->
+    <div class="auth-right">
+      <div class="auth-card">
+        <!-- Tab Toggle -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">Login</button>
+          <a class="auth-tab" href="/login-signup/signup.html">Sign Up</a>
+        </div>
 
-      function switchTab(tabName) {
-        // Update active tab
-        tabs.forEach(tab => tab.classList.remove('active'));
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active" novalidate>
+          <h2>Welcome Back</h2>
+          <p class="auth-subtitle">Access your EnerLuma dashboard</p>
 
-        // Update active form
-        forms.forEach(form => form.classList.remove('active'));
-        document.getElementById(`${tabName}-form`).classList.add('active');
-      }
+          <div class="form-group has-icon email">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" placeholder="you@example.com" required />
+            <div class="error-msg" id="login-email-error" aria-live="polite"></div>
+          </div>
 
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          switchTab(tab.dataset.tab);
-        });
+          <div class="form-group has-icon password password-field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="••••••••" required />
+            <button type="button" class="password-toggle" aria-label="Show password"
+              data-target="login-password">Show</button>
+            <div class="error-msg" id="login-password-error" aria-live="polite"></div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember-me" />
+              Remember me
+            </label>
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="auth-button" disabled>
+            <span class="btn-spinner"></span>
+            <span class="btn-text">Login</span>
+          </button>
+
+          <div class="secure-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            <span>Secured with 256-bit encryption</span>
+          </div>
+
+          <p class="auth-footer">
+            Don't have an account? <a href="/login-signup/signup.html">Sign Up</a>
+          </p>
+        </form>
+      </div>
+
+      <!-- Divider -->
+      <div class="auth-divider">
+        <span>or continue with</span>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <button class="social-button google" title="Login with Google">
+          <span class="icon" aria-hidden="true">
+            <!-- Google G icon (SVG) -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              focusable="false" aria-hidden="true">
+              <path
+                d="M21.805 10.023h-9.78v3.954h5.602c-.242 1.502-1.632 4.404-5.602 4.404-3.368 0-6.114-2.77-6.114-6.184 0-3.414 2.746-6.184 6.114-6.184 1.918 0 3.194.819 3.928 1.507l2.673-2.574C17.454 3.01 15.39 2 12.025 2 6.92 2 2.8 6.086 2.8 11.203c0 5.117 4.12 9.203 9.225 9.203 5.32 0 8.81-3.732 8.81-8.997 0-.605-.07-1.07-.05-1.586z"
+                fill="#4285F4" />
+              <path
+                d="M3.455 7.35l2.94 2.152C7.042 7.97 9.38 6.4 12.024 6.4c1.918 0 3.194.819 3.928 1.507l2.673-2.574C17.454 3.01 15.39 2 12.025 2 8.29 2 5.09 3.9 3.455 7.35z"
+                fill="#34A853" />
+            </svg>
+          </span>
+          <span>Continue with Google</span>
+        </button>
+
+        <button class="social-button apple" title="Login with Apple">
+          <span class="icon" aria-hidden="true">
+            <!-- Apple icon (SVG) -->
+            <svg width="18" height="20" viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg" focusable="false"
+              aria-hidden="true">
+              <path
+                d="M318.7 268.7c-.3-55.1 45.1-81.6 47.1-83  -25.6-37.4-65.5-42.5-79.7-43.3-33.9-3.4-66.1 20.1-83.4 20.1-17.5 0-44.5-19.6-73.2-19.1-37.6.5-72.2 22-91.4 55.8-39.1 67.9-10 168.4 28.1 223.7 18.6 26.2 40.6 55.6 69.5 54.5 27.2-1 37.5-17.6 70.5-17.6 32.8 0 42.3 17.6 70.7 17.1 29.4-.5 48-26.7 66.3-53 21-30.1 29.8-59.2 30.3-60.7- .7-.3-58.2-22.5-58.6-89.6z"
+                fill="#ffffff" />
+            </svg>
+          </span>
+          <span>Continue with Apple</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.auth-tab');
+    const forms = document.querySelectorAll('.auth-form');
+
+    /* ============ SVG icon markup ============ */
+    const eyeOpenSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const eyeClosedSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+
+    /* ============ Tab switching ============ */
+    function switchTab(tabName) {
+      tabs.forEach(tab => tab.classList.remove('active'));
+      document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+      forms.forEach(form => form.classList.remove('active'));
+      document.getElementById(`${tabName}-form`).classList.add('active');
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
+
+    /* ============ Password toggle (eye icon with animation) ============ */
+    document.querySelectorAll('.password-toggle').forEach(btn => {
+      btn.innerHTML = eyeOpenSVG;
+      btn.addEventListener('click', () => {
+        const input = document.getElementById(btn.dataset.target);
+        if (!input) return;
+        const isPassword = input.type === 'password';
+        input.type = isPassword ? 'text' : 'password';
+        btn.innerHTML = isPassword ? eyeClosedSVG : eyeOpenSVG;
+        btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
       });
+    });
 
-      // Links that navigate to separate pages (signup) will not be intercepted
+    /* ============ Validation helpers ============ */
+    function isValidEmail(email) {
+      return /^\S+@\S+\.\S+$/.test(email);
+    }
 
-      // Password toggle
-      passwordToggles.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const targetId = btn.dataset.target;
-          const input = document.getElementById(targetId);
-          if (!input) return;
-          if (input.type === 'password') {
-            input.type = 'text';
-            btn.textContent = 'Hide';
-            btn.setAttribute('aria-label', 'Hide password');
-          } else {
-            input.type = 'password';
-            btn.textContent = 'Show';
-            btn.setAttribute('aria-label', 'Show password');
-          }
-        });
-      });
-
-      // Validation helpers
-      function isValidEmail(email) {
-        return /^\S+@\S+\.\S+$/.test(email);
+    function showError(inputEl, message) {
+      const el = document.getElementById(inputEl.id + '-error');
+      if (el) {
+        el.textContent = message;
+        el.classList.add('visible');
       }
+      inputEl.classList.add('input-error');
+    }
 
-      function showError(inputEl, message) {
-        const id = inputEl.id + '-error';
-        const el = document.getElementById(id);
-        if (el) el.textContent = message;
-        inputEl.classList.add('input-error');
+    function clearError(inputEl) {
+      const el = document.getElementById(inputEl.id + '-error');
+      if (el) {
+        el.classList.remove('visible');
+        setTimeout(() => { el.textContent = ''; }, 250);
       }
+      inputEl.classList.remove('input-error');
+    }
 
-      function clearError(inputEl) {
-        const id = inputEl.id + '-error';
-        const el = document.getElementById(id);
-        if (el) el.textContent = '';
-        inputEl.classList.remove('input-error');
+    /* ============ Live validation → enable/disable button ============ */
+    const loginEmail = document.getElementById('login-email');
+    const loginPassword = document.getElementById('login-password');
+    const loginBtn = document.querySelector('#login-form .auth-button');
+
+    function checkLoginValidity() {
+      const emailOk = loginEmail.value && isValidEmail(loginEmail.value);
+      const pwdOk = loginPassword.value && loginPassword.value.length >= 8;
+      loginBtn.disabled = !(emailOk && pwdOk);
+    }
+
+    loginEmail.addEventListener('input', () => { clearError(loginEmail); checkLoginValidity(); });
+    loginPassword.addEventListener('input', () => { clearError(loginPassword); checkLoginValidity(); });
+
+    /* ============ Login form submit with spinner ============ */
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let ok = true;
+      clearError(loginEmail);
+      clearError(loginPassword);
+
+      if (!loginEmail.value || !isValidEmail(loginEmail.value)) {
+        showError(loginEmail, 'Please enter a valid email address.');
+        ok = false;
       }
+      if (!loginPassword.value || loginPassword.value.length < 8) {
+        showError(loginPassword, 'Password must be at least 8 characters.');
+        ok = false;
+      }
+      if (!ok) { checkLoginValidity(); return; }
 
-      // Login validation
-      const loginForm = document.getElementById('login-form');
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email');
-        const password = document.getElementById('login-password');
-        let ok = true;
+      // Show loading state
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
 
-        clearError(email);
-        clearError(password);
-
-        if (!email.value || !isValidEmail(email.value)) {
-          showError(email, 'Please enter a valid email address.');
-          ok = false;
-        }
-
-        if (!password.value || password.value.length < 8) {
-          showError(password, 'Password must be at least 8 characters.');
-          ok = false;
-        }
-
-        if (!ok) return;
-
-        // Demo success — redirect to app
+      // Simulate async login (replace with real API call)
+      setTimeout(() => {
         window.location.href = '/app.html';
-      });
+      }, 1500);
+    });
 
-      // Signup behavior lives on the separate signup page (`signup.html`)
+    /* ============ Enter key submits active form ============ */
+    loginForm.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !loginBtn.disabled) {
+        e.preventDefault();
+        loginForm.requestSubmit();
+      }
+    });
 
-      // Real-time clear on input
-      document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', () => clearError(input));
-      });
+    /* ============ Navigation intercept ============ */
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest && e.target.closest('a');
+      if (!a) return;
+      const href = a.getAttribute && a.getAttribute('href');
+      if (!href) return;
+      if (href.startsWith('/login-signup/')) {
+        if (location.pathname === href) { e.preventDefault(); return; }
+        e.preventDefault();
+        location.replace(href);
+      }
+    });
+  </script>
+</body>
 
-      // Intercept clicks to auth pages to use replace navigation (prevents stacking history)
-      document.addEventListener('click', (e) => {
-        const a = e.target.closest && e.target.closest('a');
-        if (!a) return;
-        const href = a.getAttribute && a.getAttribute('href');
-        if (!href) return;
-        if (href.startsWith('/login-signup/')) {
-          // if already on target, prevent unnecessary reload
-          if (location.pathname === href) { e.preventDefault(); return; }
-          e.preventDefault();
-          location.replace(href);
-        }
-      });
-    </script>
-  </body>
 </html>
