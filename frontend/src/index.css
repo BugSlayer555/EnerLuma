@@ -6,8 +6,21 @@
     line-height: 1.5;
     font-weight: 400;
 
-    color-scheme: light dark;
-    
+    /* Eco-teal design tokens */
+    --color-primary: #14b8a6;
+    --color-primary-light: #5eead4;
+    --color-primary-dark: #0f766e;
+    --color-surface: #ffffff;
+    --color-surface-secondary: #f8fffe;
+    --color-surface-muted: #f0fdfa;
+    --color-text: #1e293b;
+    --color-text-secondary: #64748b;
+    --color-border: rgba(0, 0, 0, 0.06);
+    --radius-card: 18px;
+    --radius-button: 12px;
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    --shadow-card-hover: 0 8px 25px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -19,13 +32,181 @@
     min-width: 320px;
     min-height: 100vh;
     overflow-x: hidden;
+    background-color: var(--color-surface-muted);
+    color: var(--color-text);
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(20, 184, 166, 0.2);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 184, 166, 0.4);
   }
 }
 
 @layer components {
-  /* Custom component styles can go here */
+
+  /* Premium card component */
+  .card {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card-static {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+  }
+
+  /* KPI metric card */
+  .kpi-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .kpi-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Section header */
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  /* Live badge */
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #10b981;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .live-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulseSoft 2s ease-in-out infinite;
+  }
+
+  /* Trend indicator */
+  .trend-positive {
+    color: #10b981;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .trend-negative {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Skeleton loader */
+  .skeleton {
+    background: linear-gradient(90deg, #f0fdfa 25%, #e6fffa 50%, #f0fdfa 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: var(--radius-card);
+  }
 }
 
 @layer utilities {
-  /* Custom utility classes can go here */
+  .text-gradient {
+    background: linear-gradient(135deg, #0f766e, #14b8a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-eco-gradient {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 50%, #06b6d4 100%);
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes pulseSoft {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+
+  to {
+    background-position: 200% 0;
+  }
 }
