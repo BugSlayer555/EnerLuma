@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard'
 import EnergyPage from './pages/EnergyPage'
 import WaterPage from './pages/WaterPage'
 import DevicesPage from './pages/DevicesPage'
+import DeviceDetailPage from './pages/DeviceDetailPage'
 import AIInsightsPage from './pages/AIInsightsPage'
 import SustainabilityPage from './pages/SustainabilityPage'
 import AnalyticsPage from './pages/AnalyticsPage'
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/energy" element={<EnergyPage />} />
             <Route path="/water" element={<WaterPage />} />
             <Route path="/devices" element={<DevicesPage />} />
+            <Route path="/devices/:deviceId" element={<DeviceDetailPage />} />
             <Route path="/ai" element={<AIInsightsPage />} />
             <Route path="/green" element={<SustainabilityPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />

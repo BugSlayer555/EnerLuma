@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-    Cpu, Wifi, WifiOff, Power, Zap, Droplets,
+    Cpu, Zap, Droplets,
     Thermometer, LightbulbIcon, Plug, Plus,
     Search, LayoutGrid, List, ChevronRight,
 } from 'lucide-react'
 
 interface Device {
     id: number
+    slug: string
     name: string
     room: string
     type: string
@@ -19,18 +21,18 @@ interface Device {
 }
 
 const devices: Device[] = [
-    { id: 1, name: 'Smart Thermostat', room: 'Living Room', type: 'HVAC', icon: Thermometer, status: 'online', consumption: '1.2 kWh', lastSeen: 'Now', signal: 92 },
-    { id: 2, name: 'LED Strip', room: 'Living Room', type: 'Lighting', icon: LightbulbIcon, status: 'online', consumption: '0.3 kWh', lastSeen: 'Now', signal: 85 },
-    { id: 3, name: 'Refrigerator', room: 'Kitchen', type: 'Appliance', icon: Plug, status: 'online', consumption: '1.8 kWh', lastSeen: 'Now', signal: 95 },
-    { id: 4, name: 'Dishwasher', room: 'Kitchen', type: 'Appliance', icon: Droplets, status: 'idle', consumption: '0.0 kWh', lastSeen: '2h ago', signal: 78 },
-    { id: 5, name: 'Water Heater', room: 'Bathroom', type: 'Water', icon: Droplets, status: 'online', consumption: '2.1 kWh', lastSeen: 'Now', signal: 88 },
-    { id: 6, name: 'Bedroom AC', room: 'Bedroom', type: 'HVAC', icon: Thermometer, status: 'offline', consumption: '—', lastSeen: '5h ago', signal: 0 },
-    { id: 7, name: 'Smart Plug #1', room: 'Bedroom', type: 'Plug', icon: Plug, status: 'online', consumption: '0.1 kWh', lastSeen: 'Now', signal: 72 },
-    { id: 8, name: 'Garden Sprinkler', room: 'Outdoor', type: 'Water', icon: Droplets, status: 'idle', consumption: '0.0 kWh', lastSeen: '1d ago', signal: 65 },
-    { id: 9, name: 'Washing Machine', room: 'Utility', type: 'Appliance', icon: Plug, status: 'online', consumption: '0.8 kWh', lastSeen: 'Now', signal: 90 },
-    { id: 10, name: 'Porch Light', room: 'Outdoor', type: 'Lighting', icon: LightbulbIcon, status: 'online', consumption: '0.1 kWh', lastSeen: 'Now', signal: 80 },
-    { id: 11, name: 'Study Lamp', room: 'Study', type: 'Lighting', icon: LightbulbIcon, status: 'offline', consumption: '—', lastSeen: '3h ago', signal: 0 },
-    { id: 12, name: 'Smart Meter', room: 'Utility', type: 'Sensor', icon: Zap, status: 'online', consumption: '—', lastSeen: 'Now', signal: 98 },
+    { id: 1, slug: 'hvac', name: 'Smart Thermostat', room: 'Living Room', type: 'HVAC', icon: Thermometer, status: 'online', consumption: '1.2 kWh', lastSeen: 'Now', signal: 92 },
+    { id: 2, slug: 'refrigerator', name: 'Refrigerator', room: 'Kitchen', type: 'Appliance', icon: Plug, status: 'online', consumption: '1.8 kWh', lastSeen: 'Now', signal: 95 },
+    { id: 3, slug: 'water-heater', name: 'Water Heater', room: 'Bathroom', type: 'Water', icon: Droplets, status: 'online', consumption: '2.1 kWh', lastSeen: 'Now', signal: 88 },
+    { id: 4, slug: 'ev-charger', name: 'EV Charger', room: 'Garage', type: 'Charging', icon: Zap, status: 'online', consumption: '6.5 kWh', lastSeen: 'Now', signal: 90 },
+    { id: 5, slug: 'washing-machine', name: 'Washing Machine', room: 'Utility', type: 'Appliance', icon: Plug, status: 'online', consumption: '0.8 kWh', lastSeen: 'Now', signal: 90 },
+    { id: 6, slug: 'shower', name: 'Shower System', room: 'Master Bath', type: 'Water', icon: Droplets, status: 'online', consumption: '85 L', lastSeen: 'Now', signal: 85 },
+    { id: 7, slug: 'hvac', name: 'LED Strip', room: 'Living Room', type: 'Lighting', icon: LightbulbIcon, status: 'online', consumption: '0.3 kWh', lastSeen: 'Now', signal: 85 },
+    { id: 8, slug: 'hvac', name: 'Dishwasher', room: 'Kitchen', type: 'Appliance', icon: Droplets, status: 'idle', consumption: '0.0 kWh', lastSeen: '2h ago', signal: 78 },
+    { id: 9, slug: 'hvac', name: 'Bedroom AC', room: 'Bedroom', type: 'HVAC', icon: Thermometer, status: 'offline', consumption: '—', lastSeen: '5h ago', signal: 0 },
+    { id: 10, slug: 'hvac', name: 'Smart Plug #1', room: 'Bedroom', type: 'Plug', icon: Plug, status: 'online', consumption: '0.1 kWh', lastSeen: 'Now', signal: 72 },
+    { id: 11, slug: 'hvac', name: 'Garden Sprinkler', room: 'Outdoor', type: 'Water', icon: Droplets, status: 'idle', consumption: '0.0 kWh', lastSeen: '1d ago', signal: 65 },
+    { id: 12, slug: 'hvac', name: 'Smart Meter', room: 'Utility', type: 'Sensor', icon: Zap, status: 'online', consumption: '—', lastSeen: 'Now', signal: 98 },
 ]
 
 const statusStyles = {
@@ -132,45 +134,49 @@ function DeviceCard({ device, view }: { device: Device; view: 'grid' | 'list' })
 
     if (view === 'list') {
         return (
-            <motion.div
-                whileHover={{ x: 4 }}
-                className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-card cursor-pointer group"
-            >
-                <div className={`p-2 rounded-xl ${style.bg}`}><Icon className={`w-5 h-5 ${style.text}`} /></div>
-                <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-800">{device.name}</p>
-                    <p className="text-xs text-gray-400">{device.room}</p>
-                </div>
-                <span className="text-sm font-medium text-gray-700">{device.consumption}</span>
-                <div className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-full ${style.dot}`} />
-                    <span className={`text-xs font-medium capitalize ${style.text}`}>{device.status}</span>
-                </div>
-                <SignalBars signal={device.signal} />
-                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-primary-500 transition-colors" />
-            </motion.div>
+            <Link to={`/devices/${device.slug}`}>
+                <motion.div
+                    whileHover={{ x: 4 }}
+                    className="flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-card cursor-pointer group"
+                >
+                    <div className={`p-2 rounded-xl ${style.bg}`}><Icon className={`w-5 h-5 ${style.text}`} /></div>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-800">{device.name}</p>
+                        <p className="text-xs text-gray-400">{device.room}</p>
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{device.consumption}</span>
+                    <div className="flex items-center gap-1.5">
+                        <span className={`w-2 h-2 rounded-full ${style.dot}`} />
+                        <span className={`text-xs font-medium capitalize ${style.text}`}>{device.status}</span>
+                    </div>
+                    <SignalBars signal={device.signal} />
+                    <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-primary-500 transition-colors" />
+                </motion.div>
+            </Link>
         )
     }
 
     return (
-        <motion.div
-            whileHover={{ y: -2 }}
-            className="p-4 bg-white rounded-2xl border border-gray-100 shadow-card cursor-pointer group transition-shadow hover:shadow-card-hover"
-        >
-            <div className="flex items-center justify-between mb-3">
-                <div className={`p-2 rounded-xl ${style.bg}`}><Icon className={`w-5 h-5 ${style.text}`} /></div>
-                <div className="flex items-center gap-1.5">
-                    <span className={`w-2 h-2 rounded-full ${style.dot}`} />
-                    <span className={`text-[10px] font-medium capitalize ${style.text}`}>{device.status}</span>
+        <Link to={`/devices/${device.slug}`}>
+            <motion.div
+                whileHover={{ y: -2 }}
+                className="p-4 bg-white rounded-2xl border border-gray-100 shadow-card cursor-pointer group transition-shadow hover:shadow-card-hover"
+            >
+                <div className="flex items-center justify-between mb-3">
+                    <div className={`p-2 rounded-xl ${style.bg}`}><Icon className={`w-5 h-5 ${style.text}`} /></div>
+                    <div className="flex items-center gap-1.5">
+                        <span className={`w-2 h-2 rounded-full ${style.dot}`} />
+                        <span className={`text-[10px] font-medium capitalize ${style.text}`}>{device.status}</span>
+                    </div>
                 </div>
-            </div>
-            <p className="text-sm font-semibold text-gray-800">{device.name}</p>
-            <p className="text-xs text-gray-400 mt-0.5">{device.type}</p>
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                <span className="text-sm font-bold text-gray-700">{device.consumption}</span>
-                <SignalBars signal={device.signal} />
-            </div>
-        </motion.div>
+                <p className="text-sm font-semibold text-gray-800">{device.name}</p>
+                <p className="text-xs text-gray-400 mt-0.5">{device.type}</p>
+                <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                    <span className="text-sm font-bold text-gray-700">{device.consumption}</span>
+                    <SignalBars signal={device.signal} />
+                </div>
+            </motion.div>
+        </Link>
     )
 }
 
