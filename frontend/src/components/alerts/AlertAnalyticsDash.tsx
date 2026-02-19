@@ -24,16 +24,16 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                         key={kpi.label}
                         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.08 }}
-                        className="rounded-xl p-4"
-                        style={{ background: `${kpi.color}08`, border: `1px solid ${kpi.color}20` }}
+                        className="rounded-xl p-4 bg-white shadow-sm"
+                        style={{ border: `1px solid ${kpi.color}30` }}
                     >
                         <div className="flex items-center gap-2 mb-2">
                             <div className="p-1.5 rounded-lg" style={{ background: `${kpi.color}15` }}>
                                 <kpi.icon className="w-4 h-4" style={{ color: kpi.color }} />
                             </div>
-                            <span className="text-[10px] text-gray-400 font-medium">{kpi.label}</span>
+                            <span className="text-[10px] text-gray-500 font-medium">{kpi.label}</span>
                         </div>
-                        <p className="text-2xl font-extrabold text-white">{kpi.value}</p>
+                        <p className="text-2xl font-extrabold text-gray-900">{kpi.value}</p>
                         <p className="text-[10px] text-gray-500 mt-0.5">{kpi.sub}</p>
                     </motion.div>
                 ))}
@@ -43,12 +43,11 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                 {/* Daily Trend Stacked Bar */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                    className="rounded-2xl p-5"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                    className="rounded-2xl p-5 bg-white border border-gray-200 shadow-sm"
                 >
                     <div className="flex items-center gap-2 mb-4">
-                        <TrendingUp className="w-4 h-4 text-teal-400" />
-                        <h3 className="text-sm font-bold text-white">Daily Alert Trend</h3>
+                        <TrendingUp className="w-4 h-4 text-teal-500" />
+                        <h3 className="text-sm font-bold text-gray-900">Daily Alert Trend</h3>
                     </div>
                     <div className="h-52">
                         <ResponsiveContainer width="100%" height="100%">
@@ -56,7 +55,8 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                                 <XAxis dataKey="day" tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} />
                                 <YAxis tick={{ fill: '#64748b', fontSize: 10 }} axisLine={false} tickLine={false} width={24} />
                                 <Tooltip
-                                    contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 11, color: '#fff' }}
+                                    contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, fontSize: 11, color: '#0f172a', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                    cursor={{ fill: '#f1f5f9' }}
                                 />
                                 <Bar dataKey="critical" stackId="a" fill="#dc2626" radius={[0, 0, 0, 0]} />
                                 <Bar dataKey="high" stackId="a" fill="#ef4444" />
@@ -78,10 +78,9 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                 {/* Severity Distribution Pie */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                    className="rounded-2xl p-5"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                    className="rounded-2xl p-5 bg-white border border-gray-200 shadow-sm"
                 >
-                    <h3 className="text-sm font-bold text-white mb-4">Severity Distribution</h3>
+                    <h3 className="text-sm font-bold text-gray-900 mb-4">Severity Distribution</h3>
                     <div className="flex items-center gap-4">
                         <div className="h-44 w-44 flex-shrink-0">
                             <ResponsiveContainer width="100%" height="100%">
@@ -93,7 +92,7 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                                             <Cell key={i} fill={s.color} />
                                         ))}
                                     </Pie>
-                                    <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, fontSize: 11, color: '#fff' }} />
+                                    <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: 12, fontSize: 11, color: '#0f172a', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
@@ -101,8 +100,8 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                             {a.severityDistribution.map(s => (
                                 <div key={s.severity} className="flex items-center gap-2">
                                     <div className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} />
-                                    <span className="text-xs text-gray-300 capitalize flex-1">{s.severity}</span>
-                                    <span className="text-xs font-bold text-white">{s.count}</span>
+                                    <span className="text-xs text-gray-600 capitalize flex-1">{s.severity}</span>
+                                    <span className="text-xs font-bold text-gray-900">{s.count}</span>
                                 </div>
                             ))}
                         </div>
@@ -112,10 +111,9 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                 {/* Top Alerting Devices */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                    className="rounded-2xl p-5"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                    className="rounded-2xl p-5 bg-white border border-gray-200 shadow-sm"
                 >
-                    <h3 className="text-sm font-bold text-white mb-4">Top Alerting Devices</h3>
+                    <h3 className="text-sm font-bold text-gray-900 mb-4">Top Alerting Devices</h3>
                     <div className="space-y-3">
                         {a.topDevices.map((d, i) => {
                             const pct = (d.count / a.topDevices[0].count) * 100
@@ -124,10 +122,10 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                                     <span className="text-lg">{d.icon}</span>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-xs text-gray-300 font-medium truncate">{d.device}</span>
-                                            <span className="text-xs font-bold text-white">{d.count}</span>
+                                            <span className="text-xs text-gray-700 font-medium truncate">{d.device}</span>
+                                            <span className="text-xs font-bold text-gray-900">{d.count}</span>
                                         </div>
-                                        <div className="h-1.5 rounded-full bg-gray-700/50 overflow-hidden">
+                                        <div className="h-1.5 rounded-full bg-gray-100 overflow-hidden">
                                             <motion.div
                                                 initial={{ width: 0 }} animate={{ width: `${pct}%` }}
                                                 transition={{ duration: 0.8, delay: 0.35 + i * 0.08 }}
@@ -144,19 +142,18 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
                 {/* Category Breakdown */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
-                    className="rounded-2xl p-5"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                    className="rounded-2xl p-5 bg-white border border-gray-200 shadow-sm"
                 >
-                    <h3 className="text-sm font-bold text-white mb-4">Category Breakdown</h3>
+                    <h3 className="text-sm font-bold text-gray-900 mb-4">Category Breakdown</h3>
                     <div className="space-y-2.5">
                         {a.categoryBreakdown.map(c => (
                             <div key={c.category} className="flex items-center gap-3">
                                 <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: c.color }} />
-                                <span className="text-xs text-gray-300 capitalize flex-1">{c.category}</span>
-                                <div className="w-20 h-1.5 rounded-full bg-gray-700/50 overflow-hidden">
+                                <span className="text-xs text-gray-600 capitalize flex-1">{c.category}</span>
+                                <div className="w-20 h-1.5 rounded-full bg-gray-100 overflow-hidden">
                                     <div className="h-full rounded-full" style={{ width: `${(c.count / a.totalAlerts) * 100}%`, background: c.color }} />
                                 </div>
-                                <span className="text-xs font-bold text-white w-8 text-right">{c.count}</span>
+                                <span className="text-xs font-bold text-gray-900 w-8 text-right">{c.count}</span>
                             </div>
                         ))}
                     </div>
@@ -165,3 +162,4 @@ export default function AlertAnalyticsDash({ analytics: a }: Props) {
         </div>
     )
 }
+

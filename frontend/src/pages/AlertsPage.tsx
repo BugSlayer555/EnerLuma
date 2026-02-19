@@ -67,7 +67,7 @@ export default function AlertsPage() {
                 >
                     <div className="flex items-center gap-3">
                         <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500/20 to-amber-500/20 border border-red-500/20 relative">
-                            <Bell className="w-6 h-6 text-red-400" />
+                            <Bell className="w-6 h-6 text-red-500" />
                             {criticalCount > 0 && (
                                 <motion.span
                                     animate={{ scale: [1, 1.2, 1] }}
@@ -79,16 +79,16 @@ export default function AlertsPage() {
                             )}
                         </div>
                         <div>
-                            <h1 className="text-2xl font-extrabold text-white tracking-tight">Alert Command Center</h1>
-                            <p className="text-xs text-gray-400">Real-time monitoring &amp; intelligent alerting</p>
+                            <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">Alert Command Center</h1>
+                            <p className="text-xs text-gray-500">Real-time monitoring &amp; intelligent alerting</p>
                         </div>
                     </div>
                     <div className="sm:ml-auto flex items-center gap-3">
-                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] text-red-300 font-semibold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] text-red-600 font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                             {activeAlerts} Active
                         </span>
-                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 font-semibold">
+                        <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-600 font-semibold">
                             {analytics.resolvedAlerts} Resolved
                         </span>
                         <span className="text-[10px] text-gray-500">WebSocket: Connected</span>
@@ -97,7 +97,7 @@ export default function AlertsPage() {
 
                 {/* ── Tab Navigation ──────────────────────────────────── */}
                 {/* Desktop */}
-                <div className="hidden sm:block overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700">
+                <div className="hidden sm:block overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
                     <div className="flex gap-1.5 min-w-max">
                         {tabs.map(t => {
                             const isActive = activeTab === t.id
@@ -106,8 +106,8 @@ export default function AlertsPage() {
                                     key={t.id}
                                     onClick={() => setActiveTab(t.id)}
                                     className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${isActive
-                                            ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30 shadow-lg shadow-teal-500/10'
-                                            : 'text-gray-400 hover:text-white hover:bg-white/[0.04] border border-transparent'
+                                        ? 'bg-teal-500/10 text-teal-700 border border-teal-500/20 shadow-sm'
+                                        : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100 border border-transparent'
                                         }`}
                                 >
                                     <t.icon className="w-3.5 h-3.5" />
@@ -122,26 +122,25 @@ export default function AlertsPage() {
                 <div className="sm:hidden relative">
                     <button
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-sm font-semibold text-white"
+                        className="w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl bg-white border border-gray-200 text-sm font-semibold text-gray-900 shadow-sm"
                     >
                         <div className="flex items-center gap-2">
-                            <activeTabData.icon className="w-4 h-4 text-teal-400" />
+                            <activeTabData.icon className="w-4 h-4 text-teal-500" />
                             {activeTabData.label}
                         </div>
-                        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
                     <AnimatePresence>
                         {dropdownOpen && (
                             <motion.div
                                 initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                                className="absolute top-full left-0 right-0 mt-1 z-50 rounded-xl overflow-hidden border border-white/10"
-                                style={{ background: 'rgba(15,23,42,0.95)', backdropFilter: 'blur(16px)' }}
+                                className="absolute top-full left-0 right-0 mt-1 z-50 rounded-xl overflow-hidden border border-gray-200 shadow-lg bg-white"
                             >
                                 {tabs.map(t => (
                                     <button
                                         key={t.id}
                                         onClick={() => { setActiveTab(t.id); setDropdownOpen(false) }}
-                                        className={`w-full flex items-center gap-2 px-4 py-2.5 text-xs font-semibold transition-colors ${activeTab === t.id ? 'bg-teal-500/15 text-teal-300' : 'text-gray-400 hover:bg-white/[0.04] hover:text-white'
+                                        className={`w-full flex items-center gap-2 px-4 py-2.5 text-xs font-semibold transition-colors ${activeTab === t.id ? 'bg-teal-50 text-teal-700' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
                                             }`}
                                     >
                                         <t.icon className="w-3.5 h-3.5" />
@@ -175,3 +174,4 @@ export default function AlertsPage() {
         </>
     )
 }
+

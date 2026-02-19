@@ -78,8 +78,8 @@ export default function Sidebar({ isOpen, onClose, isMobile, onToggle }: Sidebar
               exit={{ opacity: 0, x: -10 }}
               className="flex items-center gap-3"
             >
-              <div className="flex items-center justify-center w-9 h-9 bg-eco-gradient rounded-xl">
-                <Leaf className="w-5 h-5 text-white" />
+              <div className="flex items-center justify-center w-9 h-9 bg-eco-gradient rounded-xl shrink-0">
+                <img src="/enerluma-logo.svg" alt="EnerLuma" className="w-5 h-5 object-contain invert brightness-0" />
               </div>
               <div>
                 <h1 className="text-base font-bold text-gradient leading-tight">EnerLuma</h1>
@@ -94,7 +94,7 @@ export default function Sidebar({ isOpen, onClose, isMobile, onToggle }: Sidebar
               exit={{ opacity: 0, scale: 0.8 }}
               className="flex items-center justify-center w-9 h-9 bg-eco-gradient rounded-xl mx-auto"
             >
-              <Leaf className="w-5 h-5 text-white" />
+              <img src="/enerluma-logo.svg" alt="EnerLuma" className="w-5 h-5 object-contain invert brightness-0" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -192,8 +192,8 @@ export default function Sidebar({ isOpen, onClose, isMobile, onToggle }: Sidebar
           className="p-3 border-t border-gray-100"
         >
           <div className="flex items-center gap-3 p-3 bg-primary-50 rounded-2xl">
-            <div className="w-10 h-10 bg-eco-gradient rounded-xl flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 bg-eco-gradient rounded-xl flex items-center justify-center shrink-0">
+              <img src="/enerluma-logo.svg" alt="Eco Score" className="w-5 h-5 object-contain invert brightness-0" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-primary-700">Eco Score</p>

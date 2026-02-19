@@ -81,14 +81,22 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
             <Menu className="w-5 h-5" />
           </button>
 
+          {/* Mobile/Compact Logo */}
+          <div className="flex md:hidden items-center gap-2 mr-2">
+            <div className="flex items-center justify-center w-8 h-8 bg-eco-gradient rounded-lg">
+              <img src="/enerluma-logo.svg" alt="EnerLuma" className="w-4 h-4 object-contain invert brightness-0" />
+            </div>
+            <span className="text-sm font-bold text-gray-900">EnerLuma</span>
+          </div>
+
           {/* Search */}
           <div
             className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 ${searchFocused
-                ? 'bg-white ring-2 ring-primary-200 shadow-sm w-80'
-                : 'bg-gray-50 w-64'
+              ? 'bg-white ring-2 ring-primary-200 shadow-sm w-80'
+              : 'bg-gray-50 w-64'
               }`}
           >
-            <Search className="w-4 h-4 text-gray-400 flex-shrink-0" />
+            <Search className="w-4 h-4 text-gray-400 shrink-0" />
             <input
               type="text"
               placeholder="Search devices, rooms..."
@@ -167,7 +175,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                           className={`flex items-start gap-3 p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors ${!notification.read ? 'bg-primary-50/30' : ''
                             }`}
                         >
-                          <div className={`p-1.5 rounded-lg flex-shrink-0 ${colorClass}`}>
+                          <div className={`p-1.5 rounded-lg shrink-0 ${colorClass}`}>
                             <Icon className="w-3.5 h-3.5" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -177,7 +185,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                             <p className="text-xs text-gray-400 mt-0.5">{notification.time}</p>
                           </div>
                           {!notification.read && (
-                            <div className="w-2 h-2 mt-1.5 bg-primary-500 rounded-full flex-shrink-0" />
+                            <div className="w-2 h-2 mt-1.5 bg-primary-500 rounded-full shrink-0" />
                           )}
                         </motion.div>
                       )

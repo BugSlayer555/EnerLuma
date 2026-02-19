@@ -28,49 +28,49 @@ export default function AlertTimeline({ alerts }: Props) {
     return (
         <div className="space-y-4">
             {/* Filters */}
-            <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="rounded-2xl p-4 bg-white border border-gray-200 shadow-sm">
                 <div className="flex items-center gap-2 mb-3">
-                    <Filter className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs font-semibold text-gray-300">Filters</span>
+                    <Filter className="w-4 h-4 text-gray-500" />
+                    <span className="text-xs font-semibold text-gray-700">Filters</span>
                     <span className="text-[10px] text-gray-500 ml-auto">{filtered.length} alerts</span>
                 </div>
 
                 {/* Search */}
                 <div className="relative mb-3">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-500" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                     <input
                         type="text"
                         placeholder="Search alerts or devices..."
                         value={search}
                         onChange={e => setSearch(e.target.value)}
-                        className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white/[0.04] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-teal-500/40 transition-colors"
+                        className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-gray-50 border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white transition-colors"
                     />
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                     {/* Severity filters */}
                     <button onClick={() => setFilterSeverity('all')}
-                        className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all ${filterSeverity === 'all' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+                        className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all ${filterSeverity === 'all' ? 'bg-gray-100 text-gray-900 border border-gray-200' : 'text-gray-500 hover:text-gray-700 border border-transparent'}`}>
                         All
                     </button>
                     {(Object.keys(severityConfig) as AlertSeverity[]).map(s => (
                         <button key={s} onClick={() => setFilterSeverity(filterSeverity === s ? 'all' : s)}
                             className="px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all"
                             style={{
-                                background: filterSeverity === s ? `${severityConfig[s].color}20` : 'transparent',
+                                background: filterSeverity === s ? `${severityConfig[s].color}15` : 'transparent',
                                 color: filterSeverity === s ? severityConfig[s].color : '#6b7280',
-                                border: `1px solid ${filterSeverity === s ? severityConfig[s].color + '40' : 'transparent'}`
+                                border: `1px solid ${filterSeverity === s ? severityConfig[s].color + '30' : 'transparent'}`
                             }}>
                             {severityConfig[s].icon} {severityConfig[s].label}
                         </button>
                     ))}
 
-                    <div className="w-px bg-white/10 mx-1" />
+                    <div className="w-px bg-gray-200 mx-1" />
 
                     {/* Status filters */}
                     {(Object.keys(statusIcons) as AlertStatus[]).map(s => (
                         <button key={s} onClick={() => setFilterStatus(filterStatus === s ? 'all' : s)}
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all ${filterStatus === s ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}>
+                            className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold transition-all ${filterStatus === s ? 'bg-gray-100 text-gray-900 border border-gray-200' : 'text-gray-500 hover:text-gray-700 border border-transparent'}`}>
                             {statusIcons[s].label}
                         </button>
                     ))}
@@ -80,7 +80,7 @@ export default function AlertTimeline({ alerts }: Props) {
             {/* Timeline */}
             <div className="relative">
                 {/* Timeline line */}
-                <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-teal-500/30 via-white/10 to-transparent" />
+                <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-teal-500/30 via-gray-200 to-transparent" />
 
                 <div className="space-y-1">
                     {filtered.map((alert, i) => {
@@ -93,18 +93,18 @@ export default function AlertTimeline({ alerts }: Props) {
                                 key={alert.id}
                                 initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.04 }}
-                                className="relative flex items-start gap-4 p-3 rounded-xl ml-2 group hover:bg-white/[0.03] transition-colors"
+                                className="relative flex items-start gap-4 p-3 rounded-xl ml-2 group hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-100 transition-all"
                             >
                                 {/* Timeline dot */}
-                                <div className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm"
-                                    style={{ background: `${sev.color}15`, border: `2px solid ${sev.color}40` }}>
+                                <div className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm bg-white"
+                                    style={{ border: `2px solid ${sev.color}40`, color: sev.color }}>
                                     {alert.deviceIcon}
                                 </div>
 
                                 {/* Content */}
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                                        <h3 className="text-sm font-bold text-white">{alert.title}</h3>
+                                        <h3 className="text-sm font-bold text-gray-900">{alert.title}</h3>
                                         <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full text-white" style={{ background: sev.color }}>
                                             {sev.label}
                                         </span>
@@ -113,19 +113,19 @@ export default function AlertTimeline({ alerts }: Props) {
                                             <StatusIcon className="w-2.5 h-2.5" /> {st.label}
                                         </span>
                                     </div>
-                                    <p className="text-[11px] text-gray-400 leading-relaxed mb-1">{alert.message}</p>
+                                    <p className="text-[11px] text-gray-600 leading-relaxed mb-1">{alert.message}</p>
                                     <div className="flex items-center gap-3 text-[10px] text-gray-500">
                                         <span className="flex items-center gap-1">
                                             <Clock className="w-3 h-3" /> {alert.timestamp}
                                         </span>
                                         <span>{alert.device}</span>
                                         {alert.value !== undefined && alert.threshold !== undefined && (
-                                            <span className="text-red-400 font-medium">
+                                            <span className="text-red-600 font-medium">
                                                 {alert.value} / {alert.threshold} {alert.unit}
                                             </span>
                                         )}
                                         {alert.confidence !== undefined && (
-                                            <span className="text-indigo-400">{alert.confidence}% confidence</span>
+                                            <span className="text-indigo-600">{alert.confidence}% confidence</span>
                                         )}
                                     </div>
                                 </div>
@@ -143,3 +143,4 @@ export default function AlertTimeline({ alerts }: Props) {
         </div>
     )
 }
+
