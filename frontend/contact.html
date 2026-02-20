@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - EnerLuma</title>
+    <link rel="icon" href="/enerluma-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/landing.css">
+    <style>
+        .page-hero {
+            background: url('/hero_back.png') center top / cover no-repeat;
+            background-color: #0d3d5c;
+            padding: 140px 0 100px 0;
+            position: relative;
+            text-align: center;
+            color: #fff;
+        }
+
+        .page-hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, #F8FAFC, transparent);
+        }
+
+        .page-hero-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+
+        .contact-info {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            color: #0f172a;
+            font-weight: 600;
+        }
+
+        .contact-form-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 40px rgba(15, 106, 102, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0f6a66;
+            box-shadow: 0 0 0 3px rgba(15, 106, 102, 0.1);
+        }
+
+        .form-textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #0f6a66 0%, #4dd4dc 100%);
+            color: #fff;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(15, 106, 102, 0.2);
+        }
+
+        @media (max-width: 900px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar topbar-hero">
+        <div class="topbar-inner">
+            <a href="index.html" class="brand" style="text-decoration: none;">
+                <img src="/enerluma-logo.png" alt="EnerLuma logo" class="logo" />
+                <span class="brand-name"><span class="brand-ener">Ener</span><span class="brand-luma">Luma</span></span>
+            </a>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="how-it-works.html" class="nav-link">How it Works</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link active">Contact Us</a>
+            </nav>
+            <a class="cta" href="/login-signup/auth.html">Get Started</a>
+
+            <div class="mobile-menu">
+                <div class="mobile-menu-inner">
+                    <a href="about.html" class="mobile-link">About</a>
+                    <a href="how-it-works.html" class="mobile-link">How it Works</a>
+                    <a href="services.html" class="mobile-link">Services</a>
+                    <a href="contact.html" class="mobile-link">Contact Us</a>
+                    <div class="mobile-cta-container">
+                        <a class="cta mobile-cta" href="/login-signup/auth.html">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="section-container">
+            <h1 class="page-hero-title">Get in Touch</h1>
+            <p class="page-hero-sub">Have questions? We'd love to hear from you.</p>
+        </div>
+    </section>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <div class="info-item">
+                <div class="info-label">Email Us</div>
+                <div class="info-value">support@enerluma.com</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Call Us</div>
+                <div class="info-value">+1 (555) 123-4567</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Headquarters</div>
+                <div class="info-value">123 Sustainability Blvd<br>Tech District, CA 94000</div>
+            </div>
+        </div>
+
+        <div class="contact-form-card">
+            <form>
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-input" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea" placeholder="How can we help you?"></textarea>
+                </div>
+                <button type="submit" class="submit-btn" onclick="event.preventDefault(); alert('Message sent!');">Send
+                    Message</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="site-footer" id="contact" aria-label="Site footer">
+        <div class="footer-inner">
+            <div class="footer-col footer-col--brand">
+                <div class="footer-brand">
+                    <img src="/enerluma-logo.png" alt="EnerLuma logo" class="footer-logo" />
+                    <span class="footer-brand-name">EnerLuma</span>
+                </div>
+                <p class="footer-tagline">AI-powered energy and water monitoring for a smarter, more sustainable future.
+                </p>
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-link">𝕏</a>
+                    <a href="#" class="footer-social-link">in</a>
+                    <a href="#" class="footer-social-link">⌥</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-heading">Company</div>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', () => {
+                mobileToggle.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+
+</html>

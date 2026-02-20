@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - EnerLuma</title>
+    <link rel="icon" href="/enerluma-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/landing.css">
+    <style>
+        /* Specific styles for sub-pages */
+        .page-hero {
+            background: url('/hero_back.png') center top / cover no-repeat;
+            background-color: #0d3d5c;
+            padding: 140px 0 100px 0;
+            position: relative;
+            text-align: center;
+            color: #fff;
+        }
+
+        .page-hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to top, #F8FAFC, transparent);
+        }
+
+        .page-hero-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-hero-sub {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .mission-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .team-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #64748b;
+        }
+
+        .team-name {
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: #0f6a66;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Reused Navbar Structure -->
+    <header class="topbar topbar-hero">
+        <div class="topbar-inner">
+            <a href="index.html" class="brand" style="text-decoration: none;">
+                <img src="/enerluma-logo.png" alt="EnerLuma logo" class="logo" />
+                <span class="brand-name"><span class="brand-ener">Ener</span><span class="brand-luma">Luma</span></span>
+            </a>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav">
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="how-it-works.html" class="nav-link">How it Works</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+            </nav>
+            <a class="cta" href="/login-signup/auth.html">Get Started</a>
+
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu">
+                <div class="mobile-menu-inner">
+                    <a href="about.html" class="mobile-link">About</a>
+                    <a href="how-it-works.html" class="mobile-link">How it Works</a>
+                    <a href="services.html" class="mobile-link">Services</a>
+                    <a href="contact.html" class="mobile-link">Contact Us</a>
+                    <div class="mobile-cta-container">
+                        <a class="cta mobile-cta" href="/login-signup/auth.html">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="section-container">
+            <h1 class="page-hero-title">Driving the Future of Sustainability</h1>
+            <p class="page-hero-sub">We believe that smart data is the key to a greener planet. Our mission is to
+                empower everyone to monitor, optimize, and save.</p>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="section-container">
+            <div class="section-label">Our Mission</div>
+            <h2 class="section-heading">Innovation for a Greener Tomorrow</h2>
+            <p class="section-sub">EnerLuma started with a simple idea: make professional-grade energy insights
+                accessible to everyone. Today, we assist thousands of homes and businesses in reducing their footprint.
+            </p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💼</div>
+                    <h3 class="team-name">Alex Johnson</h3>
+                    <div class="team-role">CEO & Founder</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👩‍🔬</div>
+                    <h3 class="team-name">Sarah Chen</h3>
+                    <div class="team-role">Chief Data Scientist</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h3 class="team-name">Mike Ross</h3>
+                    <div class="team-role">Head of Engineering</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer" id="contact" aria-label="Site footer">
+        <div class="footer-inner">
+            <div class="footer-col footer-col--brand">
+                <div class="footer-brand">
+                    <img src="/enerluma-logo.png" alt="EnerLuma logo" class="footer-logo" />
+                    <span class="footer-brand-name">EnerLuma</span>
+                </div>
+                <p class="footer-tagline">AI-powered energy and water monitoring for a smarter, more sustainable future.
+                </p>
+                <div class="footer-socials">
+                    <a href="#" class="footer-social-link">𝕏</a>
+                    <a href="#" class="footer-social-link">in</a>
+                    <a href="#" class="footer-social-link">⌥</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <div class="footer-col-heading">Company</div>
+                <a href="about.html" class="footer-link">About Us</a>
+                <a href="contact.html" class="footer-link">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ── Mobile Menu Toggle ──
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (mobileToggle && mobileMenu) {
+            mobileToggle.addEventListener('click', () => {
+                mobileToggle.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+    </script>
+</body>
+
+</html>

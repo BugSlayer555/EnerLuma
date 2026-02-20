@@ -1,242 +1,516 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EnerLuma — Smart Energy Water Monitoring</title>
-    <link rel="icon" href="/enerluma-logo.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/landing.css">
-    <meta name="robots" content="noindex">
-  </head>
-  <body>
-    <header class="topbar topbar-hero">
-      <div class="topbar-inner">
-        <div class="brand">
-          <img src="/enerluma-logo.png" alt="EnerLuma logo" class="logo" />
-          <span class="brand-name">EnerLuma</span>
-        </div>
-        <nav class="nav">
-          <a href="#">About</a>
-          <a href="#">How it Works</a>
-          <a href="#">Services</a>
-          <a href="#">Contact Us</a>
-        </nav>
-        <a class="cta" href="/login-signup/auth.html">Get Started</a>
-      </div>
-    </header>
 
-    <section class="hero-wrapper">
-      <div class="hero">
-        <div class="hero-left">
-          <h1 class="headline">
-            <span class="headline-line headline-main">Smart Energy</span>
-            <span class="headline-line headline-sub"><span class="water-accent">Water</span> Monitoring</span>
-          </h1>
-          <p class="lead">Save on utility bills with AI-powered insights.</p>
-          <p class="desc">EnerLuma is a smart sustainability platform focused on optimizing energy and water consumption in real time with AI-driven insights and actionable recommendations.</p>
-          <a class="explore" href="/login-signup/auth.html">Explore Dashboard</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnerLuma - Smart Energy Water Monitoring</title>
+  <link rel="icon" href="/enerluma-logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Dancing+Script:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/landing.css">
+  <meta name="robots" content="noindex">
+</head>
+
+<body>
+  <header class="topbar topbar-hero">
+    <div class="topbar-inner">
+      <a href="index.html" class="brand" style="text-decoration: none;">
+        <img src="/enerluma-logo.png" alt="EnerLuma logo" class="logo" />
+        <span class="brand-name"><span class="brand-ener">Ener</span><span class="brand-luma">Luma</span></span>
+      </a>
+      <button class="mobile-toggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="nav">
+        <a href="about.html" class="nav-link">About</a>
+        <a href="how-it-works.html" class="nav-link">How it Works</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="contact.html" class="nav-link">Contact Us</a>
+      </nav>
+      <a class="cta" href="/login-signup/auth.html">Get Started</a>
+
+      <!-- Mobile Menu Overlay -->
+      <div class="mobile-menu">
+        <div class="mobile-menu-inner">
+          <a href="about.html" class="mobile-link">About</a>
+          <a href="how-it-works.html" class="mobile-link">How it Works</a>
+          <a href="services.html" class="mobile-link">Services</a>
+          <a href="contact.html" class="mobile-link">Contact Us</a>
+          <div class="mobile-cta-container">
+            <a class="cta mobile-cta" href="/login-signup/auth.html">Get Started</a>
+          </div>
         </div>
-        <div class="hero-right">
-          <div class="laptop-mockup">
-            <img src="/laptop_image.png" alt="Dashboard preview" class="laptop-image" />
-            <div class="floating-label badge-top-right">
-              <span class="label-icon">🤖</span>
-              <span class="label-text">AI Optimization</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero-wrapper">
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="headline">
+          <span class="headline-line headline-main">Smart Energy</span>
+          <span class="headline-line headline-sub"><span class="water-accent">Water</span> Monitoring</span>
+        </h1>
+        <p class="lead">Save on utility bills with AI-powered insights.</p>
+        <p class="desc">EnerLuma is a smart sustainability platform focused on optimizing energy and water consumption
+          in real time with AI-driven insights and actionable recommendations.</p>
+        <a class="explore" href="/login-signup/auth.html">Explore Dashboard</a>
+      </div>
+      <div class="hero-right">
+        <div class="laptop-mockup">
+          <img src="/laptop_image.png" alt="Dashboard preview" class="laptop-image" />
+          <div class="floating-label badge-top-right">
+            <span class="label-icon">🤖</span>
+            <span class="label-text">AI Optimization</span>
+          </div>
+
+          <div class="floating-label badge-bottom-left">
+            <span class="label-icon">💡</span>
+            <span class="label-text">Smart Insights</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       STATS BAR
+  ═══════════════════════════════════════════════════════ -->
+  <section class="stats-bar" aria-label="Key metrics">
+    <div class="stats-bar-inner">
+      <div class="stat-item scroll-animate">
+        <span class="stat-value">22%</span>
+        <span class="stat-label">Average Bill Reduction</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item scroll-animate">
+        <span class="stat-value">10k+</span>
+        <span class="stat-label">Active Users</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item scroll-animate">
+        <span class="stat-value">Real-time</span>
+        <span class="stat-label">AI Monitoring</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item scroll-animate">
+        <span class="stat-value">99.9%</span>
+        <span class="stat-label">Platform Uptime</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FEATURES SECTION
+  ═══════════════════════════════════════════════════════ -->
+  <section class="features-section" id="features" aria-labelledby="features-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Platform Features</div>
+      <h2 id="features-title" class="section-heading scroll-animate">Everything You Need to Monitor Smarter</h2>
+      <p class="section-sub scroll-animate">AI-powered tools that turn raw resource data into actionable sustainability
+        insights — in real time.</p>
+
+      <div class="features-grid">
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #0f6a66; --icon-bg: rgba(15,106,102,0.08);">
+            <span class="feature-icon">⚡</span>
+          </div>
+          <h3 class="feature-card-title">Energy Monitoring</h3>
+          <p class="feature-card-desc">Real-time electricity tracking with predictive trend analysis and usage
+            forecasting.</p>
+        </div>
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #0284c7; --icon-bg: rgba(2,132,199,0.08);">
+            <span class="feature-icon">💧</span>
+          </div>
+          <h3 class="feature-card-title">Water Tracking</h3>
+          <p class="feature-card-desc">Circular usage breakdown, leak detection alerts, and consumption benchmarking.
+          </p>
+        </div>
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #7c3aed; --icon-bg: rgba(124,58,237,0.08);">
+            <span class="feature-icon">🤖</span>
+          </div>
+          <h3 class="feature-card-title">AI Optimization</h3>
+          <p class="feature-card-desc">Automated anomaly detection, smart alerts, and AI-driven efficiency
+            recommendations.</p>
+        </div>
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #0f6a66; --icon-bg: rgba(15,106,102,0.08);">
+            <span class="feature-icon">📊</span>
+          </div>
+          <h3 class="feature-card-title">Analytics Reports</h3>
+          <p class="feature-card-desc">Detailed breakdowns by facility, resource type, and time period with export
+            options.</p>
+        </div>
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #0284c7; --icon-bg: rgba(2,132,199,0.08);">
+            <span class="feature-icon">🌱</span>
+          </div>
+          <h3 class="feature-card-title">Sustainability Goals</h3>
+          <p class="feature-card-desc">Set, track, and achieve carbon reduction targets with guided action plans.</p>
+        </div>
+        <div class="feature-card scroll-animate">
+          <div class="feature-icon-wrap" style="--icon-color: #7c3aed; --icon-bg: rgba(124,58,237,0.08);">
+            <span class="feature-icon">🔐</span>
+          </div>
+          <h3 class="feature-card-title">Multi-Site Management</h3>
+          <p class="feature-card-desc">Manage multiple facilities from one dashboard with role-based access control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HOW IT WORKS — Horizontal Timeline
+  ═══════════════════════════════════════════════════════ -->
+  <section class="how-section" id="how-it-works" aria-labelledby="how-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Simple Process</div>
+      <h2 id="how-title" class="section-heading scroll-animate">Up and Running in Minutes</h2>
+      <p class="section-sub scroll-animate">No complex setup. No engineering team required. Just connect, monitor, and
+        save.</p>
+
+      <div class="how-steps">
+        <div class="how-step scroll-animate">
+          <div class="how-step-badge">01</div>
+          <div class="how-step-connector"></div>
+          <div class="how-step-icon">🔌</div>
+          <h3 class="how-step-title">Connect</h3>
+          <p class="how-step-desc">Link your energy and water meters or smart devices in seconds.</p>
+        </div>
+        <div class="how-step scroll-animate">
+          <div class="how-step-badge">02</div>
+          <div class="how-step-connector"></div>
+          <div class="how-step-icon">📡</div>
+          <h3 class="how-step-title">Monitor</h3>
+          <p class="how-step-desc">EnerLuma collects and visualizes your usage data in real time.</p>
+        </div>
+        <div class="how-step scroll-animate">
+          <div class="how-step-badge">03</div>
+          <div class="how-step-connector"></div>
+          <div class="how-step-icon">🤖</div>
+          <h3 class="how-step-title">Analyze</h3>
+          <p class="how-step-desc">Our AI engine detects anomalies and surfaces actionable insights.</p>
+        </div>
+        <div class="how-step scroll-animate">
+          <div class="how-step-badge">04</div>
+          <div class="how-step-connector how-step-connector--last"></div>
+          <div class="how-step-icon">💰</div>
+          <h3 class="how-step-title">Save</h3>
+          <p class="how-step-desc">Act on recommendations and watch your bills and emissions drop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DASHBOARD METRICS PREVIEW
+  ═══════════════════════════════════════════════════════ -->
+  <section class="metrics-section" id="dashboard" aria-labelledby="metrics-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Live Dashboard</div>
+      <h2 id="metrics-title" class="section-heading scroll-animate">Your Data, Beautifully Visualized</h2>
+      <p class="section-sub scroll-animate">See your energy and water data at a glance — always up to date, always
+        actionable.</p>
+
+      <div class="metrics-grid">
+        <div class="metric-card scroll-animate">
+          <div class="metric-icon">⚡</div>
+          <div class="metric-label">Energy Usage</div>
+          <div class="metric-value">12.4 <span class="metric-unit">kWh</span></div>
+          <div class="metric-tag metric-tag--neutral">Today</div>
+        </div>
+        <div class="metric-card scroll-animate">
+          <div class="metric-icon">💧</div>
+          <div class="metric-label">Water Usage</div>
+          <div class="metric-value">98 <span class="metric-unit">L</span></div>
+          <div class="metric-tag metric-tag--neutral">Today</div>
+        </div>
+        <div class="metric-card scroll-animate">
+          <div class="metric-icon">🌱</div>
+          <div class="metric-label">Energy Savings</div>
+          <div class="metric-value metric-value--positive">+18%</div>
+          <div class="metric-tag metric-tag--positive">vs. last month</div>
+        </div>
+        <div class="metric-card scroll-animate">
+          <div class="metric-icon">💦</div>
+          <div class="metric-label">Water Reduction</div>
+          <div class="metric-value metric-value--positive">+12%</div>
+          <div class="metric-tag metric-tag--positive">vs. last month</div>
+        </div>
+        <div class="metric-card scroll-animate">
+          <div class="metric-icon">🌍</div>
+          <div class="metric-label">CO₂ Avoided</div>
+          <div class="metric-value metric-value--positive">6.2 <span class="metric-unit">kg</span></div>
+          <div class="metric-tag metric-tag--positive">This week</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       WHO IT'S FOR (Roles)
+  ═══════════════════════════════════════════════════════ -->
+  <section class="roles-section" id="roles" aria-labelledby="roles-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Built For Everyone</div>
+      <h2 id="roles-title" class="section-heading scroll-animate">Built for Every Stakeholder</h2>
+      <p class="section-sub scroll-animate">From homeowners to enterprise admins — EnerLuma adapts to every scale of
+        sustainability management.</p>
+
+      <div class="roles-grid">
+        <div class="role-card-new scroll-animate">
+          <div class="role-icon-wrap">🏠</div>
+          <h3 class="role-card-title">Home Users</h3>
+          <p class="role-card-desc">Track and reduce home energy and water use. Save money and help the planet with
+            personalized insights.</p>
+          <div class="role-tag">Personal</div>
+        </div>
+        <div class="role-card-new scroll-animate">
+          <div class="role-icon-wrap">🏢</div>
+          <h3 class="role-card-title">Organizations</h3>
+          <p class="role-card-desc">Monitor multiple sites, boost operational efficiency, and meet your sustainability
+            reporting goals.</p>
+          <div class="role-tag">Enterprise</div>
+        </div>
+        <div class="role-card-new scroll-animate">
+          <div class="role-icon-wrap">🔐</div>
+          <h3 class="role-card-title">Admins</h3>
+          <p class="role-card-desc">Manage users, configure alerts, and ensure secure, reliable platform operations at
+            scale.</p>
+          <div class="role-tag">Platform</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TESTIMONIALS — 3-Column Grid
+  ═══════════════════════════════════════════════════════ -->
+  <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Social Proof</div>
+      <h2 id="testimonials-title" class="section-heading scroll-animate">Trusted by Teams Worldwide</h2>
+      <p class="section-sub scroll-animate">See what facility managers, sustainability leads, and homeowners are saying.
+      </p>
+
+      <div class="testimonials-grid">
+        <div class="tcard scroll-animate">
+          <div class="tcard-quote">&#8220;</div>
+          <p class="tcard-text">EnerLuma helped us cut our utility bills by 22% in just three months. The insights are
+            clear and actionable — our team loves it.</p>
+          <div class="tcard-footer">
+            <div class="tcard-avatar">FM</div>
+            <div class="tcard-info">
+              <div class="tcard-name">Facility Manager</div>
+              <div class="tcard-company">GreenTech Inc.</div>
             </div>
-
-            <div class="floating-label badge-bottom-left">
-              <span class="label-icon">💡</span>
-              <span class="label-text">Smart Insights</span>
+          </div>
+        </div>
+        <div class="tcard scroll-animate">
+          <div class="tcard-quote">&#8220;</div>
+          <p class="tcard-text">The real-time alerts caught a major leak before it became a disaster. The ROI was
+            immediate. Highly recommended for any operations team.</p>
+          <div class="tcard-footer">
+            <div class="tcard-avatar">OL</div>
+            <div class="tcard-info">
+              <div class="tcard-name">Operations Lead</div>
+              <div class="tcard-company">AquaSave</div>
+            </div>
+          </div>
+        </div>
+        <div class="tcard scroll-animate">
+          <div class="tcard-quote">&#8220;</div>
+          <p class="tcard-text">We reduced our carbon footprint by 18% in the first quarter. EnerLuma's AI
+            recommendations are genuinely smart and easy to act on.</p>
+          <div class="tcard-footer">
+            <div class="tcard-avatar">SD</div>
+            <div class="tcard-info">
+              <div class="tcard-name">Sustainability Director</div>
+              <div class="tcard-company">EcoBuilds Ltd.</div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Wave Divider Down -->
-    <div class="wave-divider wave-down">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 Q300,10 600,40 T1200,40 L1200,120 L0,120 Z" fill="white"/>
-      </svg>
+  <!-- ═══════════════════════════════════════════════════════
+       CTA SECTION
+  ═══════════════════════════════════════════════════════ -->
+  <section class="cta-section" id="cta" aria-labelledby="cta-title">
+    <div class="section-container">
+      <div class="section-label scroll-animate">Get Started</div>
+      <h2 id="cta-title" class="cta-heading scroll-animate">Ready to Transform Your Energy Future?</h2>
+      <p class="cta-subtext scroll-animate">Join thousands of users already saving money and reducing their
+        environmental footprint with EnerLuma.</p>
+      <div class="cta-buttons scroll-animate">
+        <a class="btn-primary" href="/login-signup/auth.html">Create Free Account</a>
+        <a class="btn-secondary" href="#features">See How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="site-footer" id="contact" aria-label="Site footer">
+    <div class="footer-inner">
+      <div class="footer-col footer-col--brand">
+        <div class="footer-brand">
+          <img src="/enerluma-logo.png" alt="EnerLuma logo" class="footer-logo" />
+          <span class="footer-brand-name">EnerLuma</span>
+        </div>
+        <p class="footer-tagline">AI-powered energy and water monitoring for a smarter, more sustainable future.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-link" aria-label="Twitter">𝕏</a>
+          <a href="#" class="footer-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="footer-social-link" aria-label="GitHub">⌥</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-heading">Product</div>
+        <a href="#features" class="footer-link">Features</a>
+        <a href="#how-it-works" class="footer-link">How It Works</a>
+        <a href="#dashboard" class="footer-link">Dashboard</a>
+        <a href="#testimonials" class="footer-link">Testimonials</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-col-heading">Company</div>
+        <a href="#" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">Contact</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+      </div>
+
+      <div class="footer-col footer-col--newsletter">
+        <div class="footer-col-heading">Stay Updated</div>
+        <p class="footer-newsletter-text">Get sustainability tips and platform updates in your inbox.</p>
+        <div class="footer-newsletter-form">
+          <input type="email" class="footer-input" placeholder="your@email.com" aria-label="Email address" />
+          <button class="footer-subscribe-btn" type="button">Subscribe</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Combined Features & How It Works Section -->
-    <section class="features-how wave-blue" aria-labelledby="features-how-title">
-      <h2 id="features-how-title">Features & How It Works</h2>
-      <div class="featureshow-content">
-        <div class="featureshow-cards">
-          <div class="featureshow-card">
-            <span class="featureshow-icon" aria-hidden="true">⚡</span>
-            <h3>Energy Monitoring</h3>
-            <p>Track electricity usage in real time, spot trends, and identify savings opportunities instantly.</p>
-          </div>
-          <div class="featureshow-card">
-            <span class="featureshow-icon" aria-hidden="true">💧</span>
-            <h3>Water Tracking</h3>
-            <p>Monitor water consumption, detect leaks, and promote sustainable usage with actionable data.</p>
-          </div>
-          <div class="featureshow-card">
-            <span class="featureshow-icon" aria-hidden="true">🤖</span>
-            <h3>AI Analytics</h3>
-            <p>Leverage AI to analyze usage patterns, forecast needs, and receive smart recommendations.</p>
-          </div>
-          <div class="featureshow-card">
-            <span class="featureshow-icon" aria-hidden="true">📊</span>
-            <h3>Reports</h3>
-            <p>Generate clear, customizable reports to visualize progress and share results with stakeholders.</p>
-          </div>
-        </div>
-        <div class="featureshow-steps">
-          <h4 class="featureshow-steps-title">How It Works</h4>
-          <ol class="featureshow-steps-list">
-            <li><span class="featureshow-stepnum">1</span> Monitor</li>
-            <li><span class="featureshow-stepnum">2</span> Analyze</li>
-            <li><span class="featureshow-stepnum">3</span> Optimize</li>
-          </ol>
-        </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 EnerLuma. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#" class="footer-bottom-link">Privacy</a>
+        <a href="#" class="footer-bottom-link">Terms</a>
+        <a href="#" class="footer-bottom-link">Contact</a>
       </div>
-    </section>
-
-    <!-- Wave Divider Up -->
-    <div class="wave-divider wave-up">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,80 Q300,110 600,80 T1200,80 L1200,0 L0,0 Z" fill="white"/>
-      </svg>
     </div>
+  </footer>
 
-    <!-- Dashboard Preview Section -->
-    <section class="dashboard-preview" aria-labelledby="dashboard-preview-title">
-      <h2 id="dashboard-preview-title">Dashboard Preview</h2>
-      <div class="dashboard-cards">
-        <div class="dashboard-card energy">
-          <div class="dashboard-card-icon" aria-hidden="true">⚡</div>
-          <div class="dashboard-card-label">Energy Usage</div>
-          <div class="dashboard-card-value">12.4 kWh</div>
-          <div class="dashboard-card-desc">Today</div>
-        </div>
-        <div class="dashboard-card water">
-          <div class="dashboard-card-icon" aria-hidden="true">💧</div>
-          <div class="dashboard-card-label">Water Usage</div>
-          <div class="dashboard-card-value">98 L</div>
-          <div class="dashboard-card-desc">Today</div>
-        </div>
-        <div class="dashboard-card savings">
-          <div class="dashboard-card-icon" aria-hidden="true">🌱</div>
-          <div class="dashboard-card-label">Energy Savings</div>
-          <div class="dashboard-card-value">+18%</div>
-          <div class="dashboard-card-desc">vs. last month</div>
-        </div>
-        <div class="dashboard-card reduction">
-          <div class="dashboard-card-icon" aria-hidden="true">💦</div>
-          <div class="dashboard-card-label">Water Reduction</div>
-          <div class="dashboard-card-value">+12%</div>
-          <div class="dashboard-card-desc">vs. last month</div>
-        </div>
-        <div class="dashboard-card impact">
-          <div class="dashboard-card-icon" aria-hidden="true">🌍</div>
-          <div class="dashboard-card-label">Sustainability Impact</div>
-          <div class="dashboard-card-value">6.2 kg CO₂e</div>
-          <div class="dashboard-card-desc">Emissions avoided</div>
-        </div>
-      </div>
-    </section>
+  <script>
+    // Topbar shadow on scroll
+    const topbar = document.querySelector('.topbar');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('scroll-shadow', window.scrollY > 10);
+    }, { passive: true });
 
-    <!-- Wave Divider Down -->
-    <div class="wave-divider wave-down">
-      <svg viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 Q300,10 600,40 T1200,40 L1200,120 L0,120 Z" fill="white"/>
-      </svg>
-    </div>
-
-    <!-- User Roles & Vision Section -->
-    <section class="roles-vision wave-blue" aria-labelledby="roles-vision-title">
-      <h2 id="roles-vision-title">User Roles & Sustainability Vision</h2>
-      <div class="roles-vision-content">
-        <div class="roles-list">
-          <div class="role-card">
-            <div class="role-title">Home Users</div>
-            <div class="role-desc">Track and reduce home energy and water use. Save money and help the planet.</div>
-          </div>
-          <div class="role-card">
-            <div class="role-title">Organizations</div>
-            <div class="role-desc">Monitor multiple sites, boost efficiency, and meet sustainability goals.</div>
-          </div>
-          <div class="role-card">
-            <div class="role-title">Admins</div>
-            <div class="role-desc">Manage users and data. Ensure secure, reliable platform operations.</div>
-          </div>
-        </div>
-        <div class="vision-statement">
-          <em>EnerLuma empowers individuals and organizations to achieve measurable sustainability by transforming resource data into meaningful action. Our purpose is to enable smarter decisions for a greener, more efficient future.</em>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demo/Preview Section -->
-    <section class="demo" aria-labelledby="demo-title">
-      <h2 id="demo-title">Live Dashboard Preview</h2>
-      <div class="demo-img-wrapper">
-        <div class="demo-placeholder">Explore the dashboard to see real-time energy and water analytics</div>
-      </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" aria-labelledby="testimonials-title">
-      <h2 id="testimonials-title">What Our Users Say</h2>
-      <div class="testimonial-list">
-        <blockquote class="testimonial">
-          <p>“EnerLuma helped us cut our utility bills by 22% in just three months. The insights are clear and actionable.”</p>
-          <footer>— Facility Manager, GreenTech Inc.</footer>
-        </blockquote>
-        <blockquote class="testimonial">
-          <p>“The real-time alerts caught a major leak before it became a disaster. Highly recommended!”</p>
-          <footer>— Operations Lead, AquaSave</footer>
-        </blockquote>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section" aria-labelledby="cta-title">
-      <h2 id="cta-title">Ready to Get Started?</h2>
-      <a class="cta big" href="/login-signup/auth.html">Create Your Free Account</a>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer" aria-label="Site footer">
-      <div class="footer-inner">
-        <div class="footer-brand-about">
-          <div class="footer-brand">
-            <img src="/enerluma-logo.png" alt="EnerLuma logo" class="footer-logo" />
-            <span class="footer-brand-name">EnerLuma</span>
-          </div>
-          <div class="footer-about">
-            EnerLuma empowers users and organizations to monitor, analyze, and optimize energy and water usage for a more sustainable future.
-          </div>
-        </div>
-        <nav class="footer-nav" aria-label="Quick links">
-          <a href="#features-how-title">Features</a>
-          <a href="#dashboard-preview-title">Dashboard</a>
-          <a href="#roles-vision-title">User Roles</a>
-          <a href="#">Contact</a>
-        </nav>
-      </div>
-      <div class="footer-copy" role="contentinfo">&copy; 2026 EnerLuma. All rights reserved.</div>
-    </footer>
-
-    <script>
-      const topbar = document.querySelector('.topbar');
+    // ── Parallax + opacity shift on hero background ──
+    const heroWrapper = document.querySelector('.hero-wrapper');
+    if (heroWrapper) {
+      const heroHeight = heroWrapper.offsetHeight;
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 0) {
-          topbar.classList.add('scroll-shadow');
-        } else {
-          topbar.classList.remove('scroll-shadow');
+        const scrollY = window.scrollY;
+        if (scrollY <= heroHeight) {
+          // Subtle parallax: background moves at 30% of scroll speed
+          heroWrapper.style.backgroundPositionY = `calc(center + ${scrollY * 0.3}px)`;
+          // Very subtle opacity fade as user scrolls away
+          const progress = Math.min(scrollY / (heroHeight * 0.7), 1);
+          heroWrapper.style.opacity = 1 - progress * 0.12;
+        }
+      }, { passive: true });
+    }
+
+    // Scroll-triggered animations with stagger
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
         }
       });
-      // No replace interception on landing — allow normal navigation so back returns here
-    </script>
-    <!-- End Enhancements -->
-  </body>
-  </html>
+    }, { root: null, rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+    const staggerParents = [
+      '.features-grid',
+      '.how-steps',
+      '.metrics-grid',
+      '.roles-grid',
+      '.testimonials-grid',
+      '.stats-bar-inner',
+    ];
+
+    document.querySelectorAll('.scroll-animate').forEach(el => {
+      for (const sel of staggerParents) {
+        const parent = el.closest(sel);
+        if (parent) {
+          const siblings = Array.from(parent.querySelectorAll(':scope > .scroll-animate'));
+          const i = siblings.indexOf(el);
+          if (i !== -1) el.style.transitionDelay = `${i * 0.1}s`;
+          break;
+        }
+      }
+      observer.observe(el);
+    });
+
+    // ── Active Nav State (ScrollSpy) ──
+    const sections = document.querySelectorAll('section, footer');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 200)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (current && link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ── Mobile Menu Toggle ──
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        mobileToggle.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+      });
+
+      // Close menu when clicking a link
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileToggle.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>
