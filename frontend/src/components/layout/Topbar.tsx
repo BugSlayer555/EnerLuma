@@ -7,39 +7,52 @@ import {
   Settings,
   User,
   LogOut,
-  Sun,
-  Moon,
   ChevronDown,
+  AlertTriangle,
+  Info,
+  CheckCircle,
+  X,
 } from 'lucide-react'
 
 interface TopbarProps {
   onMenuClick: () => void
 }
 
+interface Notification {
+  id: number
+  message: string
+  time: string
+  type: 'warning' | 'info' | 'success'
+  read: boolean
+}
+
+const notificationIcons = {
+  warning: AlertTriangle,
+  info: Info,
+  success: CheckCircle,
+}
+
+const notificationColors = {
+  warning: 'text-amber-500 bg-amber-50',
+  info: 'text-cyan-500 bg-cyan-50',
+  success: 'text-emerald-500 bg-emerald-50',
+}
+
 export default function Topbar({ onMenuClick }: TopbarProps) {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    // Check localStorage first, then system preference
-    const stored = localStorage.getItem('theme')
-    if (stored) {
-      return stored === 'dark'
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-  })
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
+  const [searchFocused, setSearchFocused] = useState(false)
   const userMenuRef = useRef<HTMLDivElement>(null)
   const notificationsRef = useRef<HTMLDivElement>(null)
 
-  // Initialize theme on mount
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
-    }
-  }, [isDarkMode])
+  const notifications: Notification[] = [
+    { id: 1, message: 'High energy consumption detected in HVAC', time: '5 min ago', type: 'warning', read: false },
+    { id: 2, message: 'Water leak sensor test passed', time: '1 hour ago', type: 'success', read: false },
+    { id: 3, message: 'Smart Thermostat firmware update available', time: '2 hours ago', type: 'info', read: true },
+    { id: 4, message: 'Monthly energy report ready', time: '1 day ago', type: 'info', read: true },
+  ]
+
+  const unreadCount = notifications.filter(n => !n.read).length
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,54 +68,50 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev)
-  }
-
-  const notifications = [
-    { id: 1, message: 'High energy consumption detected', time: '5 min ago', type: 'warning' },
-    { id: 2, message: 'Water leak alert resolved', time: '1 hour ago', type: 'info' },
-    { id: 3, message: 'Device offline: Smart Thermostat', time: '2 hours ago', type: 'error' },
-  ]
-
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-13 bg-black/10 dark:bg-gray-900/40 border-b border-gray-200/10 dark:border-gray-700/20 backdrop-blur-lg">
-      <div className="flex h-full items-center justify-between px-3 md:px-4">
-        {/* Left side - Menu button and search */}
-        <div className="flex items-center gap-1">
+    <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+      <div className="flex h-full items-center justify-between px-4 md:px-6">
+        {/* Left — Menu + Search */}
+        <div className="flex items-center gap-3">
           <button
             onClick={onMenuClick}
-            className="p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
+            className="p-2 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
             aria-label="Toggle sidebar"
           >
             <Menu className="w-5 h-5" />
           </button>
 
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-white/15 dark:bg-gray-700/40 rounded-lg max-w-md w-full backdrop-blur-sm border border-white/10">
-            <Search className="w-4 h-4 text-white/70" />
+          {/* Mobile/Compact Logo */}
+          <div className="flex md:hidden items-center gap-2 mr-2">
+            <div className="flex items-center justify-center w-8 h-8 bg-eco-gradient rounded-lg">
+              <img src="/enerluma-logo.svg" alt="EnerLuma" className="w-4 h-4 object-contain invert brightness-0" />
+            </div>
+            <span className="text-sm font-bold text-gray-900">EnerLuma</span>
+          </div>
+
+          {/* Search */}
+          <div
+            className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all duration-200 ${searchFocused
+              ? 'bg-white ring-2 ring-primary-200 shadow-sm w-80'
+              : 'bg-gray-50 w-64'
+              }`}
+          >
+            <Search className="w-4 h-4 text-gray-400 shrink-0" />
             <input
               type="text"
               placeholder="Search devices, rooms..."
-              className="flex-1 bg-transparent border-none outline-none text-sm text-white dark:text-gray-100 placeholder-white/60"
+              className="flex-1 bg-transparent border-none outline-none text-sm text-gray-700 placeholder-gray-400"
+              onFocus={() => setSearchFocused(true)}
+              onBlur={() => setSearchFocused(false)}
             />
+            <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium text-gray-400 bg-gray-100 rounded border border-gray-200">
+              ⌘K
+            </kbd>
           </div>
         </div>
 
-        {/* Right side - Actions */}
-        <div className="flex items-center gap-0.5">
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Sun className="w-5 h-5" />
-            ) : (
-              <Moon className="w-5 h-5" />
-            )}
-          </button>
-
+        {/* Right — Actions */}
+        <div className="flex items-center gap-1">
           {/* Notifications */}
           <div className="relative" ref={notificationsRef}>
             <button
@@ -110,45 +119,82 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                 setNotificationsOpen(!notificationsOpen)
                 setUserMenuOpen(false)
               }}
-              className="relative p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
+              className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
               aria-label="Notifications"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full ring-1.5 ring-white dark:ring-gray-900" />
+              {unreadCount > 0 && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute top-1 right-1 w-4 h-4 flex items-center justify-center text-[9px] font-bold text-white bg-red-500 rounded-full"
+                >
+                  {unreadCount}
+                </motion.span>
+              )}
             </button>
 
             <AnimatePresence>
               {notificationsOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-2 w-[360px] bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
                 >
-                  <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
-                      Notifications
-                    </h3>
+                  {/* Header */}
+                  <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-semibold text-gray-900">Notifications</h3>
+                      {unreadCount > 0 && (
+                        <span className="px-1.5 py-0.5 text-[10px] font-bold text-primary-700 bg-primary-50 rounded-full">
+                          {unreadCount} new
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setNotificationsOpen(false)}
+                      className="p-1 rounded-lg hover:bg-gray-100 text-gray-400"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
                   </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map((notification) => (
-                      <motion.div
-                        key={notification.id}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors"
-                      >
-                        <p className="text-sm text-gray-900 dark:text-white">
-                          {notification.message}
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                          {notification.time}
-                        </p>
-                      </motion.div>
-                    ))}
+
+                  {/* Notification List */}
+                  <div className="max-h-80 overflow-y-auto">
+                    {notifications.map((notification, index) => {
+                      const Icon = notificationIcons[notification.type]
+                      const colorClass = notificationColors[notification.type]
+                      return (
+                        <motion.div
+                          key={notification.id}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                          className={`flex items-start gap-3 p-4 border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors ${!notification.read ? 'bg-primary-50/30' : ''
+                            }`}
+                        >
+                          <div className={`p-1.5 rounded-lg shrink-0 ${colorClass}`}>
+                            <Icon className="w-3.5 h-3.5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className={`text-sm ${!notification.read ? 'font-medium text-gray-900' : 'text-gray-600'}`}>
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-0.5">{notification.time}</p>
+                          </div>
+                          {!notification.read && (
+                            <div className="w-2 h-2 mt-1.5 bg-primary-500 rounded-full shrink-0" />
+                          )}
+                        </motion.div>
+                      )
+                    })}
                   </div>
-                  <div className="p-3 border-t border-gray-200 dark:border-gray-700">
-                    <button className="w-full text-center text-sm text-blue-600 dark:text-blue-400 hover:underline">
+
+                  {/* Footer */}
+                  <div className="p-3 border-t border-gray-100">
+                    <button className="w-full py-2 text-center text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">
                       View all notifications
                     </button>
                   </div>
@@ -157,6 +203,9 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
             </AnimatePresence>
           </div>
 
+          {/* Divider */}
+          <div className="h-6 w-px bg-gray-200 mx-1" />
+
           {/* User menu */}
           <div className="relative" ref={userMenuRef}>
             <button
@@ -164,44 +213,47 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                 setUserMenuOpen(!userMenuOpen)
                 setNotificationsOpen(false)
               }}
-              className="flex items-center gap-1.5 p-1.5 rounded-lg text-white dark:text-gray-100 hover:bg-white/20 dark:hover:bg-gray-600/40 transition-colors"
+              className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-100 transition-colors"
               aria-label="User menu"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">U</span>
+              <div className="w-8 h-8 bg-eco-gradient rounded-xl flex items-center justify-center">
+                <span className="text-white font-semibold text-sm">P</span>
+              </div>
+              <div className="hidden md:block text-left">
+                <p className="text-sm font-medium text-gray-700 leading-tight">Prince</p>
+                <p className="text-[10px] text-gray-400">Admin</p>
               </div>
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${
-                  userMenuOpen ? 'rotate-180' : ''
-                }`}
+                className={`w-4 h-4 text-gray-400 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`}
               />
             </button>
 
             <AnimatePresence>
               {userMenuOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
                 >
-                  <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">User</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">user@example.com</p>
+                  <div className="p-4 border-b border-gray-100">
+                    <p className="text-sm font-semibold text-gray-900">Prince</p>
+                    <p className="text-xs text-gray-400 mt-0.5">prince@enerluma.com</p>
                   </div>
-                  <div className="py-1">
-                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <div className="py-1.5">
+                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-colors">
                       <User className="w-4 h-4" />
                       Profile
                     </button>
-                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-colors">
                       <Settings className="w-4 h-4" />
                       Settings
                     </button>
-                    <div className="border-t border-gray-200 dark:border-gray-700 my-1" />
-                    <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <div className="border-t border-gray-100 my-1" />
+                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
                       <LogOut className="w-4 h-4" />
-                      Logout
+                      Sign Out
                     </button>
                   </div>
                 </motion.div>
@@ -213,4 +265,3 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
     </header>
   )
 }
-
