@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import AppShell from './components/layout/AppShell'
 import Dashboard from './pages/Dashboard'
 import EnergyPage from './pages/EnergyPage'
@@ -29,6 +29,7 @@ export default function App() {
         <AppShell>
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/app.html" element={<Navigate to="/" replace />} />
             <Route path="/energy" element={<EnergyPage />} />
             <Route path="/water" element={<WaterPage />} />
             <Route path="/devices" element={<DevicesPage />} />

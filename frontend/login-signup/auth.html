@@ -339,6 +339,25 @@
       loginBtn.classList.add('loading');
       loginBtn.disabled = true;
 
+      // Save user data to localStorage for the dashboard
+      const email = loginEmail.value.trim();
+      // If the user already signed up with this email, keep their signup name
+      let displayName;
+      try {
+        const existing = JSON.parse(localStorage.getItem('enerluma_user') || '{}');
+        if (existing.email === email && existing.name) {
+          displayName = existing.name;
+        }
+      } catch { }
+      if (!displayName) {
+        // Derive first name from email prefix (letters only)
+        const rawPrefix = email.split('@')[0];
+        const nameMatch = rawPrefix.match(/^[a-zA-Z]+/);
+        const namePart = nameMatch ? nameMatch[0] : rawPrefix;
+        displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+      }
+      localStorage.setItem('enerluma_user', JSON.stringify({ name: displayName, email: email }));
+
       // Simulate async login (replace with real API call)
       setTimeout(() => {
         window.location.href = '/app.html';

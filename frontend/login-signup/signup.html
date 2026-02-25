@@ -283,6 +283,14 @@
       signupBtn.classList.add('loading');
       signupBtn.disabled = true;
 
+      // Save user data to localStorage for the dashboard (first name only)
+      const fullName = nameInput.value.trim();
+      const firstName = fullName.split(' ')[0];
+      localStorage.setItem('enerluma_user', JSON.stringify({
+        name: firstName,
+        email: emailInput.value.trim()
+      }));
+
       setTimeout(() => {
         location.replace('/login-signup/auth.html');
       }, 1500);

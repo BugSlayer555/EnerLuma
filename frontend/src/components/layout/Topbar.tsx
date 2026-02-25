@@ -45,6 +45,23 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
   const userMenuRef = useRef<HTMLDivElement>(null)
   const notificationsRef = useRef<HTMLDivElement>(null)
 
+  // Read user data from localStorage
+  const storedUser = (() => {
+    try {
+      const raw = localStorage.getItem('enerluma_user')
+      if (raw) return JSON.parse(raw) as { name: string; email: string }
+    } catch { /* ignore */ }
+    return { name: 'User', email: 'user@enerluma.com' }
+  })()
+  const userName = storedUser.name
+  const userEmail = storedUser.email
+  const userInitial = userName.charAt(0).toUpperCase()
+
+  const handleSignOut = () => {
+    localStorage.removeItem('enerluma_user')
+    window.location.replace('/login-signup/auth.html')
+  }
+
   const notifications: Notification[] = [
     { id: 1, message: 'High energy consumption detected in HVAC', time: '5 min ago', type: 'warning', read: false },
     { id: 2, message: 'Water leak sensor test passed', time: '1 hour ago', type: 'success', read: false },
@@ -217,10 +234,10 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
               aria-label="User menu"
             >
               <div className="w-8 h-8 bg-eco-gradient rounded-xl flex items-center justify-center">
-                <span className="text-white font-semibold text-sm">P</span>
+                <span className="text-white font-semibold text-sm">{userInitial}</span>
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium text-gray-700 leading-tight">Prince</p>
+                <p className="text-sm font-medium text-gray-700 leading-tight">{userName}</p>
                 <p className="text-[10px] text-gray-400">Admin</p>
               </div>
               <ChevronDown
@@ -238,8 +255,8 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                   className="absolute right-0 mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
                 >
                   <div className="p-4 border-b border-gray-100">
-                    <p className="text-sm font-semibold text-gray-900">Prince</p>
-                    <p className="text-xs text-gray-400 mt-0.5">prince@enerluma.com</p>
+                    <p className="text-sm font-semibold text-gray-900">{userName}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{userEmail}</p>
                   </div>
                   <div className="py-1.5">
                     <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-800 transition-colors">
@@ -251,7 +268,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
                       Settings
                     </button>
                     <div className="border-t border-gray-100 my-1" />
-                    <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                    <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
                       <LogOut className="w-4 h-4" />
                       Sign Out
                     </button>

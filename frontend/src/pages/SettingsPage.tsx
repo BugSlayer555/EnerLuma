@@ -18,6 +18,18 @@ const tabs = [
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState('profile')
 
+    // Read user data from localStorage
+    const storedUser = (() => {
+        try {
+            const raw = localStorage.getItem('enerluma_user')
+            if (raw) return JSON.parse(raw) as { name: string; email: string }
+        } catch { /* ignore */ }
+        return { name: 'User', email: 'user@enerluma.com' }
+    })()
+    const userName = storedUser.name
+    const userEmail = storedUser.email
+    const userInitial = userName.charAt(0).toUpperCase()
+
     return (
         <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-[900px] mx-auto space-y-6">
             <motion.div variants={fadeUp}>
@@ -48,11 +60,11 @@ export default function SettingsPage() {
                         <h2 className="section-title">Profile Information</h2>
                         <div className="flex items-center gap-4">
                             <div className="w-16 h-16 bg-eco-gradient rounded-2xl flex items-center justify-center">
-                                <span className="text-white text-xl font-bold">P</span>
+                                <span className="text-white text-xl font-bold">{userInitial}</span>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold text-gray-800">Prince</p>
-                                <p className="text-sm text-gray-400">prince@enerluma.com</p>
+                                <p className="text-lg font-semibold text-gray-800">{userName}</p>
+                                <p className="text-sm text-gray-400">{userEmail}</p>
                             </div>
                             <button className="ml-auto px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-100">
                                 Change Avatar
@@ -61,11 +73,11 @@ export default function SettingsPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-xs font-medium text-gray-500 mb-1">Full Name</label>
-                                <input type="text" defaultValue="Prince" className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-200 focus:border-primary-300 outline-none" />
+                                <input type="text" defaultValue={userName} className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-200 focus:border-primary-300 outline-none" />
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-gray-500 mb-1">Email</label>
-                                <input type="email" defaultValue="prince@enerluma.com" className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-200 focus:border-primary-300 outline-none" />
+                                <input type="email" defaultValue={userEmail} className="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-200 focus:border-primary-300 outline-none" />
                             </div>
                             <div>
                                 <label className="block text-xs font-medium text-gray-500 mb-1">Phone</label>

@@ -11,10 +11,19 @@ const systemHealth = [
     { label: 'ML Engine', status: 'online', uptime: '99.80%', latency: '142ms' },
 ]
 
+// Read user name from localStorage for audit logs
+const currentUserName = (() => {
+    try {
+        const raw = localStorage.getItem('enerluma_user')
+        if (raw) return (JSON.parse(raw) as { name: string }).name
+    } catch { /* ignore */ }
+    return 'User'
+})()
+
 const auditLogs = [
-    { time: '10:42 AM', user: 'Prince', action: 'Updated threshold settings', type: 'config' },
+    { time: '10:42 AM', user: currentUserName, action: 'Updated threshold settings', type: 'config' },
     { time: '10:15 AM', user: 'System', action: 'Auto-generated monthly report', type: 'system' },
-    { time: '9:30 AM', user: 'Prince', action: 'Acknowledged HVAC alert #42', type: 'alert' },
+    { time: '9:30 AM', user: currentUserName, action: 'Acknowledged HVAC alert #42', type: 'alert' },
     { time: '8:00 AM', user: 'System', action: 'Scheduled device health check completed', type: 'system' },
     { time: 'Yesterday', user: 'Admin', action: 'Added new device: Smart Plug #3', type: 'device' },
     { time: 'Yesterday', user: 'System', action: 'Firmware update deployed to thermostat', type: 'system' },
