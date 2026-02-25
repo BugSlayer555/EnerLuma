@@ -4,98 +4,583 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us - EnerLuma</title>
+    <title>About Us - EnerLuma | AI-Powered Sustainability Platform</title>
+    <meta name="description"
+        content="EnerLuma is an AI-powered energy and water monitoring platform that transforms how individuals and organizations optimize resource consumption." />
     <link rel="icon" href="/enerluma-logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/landing.css">
     <style>
-        /* Specific styles for sub-pages */
-        .page-hero {
-            background: url('/hero_back.png') center top / cover no-repeat;
-            background-color: #0d3d5c;
-            padding: 140px 0 100px 0;
-            position: relative;
-            text-align: center;
-            color: #fff;
+        /* ═══════════════════════════════════════════════
+           ABOUT PAGE — Scoped Styles
+           Blue-teal futuristic theme, tight spacing
+           ═══════════════════════════════════════════════ */
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #F8FAFC;
+            color: #1e293b;
+            margin: 0;
         }
 
-        .page-hero::after {
-            content: "";
+        /* ── 1. HERO ── */
+        .about-hero {
+            position: relative;
+            width: 100%;
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 24px 80px;
+            background: url('/hero_back.png') center center / cover no-repeat;
+            background-color: #0d3d5c;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, rgba(79, 224, 222, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(13, 61, 92, 0.4) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .about-hero::after {
+            content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 80px;
-            background: linear-gradient(to top, #F8FAFC, transparent);
-        }
-
-        .page-hero-title {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .page-hero-sub {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-
-        .mission-section {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 60px;
-        }
-
-        .team-card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .team-avatar {
-            width: 100px;
             height: 100px;
+            background: linear-gradient(to top, #F8FAFC, transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .about-hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 760px;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 20px;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        .about-hero p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.8;
+            margin: 0;
+            font-weight: 400;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating glow orbs */
+        .hero-orb {
+            position: absolute;
             border-radius: 50%;
-            background: #e2e8f0;
-            margin: 0 auto 20px;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(40px);
+        }
+
+        .hero-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(79, 224, 222, 0.08);
+            top: -60px;
+            right: -40px;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+
+        .hero-orb-2 {
+            width: 200px;
+            height: 200px;
+            background: rgba(41, 184, 196, 0.06);
+            bottom: 20px;
+            left: -30px;
+            animation: orbFloat 16s ease-in-out infinite 2s;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(12px, -18px);
+            }
+        }
+
+        /* ── SHARED SECTION ── */
+        .about-section {
+            padding: 72px 24px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .about-section-wide {
+            max-width: 1100px;
+        }
+
+        .about-section-bg {
+            background: linear-gradient(180deg, #f0f7fa 0%, #F8FAFC 100%);
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #0f6a66;
+            background: rgba(79, 224, 222, 0.12);
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+
+        .about-h2 {
+            font-size: clamp(1.6rem, 3vw, 2.1rem);
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0 0 6px;
+            letter-spacing: -0.02em;
+            line-height: 1.25;
+        }
+
+        .about-accent-line {
+            width: 44px;
+            height: 3px;
+            background: linear-gradient(90deg, #0f6a66, #4dd4dc);
+            border-radius: 2px;
+            margin: 14px 0 24px;
+        }
+
+        .about-accent-line-center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #475569;
+            margin: 0;
+        }
+
+        .about-text+.about-text {
+            margin-top: 16px;
+        }
+
+        /* ── 2. OUR STORY ── */
+        .story-section {
+            text-align: left;
+        }
+
+        /* ── 3. WHAT WE DO ── */
+        .wwd-intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .wwd-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .wwd-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .wwd-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 28px 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .wwd-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(13, 61, 92, 0.08);
+        }
+
+        .wwd-icon {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(15, 106, 102, 0.1), rgba(79, 224, 222, 0.12));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: #64748b;
         }
 
-        .team-name {
+        .wwd-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: #0f6a66;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .wwd-card h4 {
+            font-size: 0.98rem;
             font-weight: 700;
             color: #0f172a;
-            margin-bottom: 5px;
+            margin: 0 0 6px;
         }
 
-        .team-role {
-            color: #0f6a66;
+        .wwd-card p {
             font-size: 0.9rem;
-            font-weight: 600;
+            color: #64748b;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── 4. MISSION & VALUES ── */
+        .mv-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .mv-layout {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+        }
+
+        .mv-mission {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mv-mission::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0d3d5c, #4dd4dc);
+        }
+
+        .mv-mission h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 12px;
+        }
+
+        .mv-mission p {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        .values-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .value-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .value-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(13, 61, 92, 0.06);
+        }
+
+        .value-item strong {
+            color: #0f6a66;
+            font-weight: 700;
+            font-size: 0.92rem;
+        }
+
+        .value-item span {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ── 5. WHY ENERLUMA ── */
+        .why-section-inner {
+            text-align: center;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            margin-top: 32px;
+            text-align: left;
+        }
+
+        .why-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 22px 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .why-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(13, 61, 92, 0.07);
+        }
+
+        .why-bullet {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0d3d5c, #4dd4dc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .why-bullet svg {
+            width: 13px;
+            height: 13px;
+            stroke: #ffffff;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .why-item p {
+            font-size: 0.95rem;
+            color: #374151;
+            line-height: 1.55;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* ── 6. FOOTER ── */
+        .about-footer {
+            background: linear-gradient(145deg, #0a2e3e 0%, #0d3d5c 30%, #0f4f5a 60%, #0a3d3b 100%);
+            position: relative;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .about-footer::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79, 224, 222, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .about-footer::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -60px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(41, 184, 196, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .af-inner {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 24px 28px;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr;
+            gap: 44px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .af-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .af-inner {
+                grid-template-columns: 1fr;
+                gap: 28px;
+                padding: 48px 24px 24px;
+            }
+        }
+
+        .af-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .af-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .af-brand-logo {
+            height: 34px;
+            filter: brightness(0) invert(1);
+            opacity: 0.92;
+        }
+
+        .af-brand-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .af-brand-name span {
+            background: linear-gradient(135deg, #4fe0de, #80f0ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .af-tagline {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .af-socials {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .af-social-link {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .af-social-link:hover {
+            background: rgba(79, 224, 222, 0.12);
+            border-color: rgba(79, 224, 222, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .af-social-link svg {
+            width: 14px;
+            height: 14px;
+            fill: rgba(255, 255, 255, 0.65);
+        }
+
+        .af-heading {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 4px;
+        }
+
+        .af-link {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .af-link:hover {
+            color: #4fe0de;
+        }
+
+        .af-bottom {
+            position: relative;
+            z-index: 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            text-align: center;
+        }
+
+        .af-copy {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin: 0;
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 
 <body>
-    <!-- Reused Navbar Structure -->
+    <!-- ── Navbar ── -->
     <header class="topbar topbar-hero">
         <div class="topbar-inner">
             <a href="index.html" class="brand" style="text-decoration: none;">
@@ -115,7 +600,6 @@
             </nav>
             <a class="cta" href="/login-signup/auth.html">Get Started</a>
 
-            <!-- Mobile Menu Overlay -->
             <div class="mobile-menu">
                 <div class="mobile-menu-inner">
                     <a href="about.html" class="mobile-link">About</a>
@@ -130,62 +614,262 @@
         </div>
     </header>
 
-    <section class="page-hero">
-        <div class="section-container">
-            <h1 class="page-hero-title">Driving the Future of Sustainability</h1>
-            <p class="page-hero-sub">We believe that smart data is the key to a greener planet. Our mission is to
-                empower everyone to monitor, optimize, and save.</p>
+    <!-- ═══════════════════════════════════════════
+         SECTION 1 — HERO
+         ═══════════════════════════════════════════ -->
+    <section class="about-hero">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="about-hero-content">
+            <h1>Powering a Smarter, Sustainable Future</h1>
+            <p>EnerLuma is a next-generation AI-powered sustainability platform that helps individuals, households,
+                and organizations make better decisions about energy and water usage. By converting raw consumption
+                data into meaningful and actionable insights, we empower people to reduce waste, lower costs, and
+                contribute to a more sustainable planet.</p>
         </div>
     </section>
 
-    <section class="mission-section">
-        <div class="section-container">
-            <div class="section-label">Our Mission</div>
-            <h2 class="section-heading">Innovation for a Greener Tomorrow</h2>
-            <p class="section-sub">EnerLuma started with a simple idea: make professional-grade energy insights
-                accessible to everyone. Today, we assist thousands of homes and businesses in reducing their footprint.
-            </p>
+    <!-- ═══════════════════════════════════════════
+         SECTION 2 — OUR STORY
+         ═══════════════════════════════════════════ -->
+    <div class="about-section story-section reveal">
+        <span class="section-tag">Our Journey</span>
+        <h2 class="about-h2">Our Story</h2>
+        <div class="about-accent-line"></div>
+        <p class="about-text">
+            EnerLuma was founded on the belief that sustainability should be simple, accessible, and data-driven.
+            With rising energy costs and increasing environmental challenges, we built EnerLuma to bridge the gap
+            between complex utility data and everyday users who want clarity and control. What began as a small
+            initiative has grown into a modern platform focused on transparency, efficiency, and intelligence.
+        </p>
+        <p class="about-text">
+            Our team combines deep expertise in data science, energy systems, and user experience design to deliver
+            a platform that doesn't just show numbers — it tells stories, reveals patterns, and guides action. Every
+            feature we build is rooted in one question: how can we make sustainability easier for real people?
+        </p>
+    </div>
 
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-avatar">👨‍💼</div>
-                    <h3 class="team-name">Alex Johnson</h3>
-                    <div class="team-role">CEO & Founder</div>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">👩‍🔬</div>
-                    <h3 class="team-name">Sarah Chen</h3>
-                    <div class="team-role">Chief Data Scientist</div>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">👨‍💻</div>
-                    <h3 class="team-name">Mike Ross</h3>
-                    <div class="team-role">Head of Engineering</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="site-footer" id="contact" aria-label="Site footer">
-        <div class="footer-inner">
-            <div class="footer-col footer-col--brand">
-                <div class="footer-brand">
-                    <img src="/enerluma-logo.png" alt="EnerLuma logo" class="footer-logo" />
-                    <span class="footer-brand-name">EnerLuma</span>
-                </div>
-                <p class="footer-tagline">AI-powered energy and water monitoring for a smarter, more sustainable future.
+    <!-- ═══════════════════════════════════════════
+         SECTION 3 — WHAT WE DO
+         ═══════════════════════════════════════════ -->
+    <div class="about-section-bg">
+        <div class="about-section about-section-wide reveal">
+            <div class="wwd-intro">
+                <span class="section-tag">Our Platform</span>
+                <h2 class="about-h2">What We Do</h2>
+                <div class="about-accent-line about-accent-line-center"></div>
+                <p class="about-text" style="max-width: 640px; margin: 0 auto;">
+                    EnerLuma provides a comprehensive suite of intelligent tools designed to transform how you
+                    interact with your energy and water consumption data.
                 </p>
-                <div class="footer-socials">
-                    <a href="#" class="footer-social-link">𝕏</a>
-                    <a href="#" class="footer-social-link">in</a>
-                    <a href="#" class="footer-social-link">⌥</a>
+            </div>
+            <div class="wwd-grid">
+                <div class="wwd-card">
+                    <div class="wwd-icon">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Real-Time Monitoring</h4>
+                        <p>Track electricity and water usage as it happens. Our live dashboards give you instant
+                            visibility into your consumption patterns, so you always know where you stand.</p>
+                    </div>
+                </div>
+                <div class="wwd-card">
+                    <div class="wwd-icon">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"></path>
+                            <path d="M12 2a4 4 0 0 0-4 4c0 1.95 1.4 3.58 3.25 3.93"></path>
+                            <line x1="12" y1="10" x2="12" y2="18"></line>
+                            <path d="M9 18h6"></path>
+                            <path d="M10 22h4"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>AI-Driven Predictions</h4>
+                        <p>Our machine learning engine analyzes historical data to forecast future consumption trends,
+                            helping you plan ahead and avoid costly surprises.</p>
+                    </div>
+                </div>
+                <div class="wwd-card">
+                    <div class="wwd-icon">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Smart Alerts &amp; Thresholds</h4>
+                        <p>Get instant notifications when usage exceeds your defined limits. Stay informed about
+                            anomalies and spikes before they become expensive problems.</p>
+                    </div>
+                </div>
+                <div class="wwd-card">
+                    <div class="wwd-icon">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4>Beautiful Dashboards &amp; Analytics</h4>
+                        <p>Interactive charts, trend analysis, and usage breakdowns presented through clean, intuitive
+                            dashboards that make complex data easy to understand.</p>
+                    </div>
                 </div>
             </div>
-            <div class="footer-col">
-                <div class="footer-col-heading">Company</div>
-                <a href="about.html" class="footer-link">About Us</a>
-                <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 4 — MISSION & VALUES
+         ═══════════════════════════════════════════ -->
+    <div class="about-section about-section-wide reveal">
+        <div style="text-align: center; margin-bottom: 36px;">
+            <span class="section-tag">What Drives Us</span>
+            <h2 class="about-h2">Our Mission &amp; Values</h2>
+            <div class="about-accent-line about-accent-line-center"></div>
+        </div>
+        <div class="mv-layout">
+            <div class="mv-mission">
+                <h3>Our Mission</h3>
+                <p>EnerLuma's mission is to empower people through clarity. We believe that sustainable living
+                    starts with awareness, and awareness starts with intelligent data. Our tools are designed to
+                    make sustainability effortless, intuitive, and measurable — so that every individual, household,
+                    and organization can contribute to a healthier planet without needing a degree in data science.</p>
             </div>
+            <div class="values-list">
+                <div class="value-item">
+                    <strong>Transparency</strong><br>
+                    <span>Clear, honest data that users can trust to make confident decisions.</span>
+                </div>
+                <div class="value-item">
+                    <strong>Innovation</strong><br>
+                    <span>Using AI and modern technologies to build smarter, more responsive systems.</span>
+                </div>
+                <div class="value-item">
+                    <strong>Sustainability</strong><br>
+                    <span>Driving meaningful, measurable environmental impact at every level.</span>
+                </div>
+                <div class="value-item">
+                    <strong>Accessibility</strong><br>
+                    <span>Making advanced energy insights available to everyone, not just experts.</span>
+                </div>
+                <div class="value-item">
+                    <strong>Responsibility</strong><br>
+                    <span>Helping communities reduce their environmental footprint, one insight at a time.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 5 — WHY ENERLUMA
+         ═══════════════════════════════════════════ -->
+    <div class="about-section-bg">
+        <div class="about-section about-section-wide reveal">
+            <div class="why-section-inner">
+                <span class="section-tag">The Difference</span>
+                <h2 class="about-h2">Why EnerLuma</h2>
+                <div class="about-accent-line about-accent-line-center"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-bullet">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>AI-powered analytics that simplify complex data into clear, actionable decisions</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-bullet">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>Designed for homes, communities, and organizations of every size</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-bullet">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>Easy-to-use dashboards with real-time insights and beautiful visualizations</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-bullet">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>Helps reduce bills, eliminate waste, and lower your carbon impact</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-bullet">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <p>Built with modern, scalable architecture ready for the future of sustainability</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 6 — FOOTER
+         ═══════════════════════════════════════════ -->
+    <footer class="about-footer">
+        <div class="af-inner">
+            <div class="af-col">
+                <div class="af-brand">
+                    <img src="/enerluma-logo.png" alt="EnerLuma logo" class="af-brand-logo" />
+                    <div class="af-brand-name">Ener<span>Luma</span></div>
+                </div>
+                <p class="af-tagline">AI-powered energy and water monitoring for a smarter, more sustainable future.</p>
+                <div class="af-socials">
+                    <a href="#" class="af-social-link" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="af-social-link" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="af-social-link" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="af-col">
+                <div class="af-heading">Company</div>
+                <a href="about.html" class="af-link">About</a>
+                <a href="contact.html" class="af-link">Contact</a>
+            </div>
+            <div class="af-col">
+                <div class="af-heading">Product</div>
+                <a href="/login-signup/auth.html" class="af-link">Dashboard</a>
+                <a href="services.html" class="af-link">Services</a>
+            </div>
+            <div class="af-col">
+                <div class="af-heading">Legal</div>
+                <a href="#" class="af-link">Privacy Policy</a>
+                <a href="#" class="af-link">Terms of Service</a>
+            </div>
+        </div>
+        <div class="af-bottom">
+            <p class="af-copy">&copy; 2026 EnerLuma. All rights reserved.</p>
         </div>
     </footer>
 
@@ -193,12 +877,31 @@
         // ── Mobile Menu Toggle ──
         const mobileToggle = document.querySelector('.mobile-toggle');
         const mobileMenu = document.querySelector('.mobile-menu');
-
         if (mobileToggle && mobileMenu) {
             mobileToggle.addEventListener('click', () => {
                 mobileToggle.classList.toggle('open');
                 mobileMenu.classList.toggle('open');
                 document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            });
+        }
+
+        // ── Scroll Reveal ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        // ── Navbar scroll shadow ──
+        const topbar = document.querySelector('.topbar-hero');
+        if (topbar) {
+            window.addEventListener('scroll', () => {
+                topbar.classList.toggle('scroll-shadow', window.scrollY > 60);
             });
         }
     </script>
