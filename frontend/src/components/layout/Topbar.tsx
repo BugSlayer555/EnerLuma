@@ -59,7 +59,7 @@ export default function Topbar({ onMenuClick }: TopbarProps) {
 
   const handleSignOut = () => {
     localStorage.removeItem('enerluma_user')
-    window.location.replace('/login-signup/auth.html')
+    window.location.replace('/index.html')
   }
 
   const notifications: Notification[] = [
