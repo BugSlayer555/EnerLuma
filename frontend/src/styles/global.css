@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Outfit:wght@200;300;400;500&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,200;1,200&display=swap');
+
+:root {
+  --el-bg-1: #EAF4F8;
+  --el-bg-2: #D9EEF2;
+  --el-bg-3: #C8EDF3;
+  --el-bg-4: #F7FCFF;
+  --el-bg-gradient: linear-gradient(180deg, #EAF4F8 0%, #C8EDF3 100%);
+  --el-beam-1: #DFFFFF;
+  --el-beam-2: #B3FBFF;
+  --el-beam-3: #7BE8EA;
+  --el-beam-spark: #A8FFF8;
+  --el-accent: #56E0E0;
+  --el-accent-light: #8AF2F0;
+  --el-accent-heavy: #32C7C5;
+  --el-accent-shadow: rgba(86, 224, 224, 0.45);
+  --el-surface: rgba(255, 255, 255, 0.45);
+  --el-surface-light: rgba(255, 255, 255, 0.6);
+  --el-surface-blur: rgba(255, 255, 255, 0.25);
+  --el-border: rgba(86, 224, 224, 0.25);
+  --el-text-primary: #1D2A2E;
+  --el-text-secondary: #4A5F63;
+  --el-text-dim: #8AA8AC;
+  --el-text-accent: #32C7C5;
+  --el-footer-bg-1: #0A1A1A;
+  --el-footer-bg-2: #062F2F;
+  --el-footer-accent: #56E0E0;
+  --el-footer-border: rgba(86, 224, 224, 0.3);
+  --el-footer-text: #C8EDF3;
+  --el-glow: 0px 0px 22px rgba(86, 224, 224, 0.65);
+  --el-glow-soft: 0px 0px 14px rgba(86, 224, 224, 0.35);
+  --el-inner-glow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+  --el-shadow: 0 8px 26px rgba(17, 56, 64, 0.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden
+}
+
+body {
+  background: var(--el-bg-1);
+  color: var(--el-text-primary);
+  font-family: 'Outfit', system-ui, sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--el-accent);
+  color: var(--el-bg-1)
+}
+
+::-webkit-scrollbar {
+  width: 2px
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--el-accent);
+  border-radius: 4px
+}
+
+/* Cursor — direct DOM, zero React re-renders */
+#av-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--el-accent-heavy);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+#av-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--el-accent-shadow);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+}
+
+/* GPU-composited CSS animations only */
+@keyframes ticker {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(-50%)
+  }
+}
+
+.av-ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center
+  }
+
+  100% {
+    background-position: 200% center
+  }
+}
+
+.av-shimmer {
+  background: linear-gradient(90deg, var(--el-accent) 0%, var(--el-accent-heavy) 40%, var(--el-accent) 80%);
+  background-size: 200% auto;
+  animation: shimmer 4s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  will-change: background-position;
+}
+
+@keyframes ripple {
+  0% {
+    opacity: .4;
+    transform: scale(1)
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.1)
+  }
+}
+
+.av-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--el-accent-heavy);
+  animation: ripple 2.5s ease-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: .22
+  }
+
+  50% {
+    opacity: .5
+  }
+}
+
+.av-glow {
+  animation: pulse 4s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: .4
+  }
+}
+
+.av-blink {
+  animation: blink 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Glassmorphism */
+.av-glass {
+  background: rgba(255, 255, 255, .05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, .09);
+}
+
+/* contain:strict prevents paint outside bounds */
+.av-contain {
+  contain: layout style paint;
+}
+
+/* Image optimization */
+img {
+  image-rendering: auto;
+  decoding: async;
+}
