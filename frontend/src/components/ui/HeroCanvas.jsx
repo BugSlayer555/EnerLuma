@@ -5,13 +5,11 @@ import { OrbitControls, Sphere, MeshDistortMaterial } from "@react-three/drei";
 function FloatingCore() {
     const meshRef = useRef();
 
-    useFrame((state, _, __, invalidate) => {
+    useFrame((state) => {
         if (meshRef.current) {
             meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
             meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
         }
-        // Request next frame since we use frameloop="demand"
-        state.invalidate();
     });
 
     return (
@@ -34,7 +32,7 @@ export default function HeroCanvas() {
     return (
         <Canvas
             camera={{ position: [0, 0, 5], fov: 50 }}
-            frameloop="demand"
+            frameloop="always"
             dpr={[1, 1.5]}
             performance={{ min: 0.5 }}
         >

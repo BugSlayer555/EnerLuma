@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { IMG } from "../../assets/images";
 
 import ParticleCanvas from "../ui/ParticleCanvas";
 import WaveCanvas from "../ui/WaveCanvas";
 import MagBtn from "../ui/MagBtn";
-import HeroCanvas from "../ui/HeroCanvas"; // NEW Import
+import HeroCanvas from "../ui/HeroCanvas";
+import heroVideo from "../../assets/BackgroundVideo.mp4";
 
-const Hero = memo(function Hero() {
+const Hero = memo(function Hero({ onVideoReady }) {
   const { scrollY } = useScroll();
 
   const textY = useTransform(scrollY, [0, 600], [0, -70]);
@@ -24,7 +24,7 @@ const Hero = memo(function Hero() {
         background: "var(--el-bg-1)",
       }}
     >
-      {/* BACKGROUND IMAGES (Lightened) */}
+      {/* BACKGROUND VIDEO */}
       <motion.div
         style={{
           position: "absolute",
@@ -34,35 +34,22 @@ const Hero = memo(function Hero() {
           willChange: "transform",
         }}
       >
-        <div style={{ position: "absolute", inset: 0, width: "50%" }}>
-          <img
-            src={IMG.heroWater}
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "brightness(0.92) opacity(0.55) saturate(1.15)",
-            }}
-          />
-        </div>
-
-        <div style={{ position: "absolute", inset: 0, left: "50%", width: "50%" }}>
-          <img
-            src={IMG.heroEnergy}
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              filter: "brightness(0.92) opacity(0.55) saturate(1.15)",
-            }}
-          />
-        </div>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          src={heroVideo}
+          onCanPlay={onVideoReady}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.65,
+            filter: "brightness(0.92) saturate(1.15)",
+          }}
+        />
       </motion.div>
 
       {/* PARTICLES */}
@@ -76,7 +63,7 @@ const Hero = memo(function Hero() {
           position: "absolute",
           inset: 0,
           zIndex: 2,
-          background: "radial-gradient(ellipse 85% 75% at 50% 88%, rgba(234,244,248,0.85), transparent)",
+          background: "radial-gradient(ellipse 85% 75% at 50% 88%, rgba(234,244,248,0.18), transparent)",
         }}
       />
 

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -23,41 +23,48 @@ import Dashboard from "./dashboard/Dashboard";
 import DashboardLayout from "./dashboard/DashboardLayout";
 
 function LandingPage() {
-  const [ready, setReady] = useState(false);
+  const [loaderDone, setLoaderDone] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const ready = loaderDone && videoReady;
 
-  const onDone = useCallback(() => {
-    setReady(true);
+  const onLoaderDone = useCallback(() => setLoaderDone(true), []);
+  const onVideoReady = useCallback(() => setVideoReady(true), []);
+
+  // Fallback: if video doesn't load within 8s, proceed anyway
+  useEffect(() => {
+    const timeout = setTimeout(() => setVideoReady(true), 8000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
     <>
       <AnimatePresence mode="wait">
-        {!ready && <Loader key="loader" onDone={onDone} />}
+        {!ready && <Loader key="loader" onDone={onLoaderDone} videoReady={videoReady} />}
       </AnimatePresence>
 
-      {ready && (
-        <motion.div
-          key="site"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Cursor />
-          <Navbar />
+      {/* Always render content so the video preloads behind the loader */}
+      <motion.div
+        key="site"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ duration: 0.8 }}
+        style={{ pointerEvents: ready ? "auto" : "none" }}
+      >
+        <Cursor />
+        <Navbar />
 
-          <main>
-            <Hero />
-            <Ticker />
-            <About />
-            <Services />
-            <Manifesto />
-            <HowItWorks />
-            <Contact />
-          </main>
+        <main>
+          <Hero onVideoReady={onVideoReady} />
+          <Ticker />
+          <About />
+          <Services />
+          <Manifesto />
+          <HowItWorks />
+          <Contact />
+        </main>
 
-          <Footer />
-        </motion.div>
-      )}
+        <Footer />
+      </motion.div>
     </>
   );
 }

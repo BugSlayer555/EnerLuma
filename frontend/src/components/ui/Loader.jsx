@@ -1,23 +1,32 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-const Loader = memo(function Loader({ onDone }) {
+const Loader = memo(function Loader({ onDone, videoReady }) {
   const [pct, setPct] = useState(0);
+  const videoReadyRef = useRef(videoReady);
+
+  useEffect(() => {
+    videoReadyRef.current = videoReady;
+  }, [videoReady]);
 
   useEffect(() => {
     let v = 0;
     let timeoutId;
 
     const id = setInterval(() => {
-      v += Math.random() * 18 + 6;
-
-      if (v >= 100) {
+      if (v < 85) {
+        // Fast phase: race to 85%
+        v += Math.random() * 18 + 6;
+        v = Math.min(v, 85);
+      } else if (!videoReadyRef.current) {
+        // Slow crawl while waiting for video to buffer
+        v += Math.random() * 0.4;
+        v = Math.min(v, 95);
+      } else {
+        // Video ready — finish up
         v = 100;
         clearInterval(id);
-
-        timeoutId = setTimeout(() => {
-          onDone?.();
-        }, 420);
+        timeoutId = setTimeout(() => onDone?.(), 420);
       }
 
       setPct(Math.round(v));
