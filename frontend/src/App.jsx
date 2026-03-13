@@ -22,6 +22,12 @@ import AuthCallback from "./components/auth/AuthCallback";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardLayout from "./dashboard/DashboardLayout";
 
+// Import new pages
+import AboutPage from "./pages/AboutPage";
+import ServicesPage from "./pages/ServicesPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import ContactPage from "./pages/ContactPage";
+
 function LandingPage() {
   const [loaderDone, setLoaderDone] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
@@ -74,6 +80,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<><Cursor /><Navbar /><AboutPage /><Footer /></>} />
+        <Route path="/services" element={<><Cursor /><Navbar /><ServicesPage /><Footer /></>} />
+        <Route path="/how-it-works" element={<><Cursor /><Navbar /><HowItWorksPage /><Footer /></>} />
+        <Route path="/contact" element={<><Cursor /><Navbar /><ContactPage /><Footer /></>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />

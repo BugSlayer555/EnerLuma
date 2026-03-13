@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 import ParticleCanvas from "../ui/ParticleCanvas";
@@ -9,10 +9,64 @@ import heroVideo from "../../assets/BackgroundVideo.mp4";
 
 const Hero = memo(function Hero({ onVideoReady }) {
   const { scrollY } = useScroll();
+  const videoRef = useRef(null);
 
   const textY = useTransform(scrollY, [0, 600], [0, -70]);
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
   const imageScale = useTransform(scrollY, [0, 700], [1.05, 1.12]);
+
+  // Ensure video plays and keeps playing
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Initial play
+    const playVideo = () => {
+      video.play().catch((error) => {
+        console.error("Video autoplay failed:", error);
+      });
+    };
+
+    playVideo();
+
+    // Resume video when tab becomes visible again
+    const handleVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
+        playVideo();
+      }
+    };
+
+    // Resume video on window focus
+    const handleFocus = () => {
+      if (video.paused) {
+        playVideo();
+      }
+    };
+
+    // Prevent video from pausing
+    const handlePause = () => {
+      playVideo();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+    video.addEventListener('pause', handlePause);
+
+    // Retry on user interaction if autoplay blocked
+    const playOnInteraction = () => {
+      playVideo();
+      document.removeEventListener('click', playOnInteraction);
+      document.removeEventListener('scroll', playOnInteraction);
+    };
+    document.addEventListener('click', playOnInteraction, { once: true });
+    document.addEventListener('scroll', playOnInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
 
   return (
     <section
@@ -35,6 +89,7 @@ const Hero = memo(function Hero({ onVideoReady }) {
         }}
       >
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
@@ -42,6 +97,13 @@ const Hero = memo(function Hero({ onVideoReady }) {
           preload="auto"
           src={heroVideo}
           onCanPlay={onVideoReady}
+          onError={(e) => {
+            console.error("Video failed to load:", e);
+            console.error("Video source:", heroVideo);
+            onVideoReady(); // Proceed anyway
+          }}
+          onLoadStart={() => console.log("Video loading started...")}
+          onLoadedData={() => console.log("Video data loaded successfully")}
           style={{
             width: "100%",
             height: "100%",

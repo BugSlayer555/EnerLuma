@@ -14,4 +14,8 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    assetsInlineLimit: 0, // Don't inline assets, serve them separately
+    chunkSizeWarningLimit: 40000, // Increase warning limit for large assets
+  },
 })
