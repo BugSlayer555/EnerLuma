@@ -18,6 +18,7 @@ const Contact = memo(function Contact() {
         position: "relative",
         overflow: "hidden",
       }}
+      className="resp-section-pad"
     >
       {/* Background */}
       <img
@@ -55,6 +56,7 @@ const Contact = memo(function Contact() {
           margin: "0 auto",
           padding: "0 48px",
         }}
+        className="resp-container"
       >
         {/* Section Heading */}
         <div style={{ marginBottom: 40 }}>

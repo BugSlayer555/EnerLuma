@@ -25,8 +25,9 @@ const About = memo(function About() {
         padding: "130px 0 0",
         overflow: "hidden",
       }}
+      className="resp-section-pad"
     >
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }} className="resp-container">
         {/* Heading */}
         <div ref={r1} style={{ marginBottom: 68 }}>
           <motion.div

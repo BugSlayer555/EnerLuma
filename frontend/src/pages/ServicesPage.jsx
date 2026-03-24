@@ -1,291 +1,260 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { IMG } from "../assets/images";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+
+const SERVICES = [
+  {
+    icon: "⚡", title: "Smart Energy Monitoring",
+    desc: "Track real-time electricity consumption across appliances, rooms, and time periods with realistic simulated smart meter data that mirrors actual household energy patterns.",
+    features: ["Real-time usage tracking", "Appliance-level breakdown", "Peak hour identification"],
+  },
+  {
+    icon: "💧", title: "Water Consumption Analytics",
+    desc: "Monitor water usage patterns with precision analytics. From daily consumption tracking to seasonal trend analysis, our platform demonstrates smart water meter capabilities.",
+    features: ["Daily flow monitoring", "Leak detection alerts", "Usage optimization tips"],
+  },
+  {
+    icon: "🤖", title: "AI-Based Usage Insights",
+    desc: "Leverage artificial intelligence to uncover hidden patterns in resource consumption. Our AI engine processes historical data to generate personalized insights and recommendations.",
+    features: ["Pattern recognition", "Anomaly detection", "Behavioral analysis"],
+  },
+  {
+    icon: "📊", title: "Consumption Trend Analysis",
+    desc: "Visualize consumption trends across days, weeks, and months with interactive charts. Identify seasonal patterns and forecast future resource demands with precision.",
+    features: ["Multi-period comparisons", "Seasonal forecasting", "Cost projections"],
+  },
+  {
+    icon: "📈", title: "Dashboard Visualization",
+    desc: "Transform raw consumption data into beautiful, interactive visualizations. Our dashboards make complex analytics accessible through intuitive charts and real-time data panels.",
+    features: ["Interactive charts", "Custom date ranges", "Export capabilities"],
+  },
+];
 
 export default function ServicesPage() {
   return (
-    <div style={{ minHeight: "100vh", background: "#f8f9fa" }}>
-      {/* Hero Section */}
+    <div style={{ background: "#ffffff" }}>
+      {/* ─── Hero ─── */}
       <section style={{
-        background: "linear-gradient(135deg, #32C7C5 0%, #56E0E0 100%)",
-        paddingTop: "140px",
-        paddingBottom: "80px",
-        position: "relative",
-        overflow: "hidden"
-      }}>
+        paddingTop: 160, paddingBottom: 90,
+        background: "linear-gradient(180deg, #f0fafa 0%, #e4f7f7 40%, #ffffff 100%)",
+        position: "relative", overflow: "hidden",
+      }} className="resp-hero">
         <div style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: "url('data:image/svg+xml,<svg width=\"40\" height=\"40\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"40\" height=\"40\" fill=\"none\" stroke=\"rgba(255,255,255,0.1)\" stroke-width=\"1\"/></svg>')",
-          backgroundSize: "40px 40px"
+          position: "absolute", top: -60, right: -60,
+          width: 350, height: 350, borderRadius: "50%",
+          border: "1px solid rgba(50,199,197,0.08)",
         }} />
-        
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
-          <Link 
-            to="/"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              color: "#ffffff",
-              textDecoration: "none",
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-              marginBottom: "40px",
-              transition: "all 0.3s",
-              padding: "10px 20px",
-              borderRadius: "50px",
-              background: "rgba(255, 255, 255, 0.15)",
-              backdropFilter: "blur(10px)"
-            }}
-          >
-            ← Back to Home
-          </Link>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: "5rem",
-              color: "#ffffff",
-              marginBottom: "20px",
-              letterSpacing: "0.05em",
-              textShadow: "0 4px 20px rgba(0,0,0,0.1)"
-            }}
-          >
-            Our Services
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: "1.3rem",
-              color: "rgba(255, 255, 255, 0.95)",
-              maxWidth: "700px",
-              lineHeight: "1.6"
-            }}
-          >
-            Transforming resource consumption through intelligent monitoring and AI-powered analytics.
-          </motion.p>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 32px", position: "relative", zIndex: 1 }} className="resp-container">
+          <motion.div initial="hidden" animate="visible" variants={stagger}>
+            <motion.span variants={fadeUp} transition={{ duration: 0.5 }} style={{
+              display: "inline-block", padding: "6px 18px", borderRadius: 100,
+              background: "rgba(50,199,197,0.08)", border: "1px solid rgba(50,199,197,0.15)",
+              fontFamily: "'Outfit',sans-serif", fontSize: "0.78rem", fontWeight: 600,
+              color: "#2aada8", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 24,
+            }}>What We Offer</motion.span>
+
+            <motion.h1 variants={fadeUp} transition={{ duration: 0.7 }} style={{
+              fontFamily: "'Bebas Neue',sans-serif",
+              fontSize: "clamp(2.8rem, 5.5vw, 4.8rem)",
+              color: "#1a2e35", letterSpacing: "0.02em", lineHeight: 1.08, marginBottom: 20, maxWidth: 650,
+            }}>
+              Intelligent Monitoring Services
+            </motion.h1>
+
+            <motion.p variants={fadeUp} transition={{ duration: 0.7, delay: 0.05 }} style={{
+              fontFamily: "'Outfit',sans-serif", fontSize: "1.12rem",
+              color: "#5a7a7e", lineHeight: 1.75, maxWidth: 580,
+            }}>
+              Transforming resource consumption through AI-powered analytics, simulated sensor data, and intelligent dashboard visualization.
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Grid Content Section */}
-      <section style={{ padding: "80px 24px" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-              gap: "30px"
-            }}
+      {/* ─── Services Grid ─── */}
+      <section style={{ padding: "90px 32px" }} className="resp-section">
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+            style={{ textAlign: "center", marginBottom: 50 }}
           >
-            {/* Intelligent Resource Monitoring Card */}
-            <motion.div
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "#ffffff",
-                borderRadius: "20px",
-                padding: "40px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                border: "1px solid rgba(50, 199, 197, 0.1)"
-              }}
-            >
-              <div style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "15px",
-                background: "linear-gradient(135deg, #32C7C5 0%, #56E0E0 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "25px",
-                fontSize: "2rem"
-              }}>
-                📊
-              </div>
-              <h2 style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "2.5rem",
-                color: "#32C7C5",
-                marginBottom: "20px",
-                letterSpacing: "0.05em"
-              }}>
-                Intelligent Resource Monitoring
-              </h2>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                EnerLuma provides a simulated yet realistic environment where users can explore how modern resource monitoring systems operate. Through intelligent data processing and AI-driven insights, the platform visualizes how electricity and water usage can be tracked, analyzed, and optimized.
-              </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                Our monitoring service demonstrates how real-world smart infrastructure platforms collect sensor data, process it through analytical models, and present actionable insights through modern dashboards.
-              </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555"
-              }}>
-                Users can observe consumption patterns over time, detect anomalies, and understand how everyday behaviors influence energy and water usage.
-              </p>
-            </motion.div>
+            <motion.span variants={fadeUp} style={{
+              fontFamily: "'Outfit',sans-serif", fontSize: "0.72rem", fontWeight: 700,
+              letterSpacing: "0.18em", textTransform: "uppercase", color: "#32C7C5",
+            }}>Our Capabilities</motion.span>
+            <motion.h2 variants={fadeUp} style={{
+              fontFamily: "'Bebas Neue',sans-serif", fontSize: "3rem",
+              color: "#1a2e35", letterSpacing: "0.02em", marginTop: 10, marginBottom: 12,
+            }}>EnerLuma Platform Services</motion.h2>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: "'Outfit',sans-serif", fontSize: "1.02rem", color: "#7a9a9e",
+              maxWidth: 600, margin: "0 auto", lineHeight: 1.7,
+            }}>Each service demonstrates how modern smart monitoring platforms optimize energy and water management.</motion.p>
+          </motion.div>
 
-            {/* AI-Based Consumption Analytics Card */}
-            <motion.div
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "#ffffff",
-                borderRadius: "20px",
-                padding: "40px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                border: "1px solid rgba(50, 199, 197, 0.1)"
-              }}
-            >
-              <div style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "15px",
-                background: "linear-gradient(135deg, #32C7C5 0%, #56E0E0 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "25px",
-                fontSize: "2rem"
-              }}>
-                🤖
-              </div>
-              <h2 style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "2.5rem",
-                color: "#32C7C5",
-                marginBottom: "20px",
-                letterSpacing: "0.05em"
-              }}>
-                AI-Based Consumption Analytics
-              </h2>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                EnerLuma integrates artificial intelligence to simulate predictive analytics used in advanced monitoring systems.
-              </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                By processing historical consumption patterns, the platform identifies trends and generates insights that help users understand potential inefficiencies.
-              </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                The analytics engine highlights unusual spikes in usage, predicts future consumption trends, and provides recommendations designed to improve efficiency and sustainability.
-              </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555"
-              }}>
-                This approach demonstrates how AI technology can empower households and organizations to make smarter resource management decisions.
-              </p>
-            </motion.div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}
+            className="resp-grid-3"
+          >
+            {SERVICES.map((svc, i) => (
+              <motion.div key={i} variants={fadeUp} transition={{ delay: i * 0.06 }}
+                whileHover={{ y: -6 }}
+                style={{
+                  background: "#fff", borderRadius: 20, padding: "36px 28px",
+                  boxShadow: "0 2px 16px rgba(0,0,0,0.04)", border: "1px solid #eef5f5",
+                  transition: "all 0.35s",
+                  ...(i >= 3 ? {} : {}),
+                }}
+              >
+                <div style={{
+                  width: 52, height: 52, borderRadius: 14,
+                  background: "linear-gradient(135deg,#e8fafa,#d2f5f4)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  marginBottom: 20, fontSize: "1.5rem",
+                }}>{svc.icon}</div>
+                <h3 style={{
+                  fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.7rem",
+                  color: "#1a2e35", marginBottom: 12, letterSpacing: "0.02em",
+                }}>{svc.title}</h3>
+                <p style={{
+                  fontFamily: "'Outfit',sans-serif", fontSize: "0.92rem",
+                  lineHeight: 1.75, color: "#5a7a7e", marginBottom: 18,
+                }}>{svc.desc}</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                  {svc.features.map((f, j) => (
+                    <div key={j} style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                      <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#32C7C5", flexShrink: 0 }} />
+                      <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: "0.82rem", color: "#9ab5b8" }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Smart Dashboard Visualization Card */}
-            <motion.div
-              whileHover={{ y: -10 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background: "#ffffff",
-                borderRadius: "20px",
-                padding: "40px",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-                border: "1px solid rgba(50, 199, 197, 0.1)"
-              }}
-            >
-              <div style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "15px",
-                background: "linear-gradient(135deg, #32C7C5 0%, #56E0E0 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "25px",
-                fontSize: "2rem"
-              }}>
-                📈
-              </div>
+      {/* ─── How Simulated Data Works ─── */}
+      <section style={{ padding: "90px 32px", background: "#f7fbfb" }} className="resp-section">
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}
+            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
+            className="resp-grid-2"
+          >
+            <motion.div variants={fadeUp} transition={{ duration: 0.7 }}>
+              <span style={{
+                fontFamily: "'Outfit',sans-serif", fontSize: "0.72rem", fontWeight: 700,
+                letterSpacing: "0.18em", textTransform: "uppercase", color: "#32C7C5", marginBottom: 12, display: "block",
+              }}>Data Pipeline</span>
               <h2 style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: "2.5rem",
-                color: "#32C7C5",
-                marginBottom: "20px",
-                letterSpacing: "0.05em"
-              }}>
-                Smart Dashboard Visualization
-              </h2>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                The EnerLuma dashboard transforms raw usage data into visually engaging analytics.
+                fontFamily: "'Bebas Neue',sans-serif", fontSize: "2.6rem",
+                color: "#1a2e35", lineHeight: 1.1, marginBottom: 22, letterSpacing: "0.02em",
+              }}>How Simulated Data Replicates Real IoT Systems</h2>
+              <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: "1rem", lineHeight: 1.85, color: "#5a7a7e", marginBottom: 18 }}>
+                EnerLuma uses sophisticated API-based simulation to replicate real smart meters and IoT sensors. Instead of physical hardware, our data pipelines generate realistic consumption patterns.
               </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555",
-                marginBottom: "15px"
-              }}>
-                Interactive charts, usage graphs, and trend visualizations allow users to quickly understand their resource consumption patterns. Instead of dealing with complicated data logs, users can simply explore visual insights that communicate important information instantly.
+              <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: "1rem", lineHeight: 1.85, color: "#5a7a7e", marginBottom: 26 }}>
+                This approach lets users experience a fully functional monitoring platform without deploying physical IoT infrastructure.
               </p>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: "1rem",
-                lineHeight: "1.7",
-                color: "#555"
-              }}>
-                These dashboards simulate real smart monitoring systems used by energy management platforms and urban infrastructure systems.
-              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {[
+                  { s: "01", t: "API generates time-series consumption data" },
+                  { s: "02", t: "Data normalized and stored in analytics engine" },
+                  { s: "03", t: "AI models process patterns and anomalies" },
+                  { s: "04", t: "Insights visualized through interactive dashboard" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <div style={{
+                      width: 36, height: 36, borderRadius: 10,
+                      background: "linear-gradient(135deg,#e8fafa,#d2f5f4)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "'Bebas Neue',sans-serif", fontSize: "0.85rem", color: "#32C7C5", flexShrink: 0,
+                    }}>{item.s}</div>
+                    <span style={{ fontFamily: "'Outfit',sans-serif", fontSize: "0.92rem", fontWeight: 500, color: "#3a5a5e" }}>{item.t}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
+            <motion.div variants={fadeUp} transition={{ duration: 0.7, delay: 0.1 }}>
+              <div style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.08)" }}>
+                <img src={IMG.sensorNetwork} alt="IoT sensor network" style={{ width: "100%", height: 450, objectFit: "cover", display: "block" }} className="resp-img" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── Platform Capabilities ─── */}
+      <section style={{ padding: "90px 32px" }} className="resp-section">
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={stagger}
+            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
+            className="resp-grid-2"
+          >
+            <motion.div variants={fadeUp} transition={{ duration: 0.7 }}>
+              <div style={{ borderRadius: 20, overflow: "hidden", boxShadow: "0 12px 40px rgba(0,0,0,0.08)" }}>
+                <img src={IMG.dataFlow} alt="Data platform" style={{ width: "100%", height: 400, objectFit: "cover", display: "block" }} className="resp-img" />
+              </div>
+            </motion.div>
+            <motion.div variants={fadeUp} transition={{ duration: 0.7, delay: 0.1 }}>
+              <span style={{
+                fontFamily: "'Outfit',sans-serif", fontSize: "0.72rem", fontWeight: 700,
+                letterSpacing: "0.18em", textTransform: "uppercase", color: "#32C7C5", marginBottom: 12, display: "block",
+              }}>Platform Power</span>
+              <h2 style={{
+                fontFamily: "'Bebas Neue',sans-serif", fontSize: "2.6rem",
+                color: "#1a2e35", lineHeight: 1.1, marginBottom: 22, letterSpacing: "0.02em",
+              }}>Built for Modern Resource Intelligence</h2>
+              <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: "1rem", lineHeight: 1.85, color: "#5a7a7e", marginBottom: 26 }}>
+                Every layer is optimized for performance and clarity — from data ingestion to visualization.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="resp-grid-2-inner">
+                {[
+                  { n: "99.9%", l: "Data accuracy" },
+                  { n: "< 2s", l: "Dashboard load time" },
+                  { n: "24/7", l: "Continuous monitoring" },
+                  { n: "100+", l: "Analytics metrics" },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    padding: "18px 16px", borderRadius: 14,
+                    background: "#f7fbfb", border: "1px solid #eef5f5",
+                  }}>
+                    <div style={{ fontFamily: "'Bebas Neue',sans-serif", fontSize: "1.8rem", color: "#32C7C5", marginBottom: 3 }}>{item.n}</div>
+                    <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: "0.8rem", color: "#9ab5b8" }}>{item.l}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ─── CTA ─── */}
+      <section style={{ padding: "70px 32px", background: "#f7fbfb", textAlign: "center" }} className="resp-section">
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            <motion.h2 variants={fadeUp} style={{
+              fontFamily: "'Bebas Neue',sans-serif", fontSize: "3rem",
+              color: "#1a2e35", letterSpacing: "0.02em", marginBottom: 16,
+            }}>Ready to Explore Smart Monitoring?</motion.h2>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: "'Outfit',sans-serif", fontSize: "1.05rem",
+              color: "#7a9a9e", lineHeight: 1.7, marginBottom: 32,
+            }}>
+              Discover how EnerLuma transforms raw consumption data into actionable intelligence.
+            </motion.p>
+            <motion.a variants={fadeUp} href="/contact" style={{
+              display: "inline-block", padding: "14px 40px", borderRadius: 100,
+              background: "linear-gradient(135deg,#32C7C5,#56E0E0)",
+              color: "#fff", fontFamily: "'Outfit',sans-serif", fontSize: "0.85rem",
+              fontWeight: 700, letterSpacing: "0.08em", textDecoration: "none", textTransform: "uppercase",
+              boxShadow: "0 6px 20px rgba(50,199,197,0.25)",
+            }}>Get in Touch</motion.a>
           </motion.div>
         </div>
       </section>

@@ -27,6 +27,7 @@ const StepRow = memo(function StepRow({ step, i }) {
         minHeight: 360,
         borderTop: "1px solid var(--el-border)",
       }}
+      className="resp-grid-2"
     >
       {/* Image */}
       <motion.div
@@ -69,6 +70,7 @@ const StepRow = memo(function StepRow({ step, i }) {
           padding: "48px 56px",
           background: "var(--el-bg-1)",
         }}
+        className="resp-step-content"
       >
         <div>
           <div
@@ -127,8 +129,9 @@ const HowItWorks = memo(function HowItWorks() {
         background: "var(--el-bg-1)",
         padding: "130px 0",
       }}
+      className="resp-section-pad"
     >
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }} className="resp-container">
         {/* Section Heading */}
         <motion.div
           ref={headRef}

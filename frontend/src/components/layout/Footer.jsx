@@ -35,9 +35,10 @@ const Footer = memo(function Footer() {
         padding: "58px 48px 26px",
         borderTop: "1px solid var(--el-footer-border)",
       }}
+      className="resp-footer-pad"
     >
       <div style={{ maxWidth: 1440, margin: "0 auto" }}>
-        <div style={{ display: "flex", gap: 44, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 44, flexWrap: "wrap" }} className="resp-footer">
           {/* Brand */}
           <div style={{ flex: "1 1 240px" }}>
             <div
@@ -105,7 +106,7 @@ const Footer = memo(function Footer() {
 
           {/* Columns */}
           {COLS.map((col) => (
-            <div key={col.title} style={{ flex: "0 0 130px" }}>
+            <div key={col.title} style={{ flex: "0 0 130px" }} className="resp-footer-col">
               <div
                 style={{
                   fontFamily: "'Outfit',sans-serif",
@@ -152,6 +153,7 @@ const Footer = memo(function Footer() {
             flexWrap: "wrap",
             gap: 9,
           }}
+          className="resp-footer-bottom"
         >
           <div
             style={{

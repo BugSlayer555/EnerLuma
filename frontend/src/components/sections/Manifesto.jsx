@@ -21,6 +21,7 @@ const Manifesto = memo(function Manifesto() {
         background: "var(--el-bg-gradient)",
         padding: "110px 0",
       }}
+      className="resp-section-pad"
     >
       {/* Moving background rows */}
       <motion.div

@@ -153,18 +153,18 @@ function LoginForm() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function LoginPage() {
     return (
-        <div style={layout.page}>
+        <div style={layout.page} className="auth-page">
             <style>{globalCSS}</style>
 
             {/* Left pane */}
-            <div style={layout.leftPane}>
+            <div style={layout.leftPane} className="auth-left">
                 <AmbientBg />
                 <DashboardPreview />
                 <AuthBranding />
             </div>
 
             {/* Right pane */}
-            <div style={layout.rightPane}>
+            <div style={layout.rightPane} className="auth-right">
                 {/* Tabs */}
                 <div style={{ ...card.wrapper, marginBottom: 0 }}>
                     <div style={card.tabs}>

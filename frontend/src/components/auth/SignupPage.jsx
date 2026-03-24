@@ -253,18 +253,18 @@ function SignupForm() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function SignupPage() {
     return (
-        <div style={layout.page}>
+        <div style={layout.page} className="auth-page">
             <style>{globalCSS}</style>
 
             {/* Left pane */}
-            <div style={layout.leftPane}>
+            <div style={layout.leftPane} className="auth-left">
                 <AmbientBg />
                 <DashboardPreview />
                 <AuthBranding />
             </div>
 
             {/* Right pane — scrollable for taller signup form */}
-            <div style={{ ...layout.rightPane, justifyContent: "flex-start", paddingTop: 60 }}>
+            <div style={{ ...layout.rightPane, justifyContent: "flex-start", paddingTop: 60 }} className="auth-right">
                 <div style={{ ...card.wrapper, marginBottom: 0 }}>
                     <div style={card.tabs}>
                         <Link to="/login" style={card.tab}>Login</Link>

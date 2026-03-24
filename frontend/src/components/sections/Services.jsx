@@ -107,14 +107,16 @@ const Services = memo(function Services() {
         background: "var(--el-bg-3)",
         padding: "130px 0",
       }}
+      className="resp-section-pad"
     >
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 48px" }} className="resp-container">
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(2, minmax(0,1fr))",
             gap: 18,
           }}
+          className="resp-grid-2"
         >
           {SVCS.map((s, i) => (
             <ServiceCard key={s.id} s={s} i={i} />
