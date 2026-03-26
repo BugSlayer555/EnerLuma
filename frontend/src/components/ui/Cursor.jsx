@@ -28,7 +28,7 @@ const Cursor = memo(function Cursor() {
       ry += (my - ry) * 0.12;
 
       dot.style.transform = `translate3d(${mx - 3}px,${my - 3}px,0)`;
-      ring.style.transform = `translate3d(${rx - 18}px,${ry - 18}px,0)`;
+      ring.style.transform = `translate3d(${rx - 16}px,${ry - 16}px,0)`;
 
       rafId = requestAnimationFrame(tick);
     };

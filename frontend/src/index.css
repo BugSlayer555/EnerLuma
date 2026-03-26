@@ -31,16 +31,21 @@ body {
 /* ─── Dashboard custom components ─── */
 .card-static {
   background: #fff;
-  border-radius: 1rem;
-  padding: 1.5rem;
+  border-radius: 1.25rem;
+  padding: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-static:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
 }
 
 .kpi-card {
   background: #fff;
-  border-radius: 1rem;
-  padding: 1.25rem;
+  border-radius: 1.25rem;
+  padding: 1.75rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: var(--shadow-card);
   transition: box-shadow 0.2s, transform 0.2s;
@@ -109,6 +114,19 @@ body {
   height: 100vh;
   overflow: hidden;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  cursor: auto;
+}
+
+.dash-layout * {
+  cursor: auto;
+}
+
+.dash-layout button,
+.dash-layout a,
+.dash-layout select,
+.dash-layout [role="button"],
+.dash-layout .cursor-pointer {
+  cursor: pointer;
 }
 
 /* ─── Sidebar ─── */
@@ -511,5 +529,5 @@ body {
 .dash-content {
   flex: 1;
   overflow-y: auto;
-  padding: 24px 28px;
+  padding: 40px 44px;
 }

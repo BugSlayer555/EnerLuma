@@ -21,6 +21,7 @@ import SignupPage from "./components/auth/SignupPage";
 import AuthCallback from "./components/auth/AuthCallback";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardLayout from "./dashboard/DashboardLayout";
+import AIInsightsPage from "./dashboard/AIInsightsPage";
 
 // Import new pages
 import AboutPage from "./pages/AboutPage";
@@ -87,6 +88,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/dashboard/insights" element={<DashboardLayout><AIInsightsPage /></DashboardLayout>} />
         <Route path="/dashboard/*" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
       </Routes>
     </BrowserRouter>
