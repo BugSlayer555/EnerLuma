@@ -22,6 +22,8 @@ import AuthCallback from "./components/auth/AuthCallback";
 import Dashboard from "./dashboard/Dashboard";
 import DashboardLayout from "./dashboard/DashboardLayout";
 import AIInsightsPage from "./dashboard/AIInsightsPage";
+import EnergyPage from "./dashboard/EnergyPage";
+import NotFound from "./dashboard/NotFound";
 
 // Import new pages
 import AboutPage from "./pages/AboutPage";
@@ -89,7 +91,10 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/dashboard/insights" element={<DashboardLayout><AIInsightsPage /></DashboardLayout>} />
-        <Route path="/dashboard/*" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
+        <Route path="/dashboard/energy" element={<DashboardLayout><EnergyPage /></DashboardLayout>} />
+        <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
+        <Route path="/dashboard/*" element={<DashboardLayout><NotFound /></DashboardLayout>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
