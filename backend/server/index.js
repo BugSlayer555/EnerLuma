@@ -1,62 +1,26 @@
-import dotenv from "dotenv";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import app from "./app.js";
+import env from "./config/env.js";
+import { connectDatabase } from "./config/db.js";
+import { startMaintenanceJob } from "./jobs/maintenanceJob.js";
+import { logger } from "./utils/logger.js";
 
-// ─── Load .env BEFORE anything else ──────────────────────────────────────────
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-dotenv.config({ path: join(__dirname, ".env") });
-
-// ─── Now import everything else (env vars are available) ─────────────────────
-const { default: express } = await import("express");
-const { default: cors } = await import("cors");
-const { default: mongoose } = await import("mongoose");
-const { default: passport } = await import("passport");
-const { default: configurePassport } = await import("./config/passport.js");
-const { default: authRoutes } = await import("./routes/auth.js");
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI =
-    process.env.MONGO_URI || "mongodb://localhost:27017/enerluma";
-
-// ─── Middleware ────────────────────────────────────────────────────────────────
-app.use(
-    cors({
-        origin: process.env.FRONTEND_URL || "http://localhost:5174",
-        credentials: true,
-    })
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(passport.initialize());
-
-// ─── Passport Strategies ──────────────────────────────────────────────────────
-configurePassport();
-
-// ─── Routes ───────────────────────────────────────────────────────────────────
-app.use("/api/auth", authRoutes);
-
-// Health check
-app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", uptime: process.uptime() });
-});
-
-// ─── Connect to MongoDB & Start Server ────────────────────────────────────────
-async function start() {
+async function startServer() {
     try {
-        console.log("\n🔌 Connecting to MongoDB...");
-        await mongoose.connect(MONGO_URI);
-        console.log(`  ✓ MongoDB connected: ${mongoose.connection.host}`);
+        await connectDatabase();
 
-        app.listen(PORT, () => {
-            console.log(`\n⚡ EnerLuma API server running on http://localhost:${PORT}`);
-            console.log(`  Frontend URL: ${process.env.FRONTEND_URL || "http://localhost:5174"}\n`);
+        app.listen(env.port, () => {
+            logger.info(`EnerLuma API server running on ${env.serverUrl}`);
+            logger.info(`Frontend origin allowed: ${env.frontendUrl}`);
         });
+
+        startMaintenanceJob();
     } catch (err) {
-        console.error("❌ Failed to start server:", err.message);
+        logger.error("Failed to start server", {
+            message: err.message,
+            stack: err.stack,
+        });
         process.exit(1);
     }
 }
 
-start();
+startServer();

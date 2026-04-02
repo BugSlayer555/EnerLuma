@@ -25,6 +25,11 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: "local",
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user",
+        },
         providerId: {
             type: String,
             default: "",
@@ -48,6 +53,7 @@ userSchema.pre("save", async function () {
 
 // Compare password for login
 userSchema.methods.comparePassword = async function (candidatePassword) {
+    if (!this.password) return false;
     return bcrypt.compare(candidatePassword, this.password);
 };
 
@@ -59,23 +65,31 @@ userSchema.statics.findOrCreateFromOAuth = async function ({
     name,
     avatar,
 }) {
-    let user = await this.findOne({ email });
+    const normalizedEmail = (email || "").toLowerCase().trim();
+
+    if (!normalizedEmail) {
+        throw new Error("OAuth profile is missing email");
+    }
+
+    let user = await this.findOne({ email: normalizedEmail });
 
     if (user) {
         // Update provider info if they previously used a different method
-        if (!user.providerId) {
+        if (!user.providerId || !user.provider) {
             user.provider = provider;
             user.providerId = providerId;
-            if (avatar && !user.avatar) user.avatar = avatar;
-            if (name && !user.name) user.name = name;
-            await user.save();
         }
+
+        if (avatar && !user.avatar) user.avatar = avatar;
+        if (name && !user.name) user.name = name;
+        await user.save();
+
         return user;
     }
 
     // Create new user
     user = await this.create({
-        email,
+        email: normalizedEmail,
         name: name || "",
         avatar: avatar || "",
         provider,
