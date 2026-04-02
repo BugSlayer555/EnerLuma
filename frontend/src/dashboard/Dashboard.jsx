@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import {
   Zap,
   Droplets,
-  DollarSign,
+  IndianRupee,
   Cpu,
   TrendingUp,
   TrendingDown,
@@ -218,7 +218,7 @@ export default function Dashboard() {
             sparkData={[8, 8, 7, 8, 8, 9, 8, 8]}
           />
           <KpiCard
-            icon={DollarSign}
+            icon={IndianRupee}
             iconBg="bg-amber-50"
             iconColor="text-amber-600"
             label="Est. Monthly Cost"

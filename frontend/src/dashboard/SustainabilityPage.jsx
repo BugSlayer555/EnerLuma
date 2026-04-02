@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Leaf, Zap, Droplets, DollarSign, Gauge, TrendingDown } from 'lucide-react'
+import { Leaf, Zap, Droplets, IndianRupee, Gauge, TrendingDown } from 'lucide-react'
 import CarbonEmissionsPanel from '../components/sustainability/CarbonEmissionsPanel'
 import WaterConservationPanel from '../components/sustainability/WaterConservationPanel'
 import CostSavingsTimeline from '../components/sustainability/CostSavingsTimeline'
@@ -44,7 +44,7 @@ export default function SustainabilityPage() {
         {[
           { icon: Leaf, label: 'CO₂ Saved', value: '14.6 kg', sub: '↑ 12% vs last month', iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
           { icon: Droplets, label: 'Water Saved', value: '1,850 L', sub: '↑ 18% vs baseline', iconBg: 'bg-cyan-50', iconColor: 'text-cyan-600' },
-          { icon: DollarSign, label: 'Cost Saved', value: '₹1,580', sub: '↑ 15% vs last month', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
+          { icon: IndianRupee, label: 'Cost Saved', value: '₹1,580', sub: '↑ 15% vs last month', iconBg: 'bg-amber-50', iconColor: 'text-amber-600' },
           { icon: Gauge, label: 'Efficiency Index', value: '78 / 100', sub: '4-Star BEE Rating', iconBg: 'bg-primary-50', iconColor: 'text-primary-600' },
         ].map(kpi => (
           <motion.div key={kpi.label} whileHover={{ y: -2 }} className="kpi-card">

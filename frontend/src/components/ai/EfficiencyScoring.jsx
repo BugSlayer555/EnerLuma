@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Award, AlertTriangle, DollarSign } from 'lucide-react'
+import { Award, AlertTriangle, IndianRupee } from 'lucide-react'
 
 function GaugeArc({ score, color }) {
   const r = 32, c = Math.PI * r, offset = c - (score / 100) * c
@@ -35,7 +35,7 @@ export default function EfficiencyScoring({ scores }) {
         <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#111827', margin: 0 }}>Efficiency Scoring</h2>
       </div>
       <p style={{ fontSize: '12px', color: '#9ca3af', margin: '0 0 22px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-        <DollarSign style={{ width: 14, height: 14, color: '#ef4444' }} />
+        <IndianRupee style={{ width: 14, height: 14, color: '#ef4444' }} />
         Total waste: <span style={{ color: '#ef4444', fontWeight: 700 }}>₹{totalWasted}/mo</span> recoverable
       </p>
 

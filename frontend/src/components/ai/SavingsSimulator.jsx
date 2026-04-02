@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calculator, Leaf, DollarSign, Zap, ChevronRight } from 'lucide-react'
+import { Calculator, Leaf, IndianRupee, Zap, ChevronRight } from 'lucide-react'
 
 const difficultyColors = {
   easy:   { bg: '#f0fdf4', border: '#bbf7d0', text: '#10b981' },
@@ -36,7 +36,7 @@ export default function SavingsSimulator({ scenarios }) {
       {/* Summary cards */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '20px' }}>
         <div style={{ padding: '14px', borderRadius: '14px', background: '#f0fdf4', border: '1px solid #bbf7d0', textAlign: 'center' }}>
-          <DollarSign style={{ width: 16, height: 16, color: '#10b981', margin: '0 auto 4px' }} />
+          <IndianRupee style={{ width: 16, height: 16, color: '#10b981', margin: '0 auto 4px' }} />
           <span style={{ fontSize: '18px', fontWeight: 800, color: '#10b981' }}>₹{totalMonthlySavings}</span>
           <p style={{ fontSize: '9px', color: '#9ca3af', margin: '2px 0 0' }}>Max Monthly</p>
         </div>

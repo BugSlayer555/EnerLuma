@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Info, DollarSign, Leaf, TrendingDown, TrendingUp, TreePine, MapPin, Calendar, Shield, Tag, Cpu } from 'lucide-react'
+import { Info, IndianRupee, Leaf, TrendingDown, TrendingUp, TreePine, MapPin, Calendar, Shield, Tag, Cpu } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 const tooltipStyle = {
@@ -69,7 +69,7 @@ export default function DeviceMetadata({ profile, costEstimate, carbonImpact }) 
                 style={{ padding: 24 }}
             >
                 <div className="flex items-center gap-2" style={{ marginBottom: 20 }}>
-                    <DollarSign className="w-4 h-4 text-amber-500" />
+                    <IndianRupee className="w-4 h-4 text-amber-500" />
                     <h3 className="text-sm font-bold text-gray-900">Cost Estimate</h3>
                 </div>
 

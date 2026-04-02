@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Wrench, Heart, AlertTriangle, Clock, DollarSign } from 'lucide-react'
+import { Wrench, Heart, AlertTriangle, Clock, IndianRupee } from 'lucide-react'
 
 const urgencyColors = {
   critical: '#ef4444',
@@ -93,7 +93,7 @@ export default function PredictiveMaintenanceAlerts({ alerts }) {
                     </span>
                     {a.estimatedCost > 0 && (
                       <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <DollarSign style={{ width: 12, height: 12 }} />
+                        <IndianRupee style={{ width: 12, height: 12 }} />
                         ~₹{a.estimatedCost.toLocaleString()}
                       </span>
                     )}
