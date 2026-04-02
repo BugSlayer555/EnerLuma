@@ -1,0 +1,14 @@
+{
+  "name": "enerluma",
+  "version": "1.0.0",
+  "description": "EnerLuma – Energy & Water monitoring platform (frontend + backend)",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --names \"backend,frontend\" --prefix-colors \"cyan,magenta\" \"npm run dev --prefix backend/server\" \"npm run dev --prefix frontend\"",
+    "install:all": "npm install --prefix backend/server && npm install --prefix frontend",
+    "seed": "npm run seed --prefix backend/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

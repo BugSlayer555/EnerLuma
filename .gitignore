@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/server/node_modules/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Environment files – never commit secrets
+backend/server/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
