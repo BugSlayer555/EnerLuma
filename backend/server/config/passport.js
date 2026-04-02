@@ -1,17 +1,18 @@
-import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import AppleStrategy from "passport-apple";
-import User from "../models/User.js";
 
-export default function configurePassport() {
-    // ─── Google OAuth 2.0 ───────────────────────────────────────────────
-    if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+import env from "./env.js";
+import User from "../models/User.js";
+import { logger } from "../utils/logger.js";
+
+export default function configurePassport(passport) {
+    if (env.googleClientId && env.googleClientSecret) {
         passport.use(
             new GoogleStrategy(
                 {
-                    clientID: process.env.GOOGLE_CLIENT_ID,
-                    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-                    callbackURL: `http://localhost:${process.env.PORT || 5000}/api/auth/google/callback`,
+                    clientID: env.googleClientId,
+                    clientSecret: env.googleClientSecret,
+                    callbackURL: `${env.serverUrl}/api/auth/google/callback`,
                     scope: ["profile", "email"],
                 },
                 async (_accessToken, _refreshToken, profile, done) => {
@@ -40,32 +41,24 @@ export default function configurePassport() {
                 }
             )
         );
-        console.log("  ✓ Google OAuth strategy configured");
+        logger.info("Google OAuth strategy configured");
     } else {
-        console.log(
-            "  ⚠ Google OAuth skipped (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET not set)"
-        );
+        logger.warn("Google OAuth skipped because credentials are not configured");
     }
 
-    // ─── Apple Sign-In ──────────────────────────────────────────────────
-    if (
-        process.env.APPLE_CLIENT_ID &&
-        process.env.APPLE_TEAM_ID &&
-        process.env.APPLE_KEY_ID
-    ) {
+    if (env.appleClientId && env.appleTeamId && env.appleKeyId) {
         passport.use(
             new AppleStrategy(
                 {
-                    clientID: process.env.APPLE_CLIENT_ID,
-                    teamID: process.env.APPLE_TEAM_ID,
-                    keyID: process.env.APPLE_KEY_ID,
-                    privateKeyLocation: process.env.APPLE_PRIVATE_KEY_PATH || "",
-                    callbackURL: "/api/auth/apple/callback",
+                    clientID: env.appleClientId,
+                    teamID: env.appleTeamId,
+                    keyID: env.appleKeyId,
+                    privateKeyLocation: env.applePrivateKeyPath,
+                    callbackURL: `${env.serverUrl}/api/auth/apple/callback`,
                     scope: ["name", "email"],
                 },
                 async (_accessToken, _refreshToken, idToken, profile, done) => {
                     try {
-                        // Apple may only send the user's name on the FIRST login
                         const email = profile.email || (idToken && idToken.email) || "";
                         const name =
                             profile.name
@@ -87,14 +80,11 @@ export default function configurePassport() {
                 }
             )
         );
-        console.log("  ✓ Apple Sign-In strategy configured");
+        logger.info("Apple Sign-In strategy configured");
     } else {
-        console.log(
-            "  ⚠ Apple Sign-In skipped (APPLE_CLIENT_ID / APPLE_TEAM_ID / APPLE_KEY_ID not set)"
-        );
+        logger.warn("Apple Sign-In skipped because credentials are not configured");
     }
 
-    // Passport serialization (not used for JWT, but required by Passport)
     passport.serializeUser((user, done) => done(null, user._id));
     passport.deserializeUser(async (id, done) => {
         try {
