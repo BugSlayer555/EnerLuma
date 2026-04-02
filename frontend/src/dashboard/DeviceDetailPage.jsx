@@ -29,7 +29,7 @@ export default function DeviceDetailPage() {
   const StatusIcon = statusStyle.icon
 
   return (
-    <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-[1400px] mx-auto space-y-12 pb-10">
+    <motion.div variants={stagger} initial="hidden" animate="visible" style={{ maxWidth: 1400, margin: '0 auto', paddingBottom: 40, display: 'flex', flexDirection: 'column', gap: 32 }}>
       {/* Back Link */}
       <motion.div variants={fadeUp}>
         <Link to="/dashboard/devices" className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary-600 transition-colors group">
@@ -39,11 +39,11 @@ export default function DeviceDetailPage() {
       </motion.div>
 
       {/* Device Header */}
-      <motion.div variants={fadeUp} className="flex items-center gap-5">
-        <div className="flex items-center justify-center rounded-2xl bg-primary-50 border border-primary-100" style={{ width: 64, height: 64, fontSize: 28 }}>
+      <motion.div variants={fadeUp} className="flex items-center" style={{ gap: 20 }}>
+        <div className="flex items-center justify-center rounded-2xl bg-primary-50 border border-primary-100" style={{ width: 64, height: 64, fontSize: 28, flexShrink: 0 }}>
           {profile.icon}
         </div>
-        <div className="flex-1 min-w-0">
+        <div style={{ minWidth: 0, flex: 1 }}>
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="text-xl font-bold text-gray-900">{profile.name}</h1>
             <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${statusStyle.bg}`}>
@@ -58,24 +58,31 @@ export default function DeviceDetailPage() {
         </div>
       </motion.div>
 
+      {/* KPI Strip */}
       <motion.div variants={fadeUp}><DeviceKPIStrip kpis={kpis} /></motion.div>
 
+      {/* Consumption Chart */}
       <motion.div variants={fadeUp}>
         <DeviceMainChart realTime={realTime} historical={historical} costEstimate={costEstimate} carbonImpact={carbonImpact} unit={realTime.todayUnit} />
       </motion.div>
 
+      {/* AI Insights */}
       <motion.div variants={fadeUp}>
         <DeviceAIInsights efficiency={efficiency} recommendations={aiRecommendations} comparisons={comparisons} />
       </motion.div>
 
-      <motion.div variants={fadeUp} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <DeviceHealthPanel health={health} />
-        <div className="lg:col-span-2">
-          <DeviceMetadata profile={profile} costEstimate={costEstimate} carbonImpact={carbonImpact} />
-        </div>
+      {/* Device Metadata (3 responsive cards) */}
+      <motion.div variants={fadeUp}>
+        <DeviceMetadata profile={profile} costEstimate={costEstimate} carbonImpact={carbonImpact} />
       </motion.div>
 
-      <motion.div variants={fadeUp} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Health Panel */}
+      <motion.div variants={fadeUp}>
+        <DeviceHealthPanel health={health} />
+      </motion.div>
+
+      {/* Anomaly History + Maintenance Log */}
+      <motion.div variants={fadeUp} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 24 }}>
         <DeviceAnomalyHistory anomalies={anomalies} />
         <DeviceMaintenanceLog maintenanceLog={maintenanceLog} />
       </motion.div>

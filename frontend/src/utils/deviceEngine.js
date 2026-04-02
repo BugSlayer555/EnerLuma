@@ -1,12 +1,12 @@
 // Device Analytics Engine — generates mock device data for the Device Detail page
 
 const deviceProfiles = {
-  hvac: { name: 'Smart Thermostat', type: 'HVAC', brand: 'Nest', model: 'Learning 3rd Gen', location: 'Living Room', icon: '🌡️', status: 'online', installedDate: '2024-06-15' },
-  refrigerator: { name: 'Refrigerator', type: 'Appliance', brand: 'Samsung', model: 'RT28', location: 'Kitchen', icon: '🧊', status: 'online', installedDate: '2023-01-20' },
-  'water-heater': { name: 'Water Heater', type: 'Water', brand: 'Havells', model: 'Instanio 25L', location: 'Bathroom', icon: '🚿', status: 'online', installedDate: '2024-02-10' },
-  'ev-charger': { name: 'EV Charger', type: 'Charging', brand: 'Ather', model: 'Dot', location: 'Garage', icon: '⚡', status: 'online', installedDate: '2024-09-05' },
-  'washing-machine': { name: 'Washing Machine', type: 'Appliance', brand: 'LG', model: 'FHM1408', location: 'Utility', icon: '👕', status: 'online', installedDate: '2023-08-12' },
-  shower: { name: 'Shower System', type: 'Water', brand: 'Jaquar', model: 'ARI-39', location: 'Master Bath', icon: '🚿', status: 'online', installedDate: '2024-04-22' },
+  hvac: { name: 'Smart Thermostat', type: 'HVAC', brand: 'Nest', model: 'Learning 3rd Gen', location: 'Living Room', icon: '🌡️', status: 'online', installedDate: '2024-06-15', installDate: '2024-06-15', warrantyExpiry: '2027-06-15', category: 'climate' },
+  refrigerator: { name: 'Refrigerator', type: 'Appliance', brand: 'Samsung', model: 'RT28', location: 'Kitchen', icon: '🧊', status: 'online', installedDate: '2023-01-20', installDate: '2023-01-20', warrantyExpiry: '2026-01-20', category: 'appliance' },
+  'water-heater': { name: 'Water Heater', type: 'Water', brand: 'Havells', model: 'Instanio 25L', location: 'Bathroom', icon: '🚿', status: 'online', installedDate: '2024-02-10', installDate: '2024-02-10', warrantyExpiry: '2027-02-10', category: 'water' },
+  'ev-charger': { name: 'EV Charger', type: 'Charging', brand: 'Ather', model: 'Dot', location: 'Garage', icon: '⚡', status: 'online', installedDate: '2024-09-05', installDate: '2024-09-05', warrantyExpiry: '2027-09-05', category: 'charging' },
+  'washing-machine': { name: 'Washing Machine', type: 'Appliance', brand: 'LG', model: 'FHM1408', location: 'Utility', icon: '👕', status: 'online', installedDate: '2023-08-12', installDate: '2023-08-12', warrantyExpiry: '2026-08-12', category: 'appliance' },
+  shower: { name: 'Shower System', type: 'Water', brand: 'Jaquar', model: 'ARI-39', location: 'Master Bath', icon: '🚿', status: 'online', installedDate: '2024-04-22', installDate: '2024-04-22', warrantyExpiry: '2027-04-22', category: 'water' },
 }
 
 function generateHourlyData(peak = 2.5) {
@@ -70,11 +70,26 @@ export function getDeviceAnalytics(deviceId) {
       daily: +(Math.random() * 15 + 5).toFixed(0),
       monthly: +(Math.random() * 400 + 150).toFixed(0),
       yearly: +(Math.random() * 5000 + 2000).toFixed(0),
+      projectedMonth: +(Math.random() * 400 + 200).toFixed(0),
+      lastMonth: +(Math.random() * 350 + 180).toFixed(0),
+      currentMonth: +(Math.random() * 300 + 150).toFixed(0),
+      dailyAvg: +(Math.random() * 12 + 5).toFixed(0),
+      costTrend: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => ({
+        day,
+        cost: +(Math.random() * 18 + 4).toFixed(0),
+      })),
     },
     carbonImpact: {
       daily: +(Math.random() * 0.5 + 0.2).toFixed(2),
       monthly: +(Math.random() * 15 + 5).toFixed(1),
       treesEquivalent: +(Math.random() * 2 + 0.5).toFixed(1),
+      monthlyEmissions: +(Math.random() * 15 + 5).toFixed(1),
+      yearlyEmissions: +(Math.random() * 180 + 60).toFixed(0),
+      comparedToAvg: Math.floor(Math.random() * 30 - 15),
+      trend: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(month => ({
+        month,
+        emissions: +(Math.random() * 12 + 4).toFixed(1),
+      })),
     },
     comparisons: {
       vsAverage: Math.floor(Math.random() * 20 - 10),

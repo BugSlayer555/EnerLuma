@@ -11,7 +11,6 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  plugins: [react(), tailwindcss()],
   server: {
     proxy: {
       '/api': {
