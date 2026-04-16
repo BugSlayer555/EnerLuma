@@ -29,6 +29,7 @@ import DeviceDetailPage from "./dashboard/DeviceDetailPage";
 import SustainabilityPage from "./dashboard/SustainabilityPage";
 import AlertsPage from "./dashboard/AlertsPage";
 import SettingsPage from "./dashboard/SettingsPage";
+import AnalyticsPage from "./dashboard/AnalyticsPage";
 import NotFound from "./dashboard/NotFound";
 
 // Import new pages
@@ -103,6 +104,7 @@ export default function App() {
         <Route path="/dashboard/devices" element={<DashboardLayout><DevicesPage /></DashboardLayout>} />
         <Route path="/dashboard/sustainability" element={<DashboardLayout><SustainabilityPage /></DashboardLayout>} />
         <Route path="/dashboard/alerts" element={<DashboardLayout><AlertsPage /></DashboardLayout>} />
+        <Route path="/dashboard/analytics" element={<DashboardLayout><AnalyticsPage /></DashboardLayout>} />
         <Route path="/dashboard/settings" element={<DashboardLayout><SettingsPage /></DashboardLayout>} />
         <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
         <Route path="/dashboard/*" element={<DashboardLayout><NotFound /></DashboardLayout>} />

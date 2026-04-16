@@ -51,8 +51,12 @@ body {
   color: var(--el-text-primary);
   font-family: 'Outfit', system-ui, sans-serif;
   overflow-x: hidden;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Hide system cursor only on pages that render the custom cursor */
+body:has(#av-dot) {
+  cursor: none;
 }
 
 ::selection {
@@ -629,6 +633,33 @@ img {
   .dash-content {
     padding: 24px 20px !important;
   }
+
+  /* Dashboard grid responsive — tablet */
+  .dash-grid-2col {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .dash-grid-3col {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .dash-grid-4col {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .dash-grid-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+  .dash-grid-main-side {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Settings form grid */
+  .settings-form-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Page banner padding */
+  .page-banner {
+    padding: 1.5rem 1.75rem !important;
+  }
 }
 
 /* ──── Mobile: ≤ 600px ──── */
@@ -718,6 +749,27 @@ img {
   }
   .dash-content {
     padding: 20px 16px !important;
+  }
+
+  /* Dashboard grid responsive — mobile: all single column */
+  .dash-grid-2col,
+  .dash-grid-3col,
+  .dash-grid-4col,
+  .dash-grid-sidebar,
+  .dash-grid-main-side {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Settings form grid */
+  .settings-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Page banner */
+  .page-banner {
+    padding: 1.25rem 1.25rem !important;
+    border-radius: 1rem !important;
   }
 
   /* Direction fix for HowItWorks page steps */

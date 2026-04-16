@@ -19,6 +19,7 @@ import {
     AlertTriangle,
     LogOut,
 } from "lucide-react";
+import enerlLogo from "../assets/enerluma-logo.png";
 
 /* ─────────────────── NAV CONFIG ─────────────────── */
 
@@ -45,7 +46,6 @@ const navGroups = [
         label: "SYSTEM",
         items: [
             { name: "Settings", icon: Settings, path: "/dashboard/settings" },
-            { name: "Admin", icon: ShieldCheck, path: "/dashboard/admin" },
         ],
     },
 ];
@@ -65,7 +65,7 @@ function Sidebar({ collapsed, onToggle }) {
             {/* Brand */}
             <div className="sidebar-brand">
                 <div className="sidebar-logo">
-                    <Leaf className="w-5 h-5 text-white" />
+                    <img src={enerlLogo} alt="EnerLuma" style={{ width: 22, height: 22, objectFit: 'contain' }} />
                 </div>
                 <AnimatePresence>
                     {!collapsed && (
@@ -129,7 +129,7 @@ function Sidebar({ collapsed, onToggle }) {
             {/* Eco Score */}
             <div className="sidebar-eco">
                 <div className="sidebar-eco-icon">
-                    <Leaf className="w-4 h-4 text-white" />
+                    <img src={enerlLogo} alt="EnerLuma" style={{ width: 18, height: 18, objectFit: 'contain' }} />
                 </div>
                 {!collapsed && (
                     <div className="sidebar-eco-content">
@@ -181,7 +181,7 @@ function Header() {
 
             <div className="dash-header-right">
                 {/* Notifications */}
-                <button className="dash-header-icon-btn">
+                <button className="dash-header-icon-btn" onClick={() => navigate("/dashboard/alerts")}>
                     <Bell className="w-5 h-5 text-gray-500" />
                     <span className="dash-header-notif-dot" />
                 </button>

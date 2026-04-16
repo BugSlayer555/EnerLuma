@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Award, AlertTriangle, IndianRupee } from 'lucide-react'
+import { AlertTriangle, IndianRupee } from 'lucide-react'
+import enerlLogo from '../../assets/enerluma-logo.png'
 
 function GaugeArc({ score, color }) {
   const r = 32, c = Math.PI * r, offset = c - (score / 100) * c
@@ -31,7 +32,7 @@ export default function EfficiencyScoring({ scores }) {
     >
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-        <Award style={{ width: 20, height: 20, color: '#f59e0b' }} />
+        <img src={enerlLogo} alt="EnerLuma" style={{ width: 20, height: 20, objectFit: 'contain' }} />
         <h2 style={{ fontSize: '17px', fontWeight: 800, color: '#111827', margin: 0 }}>Efficiency Scoring</h2>
       </div>
       <p style={{ fontSize: '12px', color: '#9ca3af', margin: '0 0 22px', display: 'flex', alignItems: 'center', gap: '6px' }}>

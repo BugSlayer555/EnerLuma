@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Cpu, Zap, Droplets,
   Thermometer, LightbulbIcon, Plug, Plus,
-  Search, LayoutGrid, List, ChevronRight,
+  Search, LayoutGrid, List, ChevronRight, X,
 } from 'lucide-react'
 
-const devices = [
+const defaultDevices = [
   { id: 1, slug: 'hvac', name: 'Smart Thermostat', room: 'Living Room', type: 'HVAC', icon: Thermometer, status: 'online', consumption: '1.2 kWh', lastSeen: 'Now', signal: 92 },
   { id: 2, slug: 'refrigerator', name: 'Refrigerator', room: 'Kitchen', type: 'Appliance', icon: Plug, status: 'online', consumption: '1.8 kWh', lastSeen: 'Now', signal: 95 },
   { id: 3, slug: 'water-heater', name: 'Water Heater', room: 'Bathroom', type: 'Water', icon: Droplets, status: 'online', consumption: '2.1 kWh', lastSeen: 'Now', signal: 88 },
@@ -28,6 +28,18 @@ const statusStyles = {
   idle: { bg: 'bg-amber-50', text: 'text-amber-600', dot: 'bg-amber-400' },
 }
 
+const typeOptions = ['HVAC', 'Appliance', 'Water', 'Lighting', 'Charging', 'Plug', 'Sensor']
+
+const iconMap = {
+  HVAC: Thermometer,
+  Appliance: Plug,
+  Water: Droplets,
+  Lighting: LightbulbIcon,
+  Charging: Zap,
+  Plug: Plug,
+  Sensor: Zap,
+}
+
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }
 const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.35 } } }
 
@@ -35,6 +47,9 @@ export default function DevicesPage() {
   const [view, setView] = useState('grid')
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
+  const [devices, setDevices] = useState(defaultDevices)
+  const [showModal, setShowModal] = useState(false)
+  const [newDevice, setNewDevice] = useState({ name: '', room: '', type: 'Appliance' })
 
   const filtered = devices.filter(d => {
     if (filter === 'online' && d.status !== 'online') return false
@@ -51,6 +66,26 @@ export default function DevicesPage() {
 
   const online = devices.filter(d => d.status === 'online').length
 
+  const handleAddDevice = () => {
+    if (!newDevice.name.trim() || !newDevice.room.trim()) return
+    const slug = newDevice.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+    const device = {
+      id: devices.length + 1,
+      slug,
+      name: newDevice.name.trim(),
+      room: newDevice.room.trim(),
+      type: newDevice.type,
+      icon: iconMap[newDevice.type] || Plug,
+      status: 'online',
+      consumption: '0.0 kWh',
+      lastSeen: 'Now',
+      signal: 80,
+    }
+    setDevices(prev => [...prev, device])
+    setNewDevice({ name: '', room: '', type: 'Appliance' })
+    setShowModal(false)
+  }
+
   return (
     <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-[1400px] mx-auto space-y-12 pb-10">
       {/* Header */}
@@ -61,7 +96,16 @@ export default function DevicesPage() {
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">{online} of {devices.length} devices online</p>
         </div>
-        <button className="flex items-center gap-1.5 px-4 py-2 text-sm bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-colors">
+        <button
+          onClick={() => setShowModal(true)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '10px 22px', fontSize: 13, fontWeight: 600,
+            background: 'linear-gradient(135deg, #0f766e, #14b8a6)', border: 'none', borderRadius: 12,
+            color: '#fff', cursor: 'pointer', boxShadow: '0 2px 8px rgba(20,184,166,0.3)',
+            transition: 'all 0.15s',
+          }}
+        >
           <Plus className="w-4 h-4" /> Add Device
         </button>
       </motion.div>
@@ -110,6 +154,201 @@ export default function DevicesPage() {
           </div>
         </motion.div>
       ))}
+
+      {/* Add Device Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 50,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)',
+            }}
+            onClick={() => setShowModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 24 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+              style={{
+                background: '#fff',
+                borderRadius: 24,
+                width: '100%',
+                maxWidth: 520,
+                boxShadow: '0 32px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.04)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Premium Header with gradient */}
+              <div style={{
+                background: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+                padding: '32px 36px 28px',
+                position: 'relative', overflow: 'hidden',
+              }}>
+                {/* Decorative circles */}
+                <div style={{
+                  position: 'absolute', top: -30, right: -30, width: 100, height: 100,
+                  borderRadius: '50%', background: 'rgba(255,255,255,0.08)',
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: -20, right: 60, width: 60, height: 60,
+                  borderRadius: '50%', background: 'rgba(255,255,255,0.06)',
+                }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                      <div style={{
+                        width: 36, height: 36, borderRadius: 10, background: 'rgba(255,255,255,0.2)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        <Plus style={{ width: 20, height: 20, color: '#fff' }} />
+                      </div>
+                      <h2 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0 }}>Add New Device</h2>
+                    </div>
+                    <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.75)', margin: 0 }}>
+                      Connect a new smart device to your dashboard
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    style={{
+                      width: 32, height: 32, borderRadius: 8, border: 'none',
+                      background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      cursor: 'pointer', color: '#fff', transition: 'all 0.15s',
+                    }}
+                  >
+                    <X style={{ width: 16, height: 16 }} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Form Body */}
+              <div style={{ padding: '28px 36px 36px' }}>
+                {/* Device Type Selector */}
+                <div style={{ marginBottom: 24 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 12 }}>
+                    Device Type
+                  </label>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                    {typeOptions.map(t => {
+                      const TypeIcon = iconMap[t] || Plug
+                      const isSelected = newDevice.type === t
+                      return (
+                        <button
+                          key={t}
+                          onClick={() => setNewDevice(prev => ({ ...prev, type: t }))}
+                          style={{
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+                            padding: '14px 4px', borderRadius: 14,
+                            border: isSelected ? '2px solid #14b8a6' : '1.5px solid #e5e7eb',
+                            background: isSelected ? '#f0fdfa' : '#fff',
+                            cursor: 'pointer', transition: 'all 0.2s',
+                          }}
+                        >
+                          <TypeIcon style={{
+                            width: 20, height: 20,
+                            color: isSelected ? '#0f766e' : '#9ca3af',
+                            transition: 'color 0.2s',
+                          }} />
+                          <span style={{
+                            fontSize: 10, fontWeight: 600,
+                            color: isSelected ? '#0f766e' : '#9ca3af',
+                            transition: 'color 0.2s',
+                          }}>{t}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Device Name */}
+                <div style={{ marginBottom: 20 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 10 }}>
+                    Device Name
+                  </label>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '0 16px', background: '#f9fafb', border: '1.5px solid #e5e7eb',
+                    borderRadius: 14, transition: 'border-color 0.15s',
+                  }}>
+                    <Cpu style={{ width: 16, height: 16, color: '#9ca3af', flexShrink: 0 }} />
+                    <input
+                      type="text"
+                      placeholder="e.g. Smart Thermostat"
+                      value={newDevice.name}
+                      onChange={e => setNewDevice(prev => ({ ...prev, name: e.target.value }))}
+                      style={{
+                        width: '100%', padding: '13px 0', fontSize: 14, border: 'none',
+                        outline: 'none', color: '#1f2937', background: 'transparent',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Room / Location */}
+                <div style={{ marginBottom: 28 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#6b7280', letterSpacing: 0.5, textTransform: 'uppercase', marginBottom: 10 }}>
+                    Room / Location
+                  </label>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '0 16px', background: '#f9fafb', border: '1.5px solid #e5e7eb',
+                    borderRadius: 14, transition: 'border-color 0.15s',
+                  }}>
+                    <LayoutGrid style={{ width: 16, height: 16, color: '#9ca3af', flexShrink: 0 }} />
+                    <input
+                      type="text"
+                      placeholder="e.g. Living Room"
+                      value={newDevice.room}
+                      onChange={e => setNewDevice(prev => ({ ...prev, room: e.target.value }))}
+                      style={{
+                        width: '100%', padding: '13px 0', fontSize: 14, border: 'none',
+                        outline: 'none', color: '#1f2937', background: 'transparent',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div style={{ display: 'flex', gap: 12 }}>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    style={{
+                      flex: 1, padding: '13px 0', fontSize: 14, fontWeight: 600, color: '#64748b',
+                      background: '#f1f5f9', border: 'none', borderRadius: 14, cursor: 'pointer',
+                      transition: 'all 0.15s',
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleAddDevice}
+                    disabled={!newDevice.name.trim() || !newDevice.room.trim()}
+                    style={{
+                      flex: 1.5, padding: '13px 0', fontSize: 14, fontWeight: 600, color: '#fff',
+                      background: (!newDevice.name.trim() || !newDevice.room.trim()) ? '#d1d5db' : 'linear-gradient(135deg, #0f766e, #14b8a6)',
+                      border: 'none', borderRadius: 14,
+                      cursor: (!newDevice.name.trim() || !newDevice.room.trim()) ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.2s',
+                      boxShadow: (!newDevice.name.trim() || !newDevice.room.trim()) ? 'none' : '0 4px 14px rgba(20,184,166,0.35)',
+                      letterSpacing: 0.3,
+                    }}
+                  >
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                      <Plus style={{ width: 16, height: 16 }} /> Add Device
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }

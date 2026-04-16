@@ -74,12 +74,23 @@ export default function EnergyPage() {
           </h1>
           <p className="text-sm text-gray-500 mt-0.5">Deep dive into your energy consumption patterns</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div className="live-badge">Live</div>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm bg-white border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition-colors">
+          <button style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '10px 22px', fontSize: 13, fontWeight: 500,
+            background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
+            color: '#4b5563', cursor: 'pointer', transition: 'all 0.15s',
+          }}>
             <Calendar className="w-4 h-4" /> Date Range
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-colors">
+          <button style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '10px 22px', fontSize: 13, fontWeight: 600,
+            background: 'linear-gradient(135deg, #0f766e, #14b8a6)', border: 'none', borderRadius: 12,
+            color: '#fff', cursor: 'pointer', boxShadow: '0 2px 8px rgba(20,184,166,0.3)',
+            transition: 'all 0.15s',
+          }}>
             <Download className="w-4 h-4" /> Export
           </button>
         </div>

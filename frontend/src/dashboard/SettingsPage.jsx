@@ -2,21 +2,36 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
     Settings, User, Bell, Shield, Zap,
-    Droplets, Save, IndianRupee, Mail, Phone, MapPin, Key, Smartphone, Monitor, Lock,
+    Droplets, Save, IndianRupee, Mail, Phone, MapPin, Key,
+    Smartphone, Monitor, Lock, Camera, ChevronRight, Palette,
 } from 'lucide-react'
 
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }
 const fadeUp = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }
 
-const tabs = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'thresholds', label: 'Thresholds', icon: Zap },
-    { id: 'security', label: 'Security', icon: Shield },
+const sidebarTabs = [
+    { id: 'profile', label: 'Profile', icon: User, desc: 'Personal info & avatar' },
+    { id: 'notifications', label: 'Notifications', icon: Bell, desc: 'Alert preferences' },
+    { id: 'thresholds', label: 'Thresholds', icon: Zap, desc: 'Usage limits & alerts' },
+    { id: 'security', label: 'Security', icon: Lock, desc: 'Password & sessions' },
 ]
+
+function ToggleSwitch({ enabled, onChange }) {
+    return (
+        <div
+            className={`toggle-track ${enabled ? 'active' : 'inactive'}`}
+            onClick={() => onChange(!enabled)}
+        >
+            <div className="toggle-thumb" />
+        </div>
+    )
+}
 
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState('profile')
+    const [notifStates, setNotifStates] = useState({
+        email: true, push: true, weekly: true, ai: false, sound: false,
+    })
 
     // Read user data from localStorage
     const storedUser = (() => {
@@ -30,314 +45,401 @@ export default function SettingsPage() {
     const userEmail = storedUser.email || 'user@enerluma.com'
     const userInitial = userName.charAt(0).toUpperCase()
 
+    const toggleNotif = (key) => {
+        setNotifStates(prev => ({ ...prev, [key]: !prev[key] }))
+    }
+
     return (
-        <motion.div variants={stagger} initial="hidden" animate="visible" style={{ maxWidth: 920, margin: '0 auto' }}>
-            {/* Header */}
-            <motion.div variants={fadeUp} style={{ marginBottom: 28 }}>
-                <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111827', display: 'flex', alignItems: 'center', gap: 10, margin: 0 }}>
-                    <div style={{ padding: 10, borderRadius: 14, background: 'linear-gradient(135deg, #e0f2fe, #dbeafe)' }}>
-                        <Settings style={{ width: 22, height: 22, color: '#3b82f6' }} />
+        <motion.div variants={stagger} initial="hidden" animate="visible" style={{ maxWidth: 1100, margin: '0 auto' }}>
+            {/* Page Header Banner */}
+            <motion.div variants={fadeUp} className="page-banner" style={{ marginBottom: 28 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{
+                            width: 52, height: 52, borderRadius: 16,
+                            background: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            boxShadow: '0 4px 14px rgba(20,184,166,0.25)',
+                        }}>
+                            <Settings style={{ width: 24, height: 24, color: '#fff' }} />
+                        </div>
+                        <div>
+                            <h1 style={{ fontSize: 24, fontWeight: 800, color: '#0f766e', margin: 0 }}>Settings</h1>
+                            <p style={{ fontSize: 13, color: '#64748b', margin: '4px 0 0' }}>
+                                Manage your account, preferences and alert thresholds
+                            </p>
+                        </div>
                     </div>
-                    Settings
-                </h1>
-                <p style={{ fontSize: 14, color: '#9ca3af', marginTop: 6 }}>Configure your dashboard preferences and account</p>
+                    <div className="stat-badge success" style={{ display: 'none' }}>
+                        <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16a34a' }} />
+                        All synced
+                    </div>
+                </div>
             </motion.div>
 
-            {/* Tabs */}
-            <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: 5, background: '#f3f4f6', borderRadius: 14, width: 'fit-content', marginBottom: 28 }}>
-                {tabs.map(t => {
-                    const Icon = t.icon
-                    return (
-                        <button
-                            key={t.id}
-                            onClick={() => setActiveTab(t.id)}
-                            style={{
-                                display: 'flex', alignItems: 'center', gap: 7,
-                                padding: '10px 20px', fontSize: 13, fontWeight: 600,
-                                borderRadius: 10, border: 'none', cursor: 'pointer',
-                                transition: 'all 0.2s',
-                                background: activeTab === t.id ? '#fff' : 'transparent',
-                                boxShadow: activeTab === t.id ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
-                                color: activeTab === t.id ? '#1f2937' : '#9ca3af',
-                            }}
-                        >
-                            <Icon style={{ width: 15, height: 15 }} /> {t.label}
-                        </button>
-                    )
-                })}
-            </motion.div>
-
-            {/* Tab Content */}
-            <motion.div variants={fadeUp}>
-
-                {/* ──────── PROFILE TAB ──────── */}
-                {activeTab === 'profile' && (
-                    <div style={{ background: '#fff', borderRadius: 20, border: '1px solid #f3f4f6', padding: 32 }}>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 24px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <User style={{ width: 16, height: 16, color: '#6366f1' }} />
-                            Profile Information
-                        </h2>
-
-                        {/* Avatar Row */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 32, padding: 20, background: '#f9fafb', borderRadius: 16 }}>
-                            <div style={{
-                                width: 64, height: 64, borderRadius: 18, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                background: 'linear-gradient(135deg, #10b981, #14b8a6)', flexShrink: 0,
-                            }}>
-                                <span style={{ color: '#fff', fontSize: 22, fontWeight: 800 }}>{userInitial}</span>
-                            </div>
-                            <div style={{ flex: 1 }}>
-                                <p style={{ fontSize: 17, fontWeight: 700, color: '#1f2937', margin: 0 }}>{userName}</p>
-                                <p style={{ fontSize: 13, color: '#9ca3af', margin: '4px 0 0' }}>{userEmail}</p>
-                            </div>
-                            <button style={{
-                                padding: '9px 16px', fontSize: 13, fontWeight: 600,
-                                background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12,
-                                color: '#6b7280', cursor: 'pointer',
-                            }}>
-                                Change Avatar
+            {/* Main Layout: Sidebar Tabs + Content */}
+            <motion.div variants={fadeUp} className="dash-grid-sidebar" style={{ gridTemplateColumns: '220px 1fr' }}>
+                {/* Sidebar Navigation */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    {sidebarTabs.map(t => {
+                        const Icon = t.icon
+                        const isActive = activeTab === t.id
+                        return (
+                            <button
+                                key={t.id}
+                                onClick={() => setActiveTab(t.id)}
+                                style={{
+                                    display: 'flex', alignItems: 'center', gap: 12,
+                                    padding: '14px 16px', borderRadius: 14, border: 'none',
+                                    cursor: 'pointer', transition: 'all 0.2s', textAlign: 'left',
+                                    background: isActive ? '#f0fdfa' : 'transparent',
+                                    borderLeft: isActive ? '3px solid #14b8a6' : '3px solid transparent',
+                                    boxShadow: isActive ? '0 2px 8px rgba(20,184,166,0.08)' : 'none',
+                                }}
+                            >
+                                <div style={{
+                                    width: 36, height: 36, borderRadius: 10,
+                                    background: isActive ? 'linear-gradient(135deg, #0f766e, #14b8a6)' : '#f3f4f6',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    transition: 'all 0.2s', flexShrink: 0,
+                                }}>
+                                    <Icon style={{
+                                        width: 16, height: 16,
+                                        color: isActive ? '#fff' : '#9ca3af',
+                                    }} />
+                                </div>
+                                <div>
+                                    <p style={{
+                                        fontSize: 13, fontWeight: 600, margin: 0,
+                                        color: isActive ? '#0f766e' : '#4b5563',
+                                    }}>{t.label}</p>
+                                    <p style={{
+                                        fontSize: 10, margin: '2px 0 0',
+                                        color: isActive ? '#14b8a6' : '#9ca3af',
+                                    }}>{t.desc}</p>
+                                </div>
                             </button>
-                        </div>
+                        )
+                    })}
+                </div>
 
-                        {/* Form Fields */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
-                            {[
-                                { label: 'Full Name', type: 'text', value: userName, icon: User },
-                                { label: 'Email', type: 'email', value: userEmail, icon: Mail },
-                                { label: 'Phone', type: 'tel', value: '+91 98765 43210', icon: Phone },
-                                { label: 'Location', type: 'text', value: 'Bangalore, India', icon: MapPin },
-                            ].map(f => {
-                                const FIcon = f.icon
-                                return (
-                                    <div key={f.label}>
-                                        <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, fontWeight: 600, color: '#9ca3af', marginBottom: 7, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                                            <FIcon style={{ width: 12, height: 12 }} /> {f.label}
-                                        </label>
-                                        <input
-                                            type={f.type}
-                                            defaultValue={f.value}
-                                            style={{
-                                                width: '100%', padding: '12px 14px', fontSize: 14,
-                                                border: '1px solid #e5e7eb', borderRadius: 12,
-                                                outline: 'none', color: '#374151', background: '#fff',
-                                                boxSizing: 'border-box',
-                                            }}
-                                        />
-                                    </div>
-                                )
-                            })}
-                        </div>
+                {/* Tab Content */}
+                <div>
+                    {/* ──────── PROFILE TAB ──────── */}
+                    {activeTab === 'profile' && (
+                        <div className="card-elevated" style={{ padding: 0, overflow: 'hidden' }}>
+                            {/* Cover / Avatar Section */}
+                            <div style={{
+                                background: 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 60%, #e0f2fe 100%)',
+                                padding: '32px 36px 24px', position: 'relative',
+                            }}>
+                                {/* Decorative dots */}
+                                <div style={{
+                                    position: 'absolute', top: 16, right: 20,
+                                    display: 'grid', gridTemplateColumns: 'repeat(5, 6px)', gap: 8, opacity: 0.3,
+                                }}>
+                                    {Array.from({ length: 15 }).map((_, i) => (
+                                        <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: '#0f766e' }} />
+                                    ))}
+                                </div>
 
-                        <button style={{
-                            display: 'flex', alignItems: 'center', gap: 8,
-                            padding: '12px 24px', fontSize: 14, fontWeight: 600,
-                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff',
-                            border: 'none', borderRadius: 12, cursor: 'pointer',
-                        }}>
-                            <Save style={{ width: 15, height: 15 }} /> Save Changes
-                        </button>
-                    </div>
-                )}
-
-                {/* ──────── NOTIFICATIONS TAB ──────── */}
-                {activeTab === 'notifications' && (
-                    <div style={{ background: '#fff', borderRadius: 20, border: '1px solid #f3f4f6', padding: 32 }}>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 28px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <Bell style={{ width: 16, height: 16, color: '#f59e0b' }} />
-                            Notification Preferences
-                        </h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                            {[
-                                { label: 'Email Notifications', desc: 'Receive alert summaries via email', enabled: true, icon: Mail },
-                                { label: 'Push Notifications', desc: 'Browser push for critical alerts', enabled: true, icon: Monitor },
-                                { label: 'Weekly Report', desc: 'Automated weekly consumption report', enabled: true, icon: Bell },
-                                { label: 'AI Recommendations', desc: 'Get notified of new AI insights', enabled: false, icon: Zap },
-                                { label: 'Sound Alerts', desc: 'Audio ping for critical alerts', enabled: false, icon: Smartphone },
-                            ].map(n => {
-                                const NIcon = n.icon
-                                return (
-                                    <div key={n.label} style={{
-                                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                        padding: '18px 20px', borderRadius: 14, background: '#f9fafb',
-                                        transition: 'background 0.15s',
-                                    }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                                            <div style={{ padding: 8, borderRadius: 10, background: '#fff', border: '1px solid #f3f4f6' }}>
-                                                <NIcon style={{ width: 15, height: 15, color: '#6b7280' }} />
-                                            </div>
-                                            <div>
-                                                <p style={{ fontSize: 14, fontWeight: 600, color: '#374151', margin: 0 }}>{n.label}</p>
-                                                <p style={{ fontSize: 12, color: '#9ca3af', margin: '3px 0 0' }}>{n.desc}</p>
-                                            </div>
-                                        </div>
-                                        <label style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', cursor: 'pointer' }}>
-                                            <input type="checkbox" defaultChecked={n.enabled} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
-                                                onChange={e => {
-                                                    const dot = e.target.nextElementSibling
-                                                    if (e.target.checked) {
-                                                        dot.style.background = '#3b82f6'
-                                                        dot.querySelector('span').style.transform = 'translateX(20px)'
-                                                    } else {
-                                                        dot.style.background = '#d1d5db'
-                                                        dot.querySelector('span').style.transform = 'translateX(0)'
-                                                    }
-                                                }}
-                                            />
-                                            <div style={{
-                                                width: 44, height: 24, borderRadius: 12,
-                                                background: n.enabled ? '#3b82f6' : '#d1d5db',
-                                                transition: 'background 0.2s', position: 'relative',
-                                            }}>
-                                                <span style={{
-                                                    position: 'absolute', top: 2, left: 2,
-                                                    width: 20, height: 20, borderRadius: '50%',
-                                                    background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
-                                                    transition: 'transform 0.2s',
-                                                    transform: n.enabled ? 'translateX(20px)' : 'translateX(0)',
-                                                }} />
-                                            </div>
-                                        </label>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                )}
-
-                {/* ──────── THRESHOLDS TAB ──────── */}
-                {activeTab === 'thresholds' && (
-                    <div style={{ background: '#fff', borderRadius: 20, border: '1px solid #f3f4f6', padding: 32 }}>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <Zap style={{ width: 16, height: 16, color: '#f59e0b' }} />
-                            Alert Thresholds
-                        </h2>
-                        <p style={{ fontSize: 13, color: '#9ca3af', margin: '0 0 28px' }}>Set consumption limits that trigger alerts</p>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
-                            {[
-                                { label: 'Energy Daily Limit', unit: 'kWh', value: 30, icon: Zap, iconColor: '#f59e0b' },
-                                { label: 'Water Daily Limit', unit: 'L', value: 200, icon: Droplets, iconColor: '#06b6d4' },
-                                { label: 'Monthly Budget', unit: '₹', value: 2000, icon: IndianRupee, iconColor: '#10b981' },
-                            ].map(t => {
-                                const TIcon = t.icon
-                                return (
-                                    <div key={t.label} style={{ padding: 20, background: '#f9fafb', borderRadius: 16 }}>
-                                        <label style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 10 }}>
-                                            <TIcon style={{ width: 14, height: 14, color: t.iconColor }} />
-                                            {t.label} ({t.unit})
-                                        </label>
-                                        <input
-                                            type="number"
-                                            defaultValue={t.value}
-                                            style={{
-                                                width: '100%', padding: '12px 14px', fontSize: 14,
-                                                border: '1px solid #e5e7eb', borderRadius: 12,
-                                                outline: 'none', color: '#374151', background: '#fff',
-                                                boxSizing: 'border-box',
-                                            }}
-                                        />
-                                    </div>
-                                )
-                            })}
-                            <div style={{ padding: 20, background: '#f9fafb', borderRadius: 16 }}>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 10 }}>
-                                    <Shield style={{ width: 14, height: 14, color: '#8b5cf6' }} />
-                                    Anomaly Sensitivity
-                                </label>
-                                <select
-                                    defaultValue="High (2σ)"
-                                    style={{
-                                        width: '100%', padding: '12px 14px', fontSize: 14,
-                                        border: '1px solid #e5e7eb', borderRadius: 12,
-                                        outline: 'none', color: '#374151', background: '#fff',
-                                        boxSizing: 'border-box', cursor: 'pointer',
-                                    }}
-                                >
-                                    <option>High (2σ)</option>
-                                    <option>Medium (3σ)</option>
-                                    <option>Low (4σ)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button style={{
-                            display: 'flex', alignItems: 'center', gap: 8,
-                            padding: '12px 24px', fontSize: 14, fontWeight: 600,
-                            background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff',
-                            border: 'none', borderRadius: 12, cursor: 'pointer',
-                        }}>
-                            <Save style={{ width: 15, height: 15 }} /> Save Thresholds
-                        </button>
-                    </div>
-                )}
-
-                {/* ──────── SECURITY TAB ──────── */}
-                {activeTab === 'security' && (
-                    <div style={{ background: '#fff', borderRadius: 20, border: '1px solid #f3f4f6', padding: 32 }}>
-                        <h2 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 28px', display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <Shield style={{ width: 16, height: 16, color: '#ef4444' }} />
-                            Security Settings
-                        </h2>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                            {[
-                                {
-                                    title: 'Two-Factor Authentication',
-                                    desc: 'Add an extra layer of security with TOTP',
-                                    icon: Lock,
-                                    btnLabel: 'Enable',
-                                    btnBg: '#eff6ff', btnColor: '#3b82f6', btnBorder: '1px solid #dbeafe',
-                                },
-                                {
-                                    title: 'Change Password',
-                                    desc: 'Last changed 30 days ago',
-                                    icon: Key,
-                                    btnLabel: 'Update',
-                                    btnBg: '#fff', btnColor: '#6b7280', btnBorder: '1px solid #e5e7eb',
-                                },
-                                {
-                                    title: 'Active Sessions',
-                                    desc: '2 devices currently logged in',
-                                    icon: Monitor,
-                                    btnLabel: 'Manage',
-                                    btnBg: '#fef2f2', btnColor: '#ef4444', btnBorder: '1px solid #fecaca',
-                                },
-                                {
-                                    title: 'API Keys',
-                                    desc: 'Manage API access for integrations',
-                                    icon: Key,
-                                    btnLabel: 'View Keys',
-                                    btnBg: '#fff', btnColor: '#6b7280', btnBorder: '1px solid #e5e7eb',
-                                },
-                            ].map(s => {
-                                const SIcon = s.icon
-                                return (
-                                    <div key={s.title} style={{
-                                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                                        padding: '20px 22px', background: '#f9fafb', borderRadius: 16,
-                                    }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-                                            <div style={{ padding: 10, borderRadius: 12, background: '#fff', border: '1px solid #f3f4f6' }}>
-                                                <SIcon style={{ width: 16, height: 16, color: '#6b7280' }} />
-                                            </div>
-                                            <div>
-                                                <p style={{ fontSize: 14, fontWeight: 600, color: '#374151', margin: 0 }}>{s.title}</p>
-                                                <p style={{ fontSize: 12, color: '#9ca3af', margin: '4px 0 0' }}>{s.desc}</p>
-                                            </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                                    <div style={{ position: 'relative' }}>
+                                        <div style={{
+                                            width: 80, height: 80, borderRadius: 22,
+                                            background: 'linear-gradient(135deg, #0f766e, #14b8a6)',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            boxShadow: '0 8px 24px rgba(20,184,166,0.25)',
+                                            border: '4px solid #fff',
+                                        }}>
+                                            <span style={{ color: '#fff', fontSize: 28, fontWeight: 800 }}>{userInitial}</span>
                                         </div>
                                         <button style={{
-                                            padding: '8px 18px', fontSize: 13, fontWeight: 600,
-                                            background: s.btnBg, color: s.btnColor,
-                                            border: s.btnBorder, borderRadius: 10, cursor: 'pointer',
+                                            position: 'absolute', bottom: -4, right: -4,
+                                            width: 28, height: 28, borderRadius: 8,
+                                            background: '#fff', border: '2px solid #e5e7eb',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            cursor: 'pointer', boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
                                         }}>
-                                            {s.btnLabel}
+                                            <Camera style={{ width: 12, height: 12, color: '#6b7280' }} />
                                         </button>
                                     </div>
-                                )
-                            })}
+                                    <div style={{ flex: 1 }}>
+                                        <h2 style={{ fontSize: 20, fontWeight: 700, color: '#111827', margin: 0 }}>{userName}</h2>
+                                        <p style={{ fontSize: 13, color: '#6b7280', margin: '4px 0 0' }}>{userEmail}</p>
+                                        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+                                            <span className="stat-badge success">
+                                                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#16a34a' }} />
+                                                Active
+                                            </span>
+                                            <span className="stat-badge info">Admin</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Form Fields */}
+                            <div style={{ padding: '28px 36px 36px' }}>
+                                <h3 style={{ fontSize: 14, fontWeight: 700, color: '#374151', margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <User style={{ width: 14, height: 14, color: '#14b8a6' }} />
+                                    Personal Information
+                                </h3>
+
+                                <div className="settings-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
+                                    <div className="form-group">
+                                        <label className="form-label"><User style={{ width: 12, height: 12 }} /> Full Name</label>
+                                        <input type="text" defaultValue={userName} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label"><Mail style={{ width: 12, height: 12 }} /> Email</label>
+                                        <input type="email" defaultValue={userEmail} className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label"><Phone style={{ width: 12, height: 12 }} /> Phone</label>
+                                        <input type="tel" defaultValue="+91 98765 43210" className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label"><MapPin style={{ width: 12, height: 12 }} /> Location</label>
+                                        <input type="text" defaultValue="Bangalore, India" className="form-input" />
+                                    </div>
+                                </div>
+
+                                <div className="section-divider" />
+
+                                <h3 style={{ fontSize: 14, fontWeight: 700, color: '#374151', margin: '0 0 20px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <Palette style={{ width: 14, height: 14, color: '#14b8a6' }} />
+                                    Preferences
+                                </h3>
+
+                                <div className="settings-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
+                                    <div className="form-group">
+                                        <label className="form-label">Language</label>
+                                        <select className="form-input" defaultValue="English" style={{ cursor: 'pointer' }}>
+                                            <option>English</option>
+                                            <option>Hindi</option>
+                                            <option>Tamil</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Timezone</label>
+                                        <select className="form-input" defaultValue="IST (UTC+5:30)" style={{ cursor: 'pointer' }}>
+                                            <option>IST (UTC+5:30)</option>
+                                            <option>UTC</option>
+                                            <option>EST (UTC-5)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button className="btn-primary">
+                                    <Save style={{ width: 15, height: 15 }} /> Save Changes
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+
+                    {/* ──────── NOTIFICATIONS TAB ──────── */}
+                    {activeTab === 'notifications' && (
+                        <div className="card-elevated" style={{ padding: '32px 36px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 28 }}>
+                                <div>
+                                    <h2 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
+                                        <div style={{ width: 32, height: 32, borderRadius: 10, background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Bell style={{ width: 16, height: 16, color: '#d97706' }} />
+                                        </div>
+                                        Notification Preferences
+                                    </h2>
+                                    <p style={{ fontSize: 12, color: '#9ca3af', margin: '6px 0 0 42px' }}>Control how and when you receive alerts</p>
+                                </div>
+                                <span className="stat-badge success">3 Active</span>
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                {[
+                                    { key: 'email', label: 'Email Notifications', desc: 'Receive alert summaries via email', icon: Mail, iconBg: '#eff6ff', iconColor: '#3b82f6' },
+                                    { key: 'push', label: 'Push Notifications', desc: 'Browser push for critical alerts', icon: Monitor, iconBg: '#f0fdf4', iconColor: '#16a34a' },
+                                    { key: 'weekly', label: 'Weekly Report', desc: 'Automated weekly consumption report', icon: Bell, iconBg: '#fef3c7', iconColor: '#d97706' },
+                                    { key: 'ai', label: 'AI Recommendations', desc: 'Get notified of new AI insights', icon: Zap, iconBg: '#fdf2f8', iconColor: '#ec4899' },
+                                    { key: 'sound', label: 'Sound Alerts', desc: 'Audio ping for critical alerts', icon: Smartphone, iconBg: '#f5f3ff', iconColor: '#7c3aed' },
+                                ].map(n => {
+                                    const NIcon = n.icon
+                                    return (
+                                        <div key={n.key} style={{
+                                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                            padding: '18px 20px', borderRadius: 16,
+                                            background: notifStates[n.key] ? '#fafffe' : '#f9fafb',
+                                            border: notifStates[n.key] ? '1px solid rgba(20,184,166,0.15)' : '1px solid #f3f4f6',
+                                            transition: 'all 0.2s',
+                                        }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                                                <div style={{
+                                                    width: 40, height: 40, borderRadius: 12,
+                                                    background: n.iconBg,
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                }}>
+                                                    <NIcon style={{ width: 18, height: 18, color: n.iconColor }} />
+                                                </div>
+                                                <div>
+                                                    <p style={{ fontSize: 14, fontWeight: 600, color: '#374151', margin: 0 }}>{n.label}</p>
+                                                    <p style={{ fontSize: 12, color: '#9ca3af', margin: '3px 0 0' }}>{n.desc}</p>
+                                                </div>
+                                            </div>
+                                            <ToggleSwitch
+                                                enabled={notifStates[n.key]}
+                                                onChange={() => toggleNotif(n.key)}
+                                            />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* ──────── THRESHOLDS TAB ──────── */}
+                    {activeTab === 'thresholds' && (
+                        <div className="card-elevated" style={{ padding: '32px 36px' }}>
+                            <div style={{ marginBottom: 28 }}>
+                                <h2 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    <div style={{ width: 32, height: 32, borderRadius: 10, background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Zap style={{ width: 16, height: 16, color: '#d97706' }} />
+                                    </div>
+                                    Alert Thresholds
+                                </h2>
+                                <p style={{ fontSize: 12, color: '#9ca3af', margin: '6px 0 0 42px' }}>Set consumption limits that trigger alerts</p>
+                            </div>
+
+                            <div className="settings-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
+                                {[
+                                    { label: 'Energy Daily Limit', unit: 'kWh', value: 30, icon: Zap, iconBg: '#fef3c7', iconColor: '#d97706' },
+                                    { label: 'Water Daily Limit', unit: 'L', value: 200, icon: Droplets, iconBg: '#ecfeff', iconColor: '#0891b2' },
+                                    { label: 'Monthly Budget', unit: '₹', value: 2000, icon: IndianRupee, iconBg: '#f0fdf4', iconColor: '#16a34a' },
+                                ].map(t => {
+                                    const TIcon = t.icon
+                                    return (
+                                        <div key={t.label} style={{
+                                            padding: 20, background: '#f9fafb', borderRadius: 16,
+                                            border: '1px solid #f3f4f6',
+                                        }}>
+                                            <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 12 }}>
+                                                <div style={{
+                                                    width: 28, height: 28, borderRadius: 8, background: t.iconBg,
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                }}>
+                                                    <TIcon style={{ width: 14, height: 14, color: t.iconColor }} />
+                                                </div>
+                                                {t.label} ({t.unit})
+                                            </label>
+                                            <input type="number" defaultValue={t.value} className="form-input" />
+                                        </div>
+                                    )
+                                })}
+                                <div style={{
+                                    padding: 20, background: '#f9fafb', borderRadius: 16,
+                                    border: '1px solid #f3f4f6',
+                                }}>
+                                    <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, fontWeight: 600, color: '#6b7280', marginBottom: 12 }}>
+                                        <div style={{
+                                            width: 28, height: 28, borderRadius: 8, background: '#f5f3ff',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        }}>
+                                            <Shield style={{ width: 14, height: 14, color: '#7c3aed' }} />
+                                        </div>
+                                        Anomaly Sensitivity
+                                    </label>
+                                    <select defaultValue="High (2σ)" className="form-input" style={{ cursor: 'pointer' }}>
+                                        <option>High (2σ)</option>
+                                        <option>Medium (3σ)</option>
+                                        <option>Low (4σ)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button className="btn-primary">
+                                <Save style={{ width: 15, height: 15 }} /> Save Thresholds
+                            </button>
+                        </div>
+                    )}
+
+                    {/* ──────── SECURITY TAB ──────── */}
+                    {activeTab === 'security' && (
+                        <div className="card-elevated" style={{ padding: '32px 36px' }}>
+                            <div style={{ marginBottom: 28 }}>
+                                <h2 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: 0, display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    <div style={{ width: 32, height: 32, borderRadius: 10, background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Lock style={{ width: 16, height: 16, color: '#ef4444' }} />
+                                    </div>
+                                    Security Settings
+                                </h2>
+                                <p style={{ fontSize: 12, color: '#9ca3af', margin: '6px 0 0 42px' }}>Manage your password and active sessions</p>
+                            </div>
+
+                            {/* Change Password */}
+                            <div style={{ marginBottom: 28 }}>
+                                <h3 style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    <Key style={{ width: 14, height: 14, color: '#14b8a6' }} /> Change Password
+                                </h3>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 400 }}>
+                                    <div className="form-group">
+                                        <label className="form-label">Current Password</label>
+                                        <input type="password" placeholder="••••••••" className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">New Password</label>
+                                        <input type="password" placeholder="••••••••" className="form-input" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label">Confirm New Password</label>
+                                        <input type="password" placeholder="••••••••" className="form-input" />
+                                    </div>
+                                </div>
+                                <button className="btn-primary" style={{ marginTop: 20 }}>
+                                    <Lock style={{ width: 14, height: 14 }} /> Update Password
+                                </button>
+                            </div>
+
+                            <div className="section-divider" />
+
+                            {/* Active Sessions */}
+                            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <Monitor style={{ width: 14, height: 14, color: '#14b8a6' }} /> Active Sessions
+                            </h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                {[
+                                    { device: 'Chrome on Windows', location: 'Bangalore, India', time: 'Active now', current: true },
+                                    { device: 'Safari on iPhone', location: 'Bangalore, India', time: '2 hours ago', current: false },
+                                ].map(s => (
+                                    <div key={s.device} style={{
+                                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                                        padding: '16px 20px', borderRadius: 14,
+                                        background: s.current ? '#fafffe' : '#f9fafb',
+                                        border: s.current ? '1px solid rgba(20,184,166,0.2)' : '1px solid #f3f4f6',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                                            <div style={{
+                                                width: 36, height: 36, borderRadius: 10, background: '#f3f4f6',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            }}>
+                                                <Monitor style={{ width: 16, height: 16, color: '#6b7280' }} />
+                                            </div>
+                                            <div>
+                                                <p style={{ fontSize: 13, fontWeight: 600, color: '#374151', margin: 0 }}>
+                                                    {s.device} {s.current && <span style={{ fontSize: 10, color: '#16a34a', fontWeight: 700 }}>• Current</span>}
+                                                </p>
+                                                <p style={{ fontSize: 11, color: '#9ca3af', margin: '2px 0 0' }}>{s.location} · {s.time}</p>
+                                            </div>
+                                        </div>
+                                        {!s.current && (
+                                            <button style={{
+                                                padding: '6px 14px', fontSize: 11, fontWeight: 600,
+                                                color: '#ef4444', background: '#fef2f2', border: '1px solid #fecaca',
+                                                borderRadius: 8, cursor: 'pointer',
+                                            }}>Revoke</button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </motion.div>
         </motion.div>
     )
