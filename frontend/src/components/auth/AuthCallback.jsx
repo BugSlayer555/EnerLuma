@@ -21,7 +21,6 @@ export default function AuthCallback() {
 
         if (token) {
             localStorage.setItem("enerluma_token", token);
-            // Redirect to home or dashboard
             navigate("/dashboard");
         } else {
             navigate("/login");

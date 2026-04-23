@@ -34,6 +34,15 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
+        phone: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+        preferences: {
+            currency: { type: String, enum: ["INR", "USD", "EUR", "GBP"], default: "INR" },
+            notifications: { type: Boolean, default: true },
+        },
         password: {
             type: String,
             select: false, // don't return password by default

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    DashboardPreview,
     AuthBranding,
     AmbientBg,
     SocialLogin,
@@ -60,7 +59,7 @@ function LoginForm() {
     return (
         <form onSubmit={handleSubmit} noValidate style={form.wrapper}>
             <h2 style={form.title}>Welcome Back</h2>
-            <p style={form.subtitle}>Access your EnerLuma dashboard</p>
+            <p style={form.subtitle}>Access your EnerLuma account</p>
 
             {errors.general && (
                 <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, padding: "10px 14px", marginBottom: 8, fontSize: 13, color: "#dc2626" }}>
@@ -159,7 +158,6 @@ export default function LoginPage() {
             {/* Left pane */}
             <div style={layout.leftPane} className="auth-left">
                 <AmbientBg />
-                <DashboardPreview />
                 <AuthBranding />
             </div>
 

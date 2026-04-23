@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Loader from "./components/ui/Loader";
@@ -19,24 +19,13 @@ import Contact from "./components/sections/Contact";
 import LoginPage from "./components/auth/LoginPage";
 import SignupPage from "./components/auth/SignupPage";
 import AuthCallback from "./components/auth/AuthCallback";
-import Dashboard from "./dashboard/Dashboard";
-import DashboardLayout from "./dashboard/DashboardLayout";
-import AIInsightsPage from "./dashboard/AIInsightsPage";
-import EnergyPage from "./dashboard/EnergyPage";
-import WaterPage from "./dashboard/WaterPage";
-import DevicesPage from "./dashboard/DevicesPage";
-import DeviceDetailPage from "./dashboard/DeviceDetailPage";
-import SustainabilityPage from "./dashboard/SustainabilityPage";
-import AlertsPage from "./dashboard/AlertsPage";
-import SettingsPage from "./dashboard/SettingsPage";
-import AnalyticsPage from "./dashboard/AnalyticsPage";
-import NotFound from "./dashboard/NotFound";
 
 // Import new pages
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import ContactPage from "./pages/ContactPage";
+import DashboardPage from "./pages/DashboardPage";
 
 function LandingPage() {
   const [loaderDone, setLoaderDone] = useState(false);
@@ -97,18 +86,8 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/dashboard/insights" element={<DashboardLayout><AIInsightsPage /></DashboardLayout>} />
-        <Route path="/dashboard/energy" element={<DashboardLayout><EnergyPage /></DashboardLayout>} />
-        <Route path="/dashboard/water" element={<DashboardLayout><WaterPage /></DashboardLayout>} />
-        <Route path="/dashboard/devices/:deviceId" element={<DashboardLayout><DeviceDetailPage /></DashboardLayout>} />
-        <Route path="/dashboard/devices" element={<DashboardLayout><DevicesPage /></DashboardLayout>} />
-        <Route path="/dashboard/sustainability" element={<DashboardLayout><SustainabilityPage /></DashboardLayout>} />
-        <Route path="/dashboard/alerts" element={<DashboardLayout><AlertsPage /></DashboardLayout>} />
-        <Route path="/dashboard/analytics" element={<DashboardLayout><AnalyticsPage /></DashboardLayout>} />
-        <Route path="/dashboard/settings" element={<DashboardLayout><SettingsPage /></DashboardLayout>} />
-        <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
-        <Route path="/dashboard/*" element={<DashboardLayout><NotFound /></DashboardLayout>} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

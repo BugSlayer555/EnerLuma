@@ -9,7 +9,6 @@ export function startMaintenanceJob() {
     }
 
     maintenanceInterval = setInterval(() => {
-        clearCacheByPrefix("dashboard:");
         clearCacheByPrefix("energy:");
         clearCacheByPrefix("water:");
         clearCacheByPrefix("devices:");

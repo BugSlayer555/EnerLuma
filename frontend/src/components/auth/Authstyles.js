@@ -65,50 +65,6 @@ export const layout = {
   },
 };
 
-// ─── Dashboard Preview ────────────────────────────────────────────────────────
-export const dashboard = {
-  dashboardPreview: {
-    background: "rgba(255,255,255,0.78)",
-    border: "1px solid rgba(15,106,102,0.15)",
-    borderRadius: 16,
-    padding: 20,
-    width: "100%",
-    maxWidth: 420,
-    backdropFilter: "blur(12px)",
-    boxShadow: "0 8px 32px rgba(15,106,102,0.10)",
-    animation: "fadeIn 0.6s ease both",
-  },
-  previewHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    marginBottom: 16,
-  },
-  dot: { width: 10, height: 10, borderRadius: "50%" },
-  previewTitle: { marginLeft: 8, fontSize: 13, color: "#666", fontWeight: 500 },
-  metricsRow: { display: "flex", gap: 10, marginBottom: 16 },
-  metricCard: {
-    flex: 1,
-    background: "#f0fafa",
-    border: "1px solid rgba(15,106,102,0.12)",
-    borderRadius: 10,
-    padding: "10px 12px",
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-  },
-  metricIcon:  { color: colors.primary, marginBottom: 2 },
-  metricData:  { display: "flex", flexDirection: "column" },
-  metricValue: { fontSize: 18, fontWeight: 700, color: colors.text, lineHeight: 1.1 },
-  metricUnit:  { fontSize: 11, color: colors.primary, fontWeight: 400, marginLeft: 2 },
-  metricLabel: { fontSize: 10, color: colors.textMuted, marginTop: 2 },
-  metricTrend: { fontSize: 11, fontWeight: 600, color: colors.primary },
-  chartWrap:   { background: "rgba(15,106,102,0.05)", borderRadius: 8, padding: "10px 12px" },
-  chartHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 },
-  chartTitle:  { fontSize: 12, color: "#666" },
-  chartBadge:  { fontSize: 11, color: colors.primary, fontWeight: 600 },
-};
-
 // ─── Branding ─────────────────────────────────────────────────────────────────
 export const branding = {
   wrapper:  { marginTop: 28, textAlign: "center", animation: "fadeIn 0.8s ease 0.2s both" },

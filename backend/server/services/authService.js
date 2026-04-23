@@ -10,6 +10,8 @@ export function sanitizeUser(user) {
         avatar: user.avatar,
         provider: user.provider,
         role: user.role,
+        phone: user.phone || "",
+        preferences: user.preferences || { currency: "INR", notifications: true },
     };
 }
 

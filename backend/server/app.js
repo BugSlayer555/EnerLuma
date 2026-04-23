@@ -3,6 +3,9 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import passport from "passport";
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
 
 import env from "./config/env.js";
 import configurePassport from "./config/passport.js";
@@ -10,6 +13,15 @@ import apiRoutes from "./routes/index.js";
 import { generalLimiter } from "./middleware/rateLimit.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { logger } from "./utils/logger.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const app = express();
 const allowedOrigins = new Set([
@@ -41,7 +53,7 @@ app.use(
     })
 );
 
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -58,6 +70,9 @@ configurePassport(passport);
 app.get("/api/health", (_req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
 });
+
+// Serve uploaded files
+app.use("/api/uploads", express.static(uploadsDir));
 
 app.use("/api", generalLimiter, apiRoutes);
 

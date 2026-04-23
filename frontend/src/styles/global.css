@@ -101,12 +101,6 @@ body:has(#av-dot) {
   opacity: 0.35;
 }
 
-/* Hide custom cursor on dashboard pages */
-.dash-layout ~ #av-dot,
-.dash-layout ~ #av-ring {
-  display: none !important;
-}
-
 /* GPU-composited CSS animations only */
 @keyframes ticker {
   0% {
@@ -611,46 +605,6 @@ img {
     min-height: 240px !important;
   }
 
-  /* Dashboard sidebar — auto collapse on tablet */
-  .dash-layout .sidebar {
-    width: 72px !important;
-  }
-  .dash-layout .sidebar .sidebar-brand-text,
-  .dash-layout .sidebar .sidebar-group-label,
-  .dash-layout .sidebar .sidebar-item-text,
-  .dash-layout .sidebar .sidebar-badge,
-  .dash-layout .sidebar .sidebar-eco-content,
-  .dash-layout .sidebar .sidebar-eco-value {
-    display: none !important;
-  }
-  .dash-layout .sidebar .sidebar-collapse-btn {
-    display: none !important;
-  }
-
-  .dash-header {
-    padding: 12px 16px !important;
-  }
-  .dash-content {
-    padding: 24px 20px !important;
-  }
-
-  /* Dashboard grid responsive — tablet */
-  .dash-grid-2col {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  .dash-grid-3col {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  .dash-grid-4col {
-    grid-template-columns: 1fr 1fr !important;
-  }
-  .dash-grid-sidebar {
-    grid-template-columns: 1fr !important;
-  }
-  .dash-grid-main-side {
-    grid-template-columns: 1fr !important;
-  }
-
   /* Settings form grid */
   .settings-form-grid {
     grid-template-columns: 1fr 1fr !important;
@@ -727,38 +681,6 @@ img {
     flex-direction: column !important;
     text-align: center !important;
     gap: 8px !important;
-  }
-
-  /* Dashboard sidebar — collapsed to icon-only */
-  .dash-layout .sidebar {
-    width: 0 !important;
-    border-right: none !important;
-    overflow: hidden !important;
-  }
-  .dash-header {
-    padding: 10px 12px !important;
-  }
-  .dash-header-search {
-    max-width: 180px !important;
-  }
-  .dash-header-user-info {
-    display: none !important;
-  }
-  .dash-header-kbd {
-    display: none !important;
-  }
-  .dash-content {
-    padding: 20px 16px !important;
-  }
-
-  /* Dashboard grid responsive — mobile: all single column */
-  .dash-grid-2col,
-  .dash-grid-3col,
-  .dash-grid-4col,
-  .dash-grid-sidebar,
-  .dash-grid-main-side {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
   }
 
   /* Settings form grid */

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    DashboardPreview,
     AuthBranding,
     AmbientBg,
     SocialLogin,
@@ -259,7 +258,6 @@ export default function SignupPage() {
             {/* Left pane */}
             <div style={layout.leftPane} className="auth-left">
                 <AmbientBg />
-                <DashboardPreview />
                 <AuthBranding />
             </div>
 

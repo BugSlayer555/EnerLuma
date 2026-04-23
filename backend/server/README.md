@@ -23,7 +23,6 @@ backend/server/
     aiController.js
     alertController.js
     authController.js
-    dashboardController.js
     deviceController.js
     energyController.js
     waterController.js
@@ -47,7 +46,6 @@ backend/server/
     ai.js
     alerts.js
     auth.js
-    dashboard.js
     devices.js
     energy.js
     index.js
@@ -59,7 +57,6 @@ backend/server/
     aiService.js
     alertService.js
     authService.js
-    dashboardService.js
     deviceService.js
     energyService.js
     waterService.js
@@ -91,7 +88,6 @@ OAuth variables are optional.
 - `GET /api/auth/google/callback`
 - `GET /api/auth/apple`
 - `POST /api/auth/apple/callback`
-- `GET /api/dashboard/overview`
 - `GET /api/energy/analytics`
 - `GET /api/water/analytics`
 - `GET /api/devices`

@@ -4,7 +4,7 @@ import User from "../models/User.js";
 import Device from "../models/Device.js";
 import Alert from "../models/Alert.js";
 import UsageSnapshot from "../models/UsageSnapshot.js";
-import { alertsData, dashboardOverviewData, devicesData } from "../data/mockData.js";
+import { alertsData, devicesData } from "../data/mockData.js";
 import { logger } from "../utils/logger.js";
 
 async function ensureSeedUser() {
@@ -31,6 +31,16 @@ function toDateFromWeekday(index) {
     d.setDate(now.getDate() - dayOffset);
     return d;
 }
+
+const weeklyUsageSeed = [
+    { energy: 18.2, water: 145 },
+    { energy: 22.1, water: 162 },
+    { energy: 19.8, water: 138 },
+    { energy: 24.3, water: 170 },
+    { energy: 20.5, water: 155 },
+    { energy: 16.1, water: 120 },
+    { energy: 14.8, water: 110 },
+];
 
 async function seed() {
     await connectDatabase();
@@ -67,7 +77,7 @@ async function seed() {
 
     const snapshots = [];
 
-    dashboardOverviewData.weeklyData.forEach((entry, index) => {
+    weeklyUsageSeed.forEach((entry, index) => {
         snapshots.push({
             owner: user._id,
             resource: "energy",
