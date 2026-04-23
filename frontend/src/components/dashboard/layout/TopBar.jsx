@@ -1,5 +1,5 @@
 import { Bell, Search, ChevronDown } from "lucide-react";
-import { layout, colors } from "../pages/DashboardStyles";
+import { layout, colors } from "../DashboardStyles";
 
 export default function TopBar({ userName }) {
     return (

@@ -9,7 +9,7 @@ import {
     Tooltip,
     ResponsiveContainer,
 } from "recharts";
-import { cards, colors } from "../pages/DashboardStyles";
+import { cards, colors } from "../DashboardStyles";
 
 const API_BASE = "/api";
 function getToken() { return localStorage.getItem("enerluma_token"); }

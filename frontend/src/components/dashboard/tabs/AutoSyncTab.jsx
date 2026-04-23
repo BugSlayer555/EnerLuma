@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RefreshCw, CheckCircle2, AlertCircle, Plus, Zap, Droplets } from "lucide-react";
-import { cards, formStyles, tableStyles, colors } from "../pages/DashboardStyles";
+import { cards, formStyles, tableStyles, colors } from "../DashboardStyles";
 
 export default function AutoSyncTab({ integrations, onLinked, onSync, apiFetch, resourceType }) {
     const [connecting, setConnecting] = useState(false);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { User, Mail, Phone, Shield, Bell, IndianRupee, CheckCircle2, AlertCircle, Trash2 } from "lucide-react";
-import { cards, formStyles, colors } from "../pages/DashboardStyles";
+import { cards, formStyles, colors } from "../DashboardStyles";
 
 const API_BASE = "/api";
 

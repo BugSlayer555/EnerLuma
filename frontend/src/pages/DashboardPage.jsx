@@ -27,15 +27,15 @@ import {
     Cpu,
     Menu
 } from "lucide-react";
-import AutoSyncTab from "../components/AutoSyncTab.jsx";
-import OverviewTab from "../components/OverviewTab.jsx";
-import TopBar from "../components/TopBar.jsx";
-import Sidebar from "../components/Sidebar.jsx";
-import AlertsTab from "../components/AlertsTab.jsx";
-import AiInsightsTab from "../components/AiInsightsTab.jsx";
-import AnalyticsTab from "../components/AnalyticsTab.jsx";
-import SustainabilityTab from "../components/SustainabilityTab.jsx";
-import SettingsTab from "../components/SettingsTab.jsx";
+import AutoSyncTab from "../components/dashboard/tabs/AutoSyncTab.jsx";
+import OverviewTab from "../components/dashboard/tabs/OverviewTab.jsx";
+import TopBar from "../components/dashboard/layout/TopBar.jsx";
+import Sidebar from "../components/dashboard/layout/Sidebar.jsx";
+import AlertsTab from "../components/dashboard/tabs/AlertsTab.jsx";
+import AiInsightsTab from "../components/dashboard/tabs/AiInsightsTab.jsx";
+import AnalyticsTab from "../components/dashboard/tabs/AnalyticsTab.jsx";
+import SustainabilityTab from "../components/dashboard/tabs/SustainabilityTab.jsx";
+import SettingsTab from "../components/dashboard/tabs/SettingsTab.jsx";
 import {
     layout,
     cards,
@@ -45,7 +45,7 @@ import {
     tabBar,
     chartStyles,
     colors,
-} from "./DashboardStyles";
+} from "../components/dashboard/DashboardStyles";
 
 const API_BASE = "/api";
 
@@ -897,6 +897,7 @@ export default function DashboardPage() {
     const [integrations, setIntegrations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userName, setUserName] = useState("");
+    const [userId, setUserId] = useState("");
 
     const fetchData = useCallback(async () => {
         try {
@@ -910,6 +911,7 @@ export default function DashboardPage() {
             setBills(billsRes.bills || []);
             setIntegrations(intRes.integrations || []);
             setUserName(meRes.user?.name || meRes.user?.email || "User");
+            setUserId(meRes.user?._id || meRes.user?.id || "");
         } catch (err) {
             console.error("Failed to load dashboard data:", err);
         } finally {
@@ -1063,38 +1065,57 @@ export default function DashboardPage() {
                     )}
 
                 <div style={{ animation: hidePageHeader ? "none" : "fadeInUp 0.5s ease 0.1s both" }}>
-                    {activeTab === "overview" && (
-                        <OverviewTab usageEntries={usageEntries} bills={bills} />
-                    )}
-                    {activeTab === "energy" && (
-                        <AutoSyncTab 
-                            integrations={integrations} 
-                            onLinked={fetchData} 
-                            onSync={fetchData} 
-                            apiFetch={apiFetch} 
-                            resourceType="energy"
-                        />
-                    )}
-                    {activeTab === "water" && (
-                        <AutoSyncTab 
-                            integrations={integrations} 
-                            onLinked={fetchData} 
-                            onSync={fetchData} 
-                            apiFetch={apiFetch} 
-                            resourceType="water"
-                        />
-                    )}
-                    {activeTab === "alerts" && (
-                        <AlertsTab usageEntries={usageEntries} />
-                    )}
-                    {activeTab === "analytics" && (
-                        <AnalyticsTab usageEntries={usageEntries} bills={bills} />
-                    )}
-                    {activeTab === "ai" && (
-                        <AiInsightsTab />
-                    )}
-                    {activeTab === "sustainability" && (
-                        <SustainabilityTab />
+                    {integrations.length === 0 && ["overview", "alerts", "analytics", "ai", "sustainability"].includes(activeTab) ? (
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "80px 20px", textAlign: "center", background: colors.white, borderRadius: 24, border: `1px solid ${colors.border}` }}>
+                            <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(32,178,170,0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
+                                <Activity size={32} color={colors.primary} />
+                            </div>
+                            <h3 style={{ fontSize: "1.5rem", fontWeight: 700, color: colors.text, marginBottom: 12 }}>Welcome to your Dashboard!</h3>
+                            <p style={{ fontSize: "1rem", color: colors.textSecondary, maxWidth: 400, lineHeight: 1.6, marginBottom: 32 }}>
+                                To see your personalized insights and data, you need to link your utility accounts first.
+                            </p>
+                            <div style={{ display: "flex", gap: 16 }}>
+                                <span style={{ fontSize: "0.9rem", color: colors.textMuted, background: colors.primaryBg, padding: "8px 16px", borderRadius: 8, border: `1px solid ${colors.primaryLight}` }}>
+                                    Please go to the <strong>Energy</strong> or <strong>Water</strong> tab in the sidebar to link an account.
+                                </span>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            {activeTab === "overview" && (
+                                <OverviewTab usageEntries={usageEntries} bills={bills} integrations={integrations} userId={userId} />
+                            )}
+                            {activeTab === "energy" && (
+                                <AutoSyncTab 
+                                    integrations={integrations} 
+                                    onLinked={fetchData} 
+                                    onSync={fetchData} 
+                                    apiFetch={apiFetch} 
+                                    resourceType="energy"
+                                />
+                            )}
+                            {activeTab === "water" && (
+                                <AutoSyncTab 
+                                    integrations={integrations} 
+                                    onLinked={fetchData} 
+                                    onSync={fetchData} 
+                                    apiFetch={apiFetch} 
+                                    resourceType="water"
+                                />
+                            )}
+                            {activeTab === "alerts" && (
+                                <AlertsTab usageEntries={usageEntries} />
+                            )}
+                            {activeTab === "analytics" && (
+                                <AnalyticsTab usageEntries={usageEntries} bills={bills} integrations={integrations} userId={userId} />
+                            )}
+                            {activeTab === "ai" && (
+                                <AiInsightsTab />
+                            )}
+                            {activeTab === "sustainability" && (
+                                <SustainabilityTab />
+                            )}
+                        </>
                     )}
                     {activeTab === "settings" && (
                         <SettingsTab userName={userName} userEmail={usageEntries.length > 0 ? "" : ""} />

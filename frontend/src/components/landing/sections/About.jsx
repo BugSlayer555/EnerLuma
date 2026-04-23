@@ -1,8 +1,8 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { IMG } from "../../assets/images";
-import WordReveal from "../ui/WordReveal";
-import WaveCanvas from "../ui/WaveCanvas";
+import { IMG } from "../../../assets/images";
+import WordReveal from "../../ui/WordReveal";
+import WaveCanvas from "../../ui/WaveCanvas";
 
 const ABOUT_STATS = [
   { label: "Countries Served", value: "40+", icon: "🌍" },

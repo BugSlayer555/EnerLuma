@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AlertCircle, Zap, Droplets, Bell, CheckCircle2, ShieldAlert, AlertTriangle } from "lucide-react";
-import { cards, formStyles, colors } from "../pages/DashboardStyles";
+import { cards, formStyles, colors } from "../DashboardStyles";
 
 const API_BASE = "/api";
 function getToken() { return localStorage.getItem("enerluma_token"); }

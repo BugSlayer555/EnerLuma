@@ -1,11 +1,11 @@
 import { memo, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-import ParticleCanvas from "../ui/ParticleCanvas";
-import WaveCanvas from "../ui/WaveCanvas";
-import MagBtn from "../ui/MagBtn";
-import HeroCanvas from "../ui/HeroCanvas";
-import heroVideo from "../../assets/BackgroundVideo.mp4";
+import ParticleCanvas from "../../ui/ParticleCanvas";
+import WaveCanvas from "../../ui/WaveCanvas";
+import MagBtn from "../../ui/MagBtn";
+import HeroCanvas from "../../ui/HeroCanvas";
+import heroVideo from "../../../assets/BackgroundVideo.mp4";
 
 const Hero = memo(function Hero({ onVideoReady }) {
   const { scrollY } = useScroll();

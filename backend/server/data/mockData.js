@@ -352,7 +352,7 @@ const deviceProfiles = {
     },
 };
 
-function createSeededRandom(seed) {
+export function createSeededRandom(seed) {
     let hash = 0;
 
     for (let i = 0; i < seed.length; i += 1) {

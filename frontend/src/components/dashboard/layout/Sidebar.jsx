@@ -1,4 +1,4 @@
-import { layout, colors } from "../pages/DashboardStyles";
+import { layout, colors } from "../DashboardStyles";
 import { LogOut } from "lucide-react";
 
 export default function Sidebar({ navGroups, activeTab, onTabChange, onLogout }) {

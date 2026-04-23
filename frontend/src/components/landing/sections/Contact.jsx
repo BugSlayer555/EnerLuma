@@ -1,7 +1,7 @@
 import { memo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { IMG } from "../../assets/images";
-import MagBtn from "../ui/MagBtn";
+import { IMG } from "../../../assets/images";
+import MagBtn from "../../ui/MagBtn";
 
 const Contact = memo(function Contact() {
   const [name, setName] = useState("");

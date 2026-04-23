@@ -24,7 +24,7 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
-import { cards, colors } from "../pages/DashboardStyles";
+import { cards, colors } from "../DashboardStyles";
 
 const CATEGORY_COLORS = ["#0f766e", "#14b8a6", "#2dd4bf", "#22d3ee", "#cbd5e1"];
 const INDIA_LOCALE = "en-IN";
@@ -130,8 +130,9 @@ function peakRangeLabel(hour) {
     return `${startLabel}-${endLabel}`;
 }
 
-export default function AnalyticsTab({ usageEntries = [], bills = [] }) {
+export default function AnalyticsTab({ usageEntries = [], bills = [], integrations = [], userId = "" }) {
     const [range, setRange] = useState("6m");
+    const waterLinked = integrations.some(i => i.resource === "water");
 
     const monthsCount = range === "6m" ? 6 : range === "3m" ? 3 : 1;
 
@@ -381,7 +382,7 @@ export default function AnalyticsTab({ usageEntries = [], bills = [] }) {
             iconBg: "rgba(20,184,166,0.12)",
             iconColor: colors.primary,
         },
-        {
+        ...(waterLinked ? [{
             label: `Total Water · ${rangeLabel.toLowerCase()}`,
             value: `${(analytics.totals.water / 1000).toFixed(1)} KL`,
             trend: analytics.trends.water,
@@ -389,7 +390,7 @@ export default function AnalyticsTab({ usageEntries = [], bills = [] }) {
             icon: Droplets,
             iconBg: "rgba(34,211,238,0.12)",
             iconColor: "#0891b2",
-        },
+        }] : []),
         {
             label: `Total Cost · ${rangeLabel.toLowerCase()}`,
             value: toCurrency(analytics.totals.cost),
@@ -507,7 +508,7 @@ export default function AnalyticsTab({ usageEntries = [], bills = [] }) {
                                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={colors.border} />
                                 <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: colors.textMuted }} />
                                 <YAxis yAxisId="energy" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: colors.textMuted }} tickFormatter={(value) => `${Math.round(value)}`} />
-                                <YAxis yAxisId="water" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: colors.textMuted }} tickFormatter={(value) => `${Math.round(value)}`} />
+                                {waterLinked && <YAxis yAxisId="water" orientation="right" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: colors.textMuted }} tickFormatter={(value) => `${Math.round(value)}`} />}
                                 <Tooltip
                                     contentStyle={{ borderRadius: 12, border: "none", boxShadow: "0 10px 25px rgba(15,23,42,0.1)", fontSize: "0.82rem" }}
                                     formatter={(value, name) => {
@@ -517,7 +518,7 @@ export default function AnalyticsTab({ usageEntries = [], bills = [] }) {
                                     labelFormatter={(label, payload) => payload?.[0]?.payload?.fullMonth || label}
                                 />
                                 <Line yAxisId="energy" type="monotone" dataKey="energy" stroke={colors.primary} strokeWidth={3} dot={false} name="energy" />
-                                <Line yAxisId="water" type="monotone" dataKey="water" stroke="#22d3ee" strokeWidth={2.4} dot={false} strokeDasharray="6 4" name="water" />
+                                {waterLinked && <Line yAxisId="water" type="monotone" dataKey="water" stroke="#22d3ee" strokeWidth={2.4} dot={false} strokeDasharray="6 4" name="water" />}
                             </LineChart>
                         </ResponsiveContainer>
                     </div>

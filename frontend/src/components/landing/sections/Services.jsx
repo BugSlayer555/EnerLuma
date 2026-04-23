@@ -1,6 +1,6 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { IMG } from "../../assets/images";
+import { IMG } from "../../../assets/images";
 
 const SVCS = [
   { id: "01", title: "Smart Monitoring", img: IMG.pipeline },

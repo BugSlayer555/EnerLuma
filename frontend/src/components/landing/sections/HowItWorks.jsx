@@ -1,6 +1,6 @@
 import { memo, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { IMG } from "../../assets/images";
+import { IMG } from "../../../assets/images";
 
 const STEPS = [
   { n: "01", title: "Connect Devices", desc: "Link your IoT sensors and smart meters to EnerLuma's cloud platform in minutes.", img: IMG.pipeline },

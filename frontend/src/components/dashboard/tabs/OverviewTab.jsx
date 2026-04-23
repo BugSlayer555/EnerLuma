@@ -11,7 +11,7 @@ import {
     BarChart,
     Bar,
 } from "recharts";
-import { cards, colors } from "../pages/DashboardStyles";
+import { cards, colors } from "../DashboardStyles";
 
 const API_BASE = "/api";
 function getToken() { return localStorage.getItem("enerluma_token"); }
@@ -47,21 +47,23 @@ const fallbackWeekly = [
     { day: "Thu", value: 15.1 }, { day: "Fri", value: 14.2 }, { day: "Sat", value: 11.9 }, { day: "Sun", value: 11.3 },
 ];
 
-export default function OverviewTab({ usageEntries, bills }) {
+export default function OverviewTab({ usageEntries, bills, integrations = [], userId = "" }) {
     const [timeFilter, setTimeFilter] = useState("today");
     const [energyData, setEnergyData] = useState(null);
     const [waterData, setWaterData] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const waterLinked = integrations.some(i => i.resource === "water");
+    const energyLinked = integrations.some(i => i.resource === "energy");
+
     useEffect(() => {
         async function load() {
             try {
-                const [eRes, wRes] = await Promise.all([
-                    apiFetch("/energy/analytics").catch(() => null),
-                    apiFetch("/water/analytics").catch(() => null),
-                ]);
+                const promises = [apiFetch("/energy/analytics").catch(() => null)];
+                if (waterLinked) promises.push(apiFetch("/water/analytics").catch(() => null));
+                const [eRes, wRes] = await Promise.all(promises);
                 setEnergyData(eRes);
-                setWaterData(wRes);
+                setWaterData(waterLinked ? (wRes || null) : null);
             } catch (e) {
                 console.error("Failed to load analytics:", e);
             } finally {
@@ -69,7 +71,16 @@ export default function OverviewTab({ usageEntries, bills }) {
             }
         }
         load();
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [waterLinked, energyLinked]);
+
+    if (loading) {
+        return (
+            <div style={{ padding: 40, textAlign: "center", color: colors.textMuted }}>
+                Loading dashboard data...
+            </div>
+        );
+    }
 
     // Derive chart data from API or fallback
     const hourlyEnergy = energyData?.hourlyData
@@ -77,7 +88,7 @@ export default function OverviewTab({ usageEntries, bills }) {
         : fallbackEnergy;
 
     const hourlyWater = waterData?.hourlyData
-        ? waterData.hourlyData.map(d => ({ time: d.time, actual: d.value, forecast: +(d.value * (0.85 + Math.random() * 0.3)).toFixed(1) }))
+        ? waterData.hourlyData.map(d => ({ time: d.time, actual: d.value, forecast: +(d.value * 0.9).toFixed(1) }))
         : fallbackWater;
 
     const weeklyBarData = energyData?.weeklyData
@@ -107,7 +118,7 @@ export default function OverviewTab({ usageEntries, bills }) {
             iconColor: colors.primary,
             gradient: "linear-gradient(135deg, rgba(32,178,170,0.08), rgba(32,178,170,0.02))",
         },
-        {
+        ...(waterLinked ? [{
             icon: <Droplets size={18} />,
             label: filterLabel("Water"),
             value: (baseWater * multiplier).toFixed(0),
@@ -116,7 +127,7 @@ export default function OverviewTab({ usageEntries, bills }) {
             trendUp: waterToday ? waterToday.change > 0 : true,
             iconColor: "#0ea5e9",
             gradient: "linear-gradient(135deg, rgba(14,165,233,0.08), rgba(14,165,233,0.02))",
-        },
+        }] : []),
         {
             icon: <IndianRupee size={18} />,
             label: timeFilter === "month" ? "Est. Monthly Cost" : timeFilter === "week" ? "Est. Weekly Cost" : "Est. Daily Cost",
@@ -277,7 +288,8 @@ export default function OverviewTab({ usageEntries, bills }) {
                     </div>
                 </div>
 
-                {/* Water Chart */}
+                {/* Water Chart — only shown when water account is linked */}
+                {waterLinked && (
                 <div style={{ ...cards.section, flex: "1 1 400px", marginBottom: 0 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
                         <div>
@@ -312,6 +324,7 @@ export default function OverviewTab({ usageEntries, bills }) {
                         </ResponsiveContainer>
                     </div>
                 </div>
+                )}
             </div>
 
             {/* Anomalies Row (from API) */}

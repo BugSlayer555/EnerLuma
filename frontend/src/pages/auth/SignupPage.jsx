@@ -49,12 +49,6 @@ function SignupForm() {
     const clearFieldError = (field) =>
         setErrors((prev) => ({ ...prev, [field]: "" }));
 
-    const isEnabled =
-        fullName.trim().length >= 2 &&
-        isValidEmail(email) &&
-        password.length >= 8 &&
-        confirmPwd === password &&
-        agreeTerms;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -224,11 +218,11 @@ function SignupForm() {
             {/* ── Submit ── */}
             <button
                 type="submit"
-                disabled={!isEnabled || loading}
+                disabled={loading}
                 style={{
                     ...form.submitBtn,
-                    opacity: (!isEnabled || loading) ? 0.55 : 1,
-                    cursor: (!isEnabled || loading) ? "not-allowed" : "pointer",
+                    opacity: loading ? 0.55 : 1,
+                    cursor: loading ? "not-allowed" : "pointer",
                 }}
             >
                 {loading && <span style={form.spinner} />}
