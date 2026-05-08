@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import "./AiInsightsTab.css";
 
-const API_BASE = "/api";
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
 
 function getToken() {
     return localStorage.getItem("enerluma_token");

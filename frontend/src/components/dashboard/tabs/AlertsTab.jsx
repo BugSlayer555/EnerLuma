@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { AlertCircle, Zap, Droplets, Bell, CheckCircle2, ShieldAlert, AlertTriangle } from "lucide-react";
 import { cards, formStyles, colors } from "../DashboardStyles";
 
-const API_BASE = "/api";
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
 function getToken() { return localStorage.getItem("enerluma_token"); }
 async function apiFetch(url) {
     const token = getToken();

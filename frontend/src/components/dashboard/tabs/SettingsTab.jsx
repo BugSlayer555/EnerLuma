@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { User, Mail, Phone, Shield, Bell, IndianRupee, CheckCircle2, AlertCircle, Trash2 } from "lucide-react";
 import { cards, formStyles, colors } from "../DashboardStyles";
 
-const API_BASE = "/api";
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
 
 function getToken() {
     return localStorage.getItem("enerluma_token");

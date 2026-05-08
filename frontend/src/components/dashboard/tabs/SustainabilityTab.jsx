@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { cards, colors } from "../DashboardStyles";
 
-const API_BASE = "/api";
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : "/api";
 function getToken() { return localStorage.getItem("enerluma_token"); }
 async function apiFetch(url) {
     const token = getToken();
