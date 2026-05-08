@@ -1,17 +1,29 @@
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 const COLS = [
   {
     title: "Platform",
-    items: ["Features", "Pricing", "Security", "API Docs"],
+    items: [
+      { label: "Home", path: "/" },
+      { label: "Services", path: "/services" },
+      { label: "How It Works", path: "/how-it-works" },
+      { label: "Dashboard App", path: "/login" },
+    ],
   },
   {
     title: "Company",
-    items: ["About", "Blog", "Careers", "Press"],
+    items: [
+      { label: "About Us", path: "/about" },
+      { label: "Contact & Support", path: "/contact" },
+    ],
   },
   {
-    title: "Resources",
-    items: ["Docs", "Case Studies", "Support", "Status"],
+    title: "Legal",
+    items: [
+      { label: "Privacy Policy", path: "#" },
+      { label: "Terms of Service", path: "#" },
+    ],
   },
 ];
 
@@ -120,23 +132,28 @@ const Footer = memo(function Footer() {
                 {col.title}
               </div>
 
-              {col.items.map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  style={linkStyle}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "var(--el-footer-accent)";
-                    e.currentTarget.style.opacity = "1";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "var(--el-footer-text)";
-                    e.currentTarget.style.opacity = "0.7";
-                  }}
-                >
-                  {item}
-                </a>
-              ))}
+              {col.items.map((item) => {
+                const isExternal = item.path === "#";
+                const Comp = isExternal ? "a" : Link;
+                return (
+                  <Comp
+                    key={item.label}
+                    to={!isExternal ? item.path : undefined}
+                    href={isExternal ? item.path : undefined}
+                    style={linkStyle}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = "var(--el-footer-accent)";
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = "var(--el-footer-text)";
+                      e.currentTarget.style.opacity = "0.7";
+                    }}
+                  >
+                    {item.label}
+                  </Comp>
+                );
+              })}
             </div>
           ))}
         </div>

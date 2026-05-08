@@ -5,17 +5,19 @@ import WordReveal from "../../ui/WordReveal";
 import WaveCanvas from "../../ui/WaveCanvas";
 
 const ABOUT_STATS = [
-  { label: "Countries Served", value: "40+", icon: "🌍" },
-  { label: "Sensors Deployed", value: "2.4M", icon: "📡" },
-  { label: "Water Preserved", value: "12B L", icon: "💧" },
+  { label: "Data Points Tracked", value: "100+", icon: "📊" },
+  { label: "Avg. Energy Savings", value: "30%", icon: "⚡" },
+  { label: "Water Waste Reduced", value: "25%", icon: "💧" },
 ];
 
 const About = memo(function About() {
   const r1 = useRef(null);
   const r2 = useRef(null);
+  const r3 = useRef(null);
 
   const v1 = useInView(r1, { once: true, margin: "-80px" });
   const v2 = useInView(r2, { once: true, margin: "-80px" });
+  const v3 = useInView(r3, { once: true, margin: "-80px" });
 
   return (
     <section
@@ -44,7 +46,7 @@ const About = memo(function About() {
               marginBottom: 18,
             }}
           >
-            01 — Our Story
+            01 — What We Built
           </motion.div>
 
           <div
@@ -55,13 +57,31 @@ const About = memo(function About() {
               letterSpacing: "-0.02em",
             }}
           >
-            <WordReveal text="We believe" style={{ color: "var(--el-text-primary)" }} />
-            <WordReveal text="every resource" style={{ color: "var(--el-accent-heavy)" }} />
+            <WordReveal text="AI that turns" style={{ color: "var(--el-text-primary)" }} />
+            <WordReveal text="meter readings" style={{ color: "var(--el-accent-heavy)" }} />
             <WordReveal
-              text="deserves intelligence."
+              text="into savings."
               style={{ color: "var(--el-text-secondary)" }}
             />
           </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={v1 ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            style={{
+              fontFamily: "'Outfit',sans-serif",
+              fontSize: "clamp(0.95rem,1.3vw,1.1rem)",
+              color: "var(--el-text-secondary)",
+              lineHeight: 1.8,
+              maxWidth: 580,
+              marginTop: 24,
+            }}
+          >
+            EnerLuma is a full-stack smart monitoring platform that transforms raw electricity
+            and water consumption data into real-time AI insights — helping households and
+            organisations reduce waste, cut utility bills, and track their sustainability progress.
+          </motion.p>
         </div>
 
         {/* Stats */}
@@ -121,42 +141,39 @@ const About = memo(function About() {
         </motion.div>
       </div>
 
-      {/* Ocean Banner */}
+      {/* Dashboard Preview Banner */}
       <motion.div
+        ref={r3}
         initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate={v3 ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1 }}
         style={{
-          marginTop: 40,
+          marginTop: 60,
+          padding: "0 48px",
           position: "relative",
-          height: 320,
-          overflow: "hidden",
+          overflow: "visible",
         }}
       >
         <img
-          src={IMG.ocean}
-          alt=""
-          aria-hidden="true"
+          src={IMG.dashboardOverview}
+          alt="EnerLuma live dashboard — 24.9 kWh energy today, ₹176 daily cost, 1.6 kW current draw"
           loading="lazy"
           decoding="async"
           style={{
             width: "100%",
-            height: "100%",
-            objectFit: "cover",
+            height: "auto",
+            maxHeight: "700px",
+            objectFit: "contain",
+            objectPosition: "center",
             display: "block",
-            filter: "brightness(0.92) opacity(0.45) saturate(1.15)",
+            borderRadius: "12px",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
           }}
         />
 
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to right, var(--el-bg-2), transparent 25%, transparent 75%, var(--el-bg-2))",
-          }}
-        />
+        {/* Removed the dimming gradients */}
+
+
 
         <div
           style={{

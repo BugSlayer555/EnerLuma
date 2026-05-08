@@ -20,9 +20,9 @@ const Contact = memo(function Contact() {
       }}
       className="resp-section-pad"
     >
-      {/* Background */}
+      {/* Background — dashboard screenshot */}
       <img
-        src={IMG.dam}
+        src={IMG.analyticsCharts}
         alt=""
         aria-hidden="true"
         style={{
@@ -31,7 +31,8 @@ const Contact = memo(function Contact() {
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          filter: "brightness(.92) opacity(0.5) saturate(1.15)",
+          objectPosition: "top",
+          filter: "brightness(.7) opacity(0.5) saturate(1.1)",
           zIndex: 0,
         }}
       />
@@ -71,7 +72,7 @@ const Contact = memo(function Contact() {
               marginBottom: 18,
             }}
           >
-            05 — Connect
+            05 — Start Monitoring
           </div>
           <h2
             style={{
@@ -80,11 +81,14 @@ const Contact = memo(function Contact() {
               lineHeight: 1.1,
               letterSpacing: "-0.02em",
               color: "var(--el-text-primary)",
-              margin: 0,
+              margin: "0 0 16px",
             }}
           >
-            Get <span style={{ color: "var(--el-accent-heavy)", fontStyle: "italic" }}>Early Access</span>
+            Start <span style={{ color: "var(--el-accent-heavy)", fontStyle: "italic" }}>monitoring smarter</span> today
           </h2>
+          <p style={{ fontFamily: "'Outfit',sans-serif", fontSize: "0.95rem", color: "var(--el-text-secondary)", lineHeight: 1.75, marginBottom: 0 }}>
+            Free to use · No hardware needed · AI insights in minutes
+          </p>
         </div>
 
         <AnimatePresence mode="wait">
@@ -160,7 +164,7 @@ const Contact = memo(function Contact() {
                   boxShadow: "var(--el-shadow)",
                 }}
               >
-                Request Early Access
+                Create Free Account →
               </MagBtn>
             </motion.div>
           ) : (
@@ -186,7 +190,7 @@ const Contact = memo(function Contact() {
                   color: "var(--el-accent-heavy)",
                 }}
               >
-                YOU'RE IN.
+                ACCOUNT CREATED!
               </div>
 
               <p
@@ -194,10 +198,11 @@ const Contact = memo(function Contact() {
                   marginTop: 8,
                   color: "var(--el-text-secondary)",
                   fontFamily: "'Outfit',sans-serif",
+                  lineHeight: 1.7,
                 }}
               >
-                Welcome to the future of resource intelligence,{" "}
-                {name || "friend"}.
+                Welcome to EnerLuma, {name || "friend"}. Head to your dashboard to start logging
+                your first energy or water reading — your AI insights are waiting.
               </p>
             </motion.div>
           )}
