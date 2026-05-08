@@ -1,5 +1,6 @@
 // ─── EnerLuma Auth — Shared Components ───────────────────────────────────────
 import { branding, social } from "./Authstyles";
+import { IMG } from "../../assets/images";
 
 // ─── SVG Icons ────────────────────────────────────────────────────────────────
 export const EyeOpen = () => (
@@ -42,10 +43,65 @@ export const AppleIcon = () => (
 // ─── Left Pane Branding ───────────────────────────────────────────────────────
 export function AuthBranding() {
     return (
-        <div style={branding.wrapper}>
-            <h1 style={branding.name}>EnerLuma</h1>
-            <p style={branding.sub}>Smart Energy &amp; Water Monitoring</p>
-            <span style={branding.tag}>AI-Powered • Real-time • Sustainable</span>
+        <div style={{ ...branding.wrapper, position: "relative", zIndex: 1, width: "100%", maxWidth: 500 }}>
+            {/* Header / Text */}
+            <div style={{ textAlign: "left", marginBottom: 40 }}>
+                <h1 style={{ ...branding.name, fontSize: 46 }}>EnerLuma</h1>
+                <p style={{ ...branding.sub, fontSize: 16, marginTop: 8, lineHeight: 1.5, color: "#3a706e" }}>
+                    The intelligent platform for enterprise energy &amp; water management. Monitor, optimize, and save in real-time.
+                </p>
+                <div style={{ display: "flex", gap: 8, marginTop: 16, flexWrap: "wrap" }}>
+                    <span style={branding.tag}>Real-Time Analytics</span>
+                    <span style={branding.tag}>AI Optimization</span>
+                    <span style={branding.tag}>ESG Tracking</span>
+                </div>
+            </div>
+
+            {/* Dashboard Visual */}
+            <div style={{ position: "relative", width: "100%" }}>
+                <img 
+                    src={IMG.dashboardOverview} 
+                    alt="EnerLuma Dashboard Preview" 
+                    style={{
+                        width: "100%", 
+                        height: "auto",
+                        borderRadius: 16, 
+                        boxShadow: "0 24px 48px rgba(15,106,102,0.18)",
+                        border: "1px solid rgba(255,255,255,0.7)",
+                        display: "block",
+                        objectFit: "cover"
+                    }} 
+                />
+                
+                {/* Floating Glassmorphic Card */}
+                <div style={{
+                    position: "absolute",
+                    bottom: -24,
+                    right: -24,
+                    background: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    border: "1px solid rgba(255,255,255,0.9)",
+                    borderRadius: 14,
+                    padding: "16px 24px",
+                    boxShadow: "0 12px 32px rgba(0,0,0,0.08)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    animation: "fadeIn 0.8s ease 0.6s both"
+                }}>
+                    <div style={{ 
+                        width: 44, height: 44, borderRadius: "50%", 
+                        background: "linear-gradient(135deg, #0f6a66, #4dd4dc)", 
+                        display: "flex", alignItems: "center", justifyContent: "center", 
+                        color: "white", fontSize: 20 
+                    }}>⚡</div>
+                    <div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#666", textTransform: "uppercase", letterSpacing: 0.6 }}>Avg. Energy Saved</div>
+                        <div style={{ fontSize: 22, fontWeight: 800, color: "#111", lineHeight: 1.1 }}>24.8%</div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
