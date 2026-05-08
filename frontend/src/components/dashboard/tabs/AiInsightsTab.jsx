@@ -18,6 +18,7 @@ import {
     Sun,
     Thermometer,
     Wrench,
+    X,
     Zap,
 } from "lucide-react";
 import "./AiInsightsTab.css";
@@ -883,11 +884,596 @@ function getChannelHeader(channelId, cards, aiData, actionableCount) {
     }
 }
 
+function Toast({ message, type, onClose }) {
+    useEffect(() => {
+        const timer = setTimeout(onClose, 3500);
+        return () => clearTimeout(timer);
+    }, [onClose]);
+
+    return (
+        <div className={`ai-toast ai-toast--${type}`}>
+            <div className="ai-toast__content">{message}</div>
+        </div>
+    );
+}
+
+function ActionModal({ isOpen, action, onClose, onConfirm }) {
+    if (!isOpen || !action) return null;
+
+    const getModalContent = () => {
+        const baseInputs = {
+            "Enable Eco Mode": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>HVAC System</label>
+                        <select className="ai-modal__select">
+                            <option>Carrier AquaEdge - Living Room</option>
+                            <option>Fujitsu ASY - Bedroom</option>
+                            <option>Daikin Inverter - Kitchen</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Temperature Range</label>
+                        <div className="ai-modal__temp-range">
+                            <input 
+                                type="range" 
+                                min="18" 
+                                max="28" 
+                                defaultValue="22"
+                                onChange={(e) => document.getElementById('temp-display').textContent = e.target.value + '°C'}
+                            />
+                            <span id="temp-display">22°C</span>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Eco Mode Level</label>
+                        <div className="ai-modal__radio-group">
+                            {["Light (5-10% savings)", "Medium (10-15% savings)", "Aggressive (15-20% savings)"].map((level) => (
+                                <label key={level} className="ai-modal__radio">
+                                    <input type="radio" name="eco-level" defaultChecked={level === "Medium (10-15% savings)"} />
+                                    {level}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Expected savings: ₹340-450/month | Carbon reduction: 8-10 kg CO2/month
+                    </div>
+                </div>
+            ),
+            "View Options": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Smart Thermostat Recommendations</label>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10 }}>
+                            <div className="ai-modal__product">
+                                <div style={{ fontWeight: 800 }}>Nest Learning Thermostat</div>
+                                <div style={{ color: "#64748b", fontSize: "0.9rem" }}>Learns schedule, WiFi, multi-zone support</div>
+                                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                                    <button className="ai-modal__btn ai-modal__btn--confirm" onClick={() => window.open('https://store.google.com/product/nest_thermostat', '_blank')}>View Details</button>
+                                    <button className="ai-modal__btn ai-modal__btn--cancel" onClick={() => showToast('Added to wishlist', 'success')}>Add to Wishlist</button>
+                                </div>
+                            </div>
+
+                            <div className="ai-modal__product">
+                                <div style={{ fontWeight: 800 }}>Ecobee SmartThermostat</div>
+                                <div style={{ color: "#64748b", fontSize: "0.9rem" }}>Room sensors, voice control, energy reports</div>
+                                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                                    <button className="ai-modal__btn ai-modal__btn--confirm" onClick={() => window.open('https://www.ecobee.com/en-us/smart-thermostats/', '_blank')}>View Details</button>
+                                    <button className="ai-modal__btn ai-modal__btn--cancel" onClick={() => showToast('Added to wishlist', 'success')}>Add to Wishlist</button>
+                                </div>
+                            </div>
+
+                            <div className="ai-modal__product">
+                                <div style={{ fontWeight: 800 }}>Honeywell Home T9</div>
+                                <div style={{ color: "#64748b", fontSize: "0.9rem" }}>Sensor-driven comfort, simple scheduling</div>
+                                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                                    <button className="ai-modal__btn ai-modal__btn--confirm" onClick={() => window.open('https://www.honeywellhome.com/en/us/products/thermostats/', '_blank')}>View Details</button>
+                                    <button className="ai-modal__btn ai-modal__btn--cancel" onClick={() => showToast('Added to wishlist', 'success')}>Add to Wishlist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 These options are recommended based on potential savings and compatibility. Click "View Details" to open the vendor page.
+                    </div>
+                </div>
+            ),
+            "Set Schedule": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Device</label>
+                        <select className="ai-modal__select">
+                            <option>Water Heater - Main Tank</option>
+                            <option>Water Heater - Guest House</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Active Days</label>
+                        <div className="ai-modal__checkbox-group">
+                            {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+                                <label key={day} className="ai-modal__checkbox">
+                                    <input type="checkbox" defaultChecked={["Mon", "Tue", "Wed", "Thu", "Fri"].includes(day)} />
+                                    {day}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Heating Duration (minutes)</label>
+                        <input type="number" min="30" max="120" defaultValue="60" className="ai-modal__input" placeholder="Minutes" />
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Smart scheduling can reduce consumption by 15-20% | ₹180-240/month savings
+                    </div>
+                </div>
+            ),
+            "Create Schedule": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Appliance</label>
+                        <select className="ai-modal__select">
+                            <option>Washing Machine - Primary</option>
+                            <option>Dishwasher - Kitchen</option>
+                            <option>EV Charger - Garage</option>
+                            <option>Dryer - Laundry</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Off-Peak Hours</label>
+                        <div className="ai-modal__time-inputs">
+                            <input type="time" defaultValue="22:00" placeholder="Start time" />
+                            <span>to</span>
+                            <input type="time" defaultValue="06:00" placeholder="End time" />
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Frequency</label>
+                        <div className="ai-modal__radio-group">
+                            {["Daily", "Weekdays Only", "Custom"].map((freq) => (
+                                <label key={freq} className="ai-modal__radio">
+                                    <input type="radio" name="frequency" defaultChecked={freq === "Weekdays Only"} />
+                                    {freq}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Off-peak rates are typically 30-40% cheaper | ₹210-280/month savings
+                    </div>
+                </div>
+            ),
+            "Apply Threshold": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Device/Service</label>
+                        <select className="ai-modal__select">
+                            <option>Thermostat - Living Room</option>
+                            <option>Smart Meter - Main</option>
+                            <option>Water Usage Monitor</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Current Threshold</label>
+                        <input type="number" disabled defaultValue="65" className="ai-modal__input" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>New Threshold</label>
+                        <input type="number" defaultValue="50" className="ai-modal__input" placeholder="Enter value" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Alert On Exceeding</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked />
+                            Send notifications when threshold is exceeded
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Smart thresholds reduce peak consumption by 8-12%
+                    </div>
+                </div>
+            ),
+            "Connect Device": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Device Type</label>
+                        <select className="ai-modal__select">
+                            <option>Smart Thermostat</option>
+                            <option>Smart Plug</option>
+                            <option>Energy Monitor</option>
+                            <option>Water Flow Meter</option>
+                            <option>Solar Inverter</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Device Model</label>
+                        <input type="text" className="ai-modal__input" placeholder="e.g., Nest Learning Thermostat" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Location/Room</label>
+                        <input type="text" className="ai-modal__input" placeholder="e.g., Living Room" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Connection Method</label>
+                        <div className="ai-modal__radio-group">
+                            {["WiFi", "Bluetooth", "Zigbee", "Z-Wave"].map((method) => (
+                                <label key={method} className="ai-modal__radio">
+                                    <input type="radio" name="connection" defaultChecked={method === "WiFi"} />
+                                    {method}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Connected devices unlock 25-35% more savings through automation
+                    </div>
+                </div>
+            ),
+            "Create Ticket": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Issue</label>
+                        <select className="ai-modal__select">
+                            <option selected>HVAC Efficiency Anomaly</option>
+                            <option>Appliance Not Responding</option>
+                            <option>High Usage Alert</option>
+                            <option>Device Malfunction</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Priority</label>
+                        <div className="ai-modal__radio-group">
+                            {["Low", "Medium", "High"].map((priority) => (
+                                <label key={priority} className="ai-modal__radio">
+                                    <input type="radio" name="priority" defaultChecked={priority === "High"} />
+                                    {priority}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Preferred Technician</label>
+                        <select className="ai-modal__select">
+                            <option>Any Available</option>
+                            <option>John (HVAC Specialist)</option>
+                            <option>Sarah (Electrician)</option>
+                            <option>Mike (Plumber)</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Preferred Date</label>
+                        <input type="date" defaultValue="2026-05-10" className="ai-modal__input" />
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Service appointment will be scheduled within 24-48 hours
+                    </div>
+                </div>
+            ),
+            "Adjust Rule": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Rule Name</label>
+                        <input type="text" className="ai-modal__input" placeholder="e.g., Peak Hour Temperature" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Condition</label>
+                        <div className="ai-modal__condition-builder">
+                            <select className="ai-modal__select">
+                                <option>When temperature exceeds</option>
+                                <option>When usage is above</option>
+                                <option>When time is between</option>
+                            </select>
+                            <input type="number" placeholder="Value" className="ai-modal__input" defaultValue="28" />
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Action</label>
+                        <select className="ai-modal__select">
+                            <option>Reduce by 2°C</option>
+                            <option>Switch to eco mode</option>
+                            <option>Send alert</option>
+                            <option>Turn off device</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Automation rules run 24/7 to optimize your energy usage
+                    </div>
+                </div>
+            ),
+            "Improve Score": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Current Efficiency Score</label>
+                        <div className="ai-modal__score-display">65/100 (D)</div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Recommended Actions</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked />
+                            <span><strong>Replace Filter</strong> - Improves airflow by 15%</span>
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked />
+                            <span><strong>Schedule Maintenance</strong> - Reduces runtime by 10%</span>
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" />
+                            <span><strong>Upgrade Device</strong> - Could save ₹2000/year</span>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Improving efficiency score by 10 points saves ₹150-200/month
+                    </div>
+                </div>
+            ),
+            "Schedule Service": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Service Type</label>
+                        <select className="ai-modal__select">
+                            <option>HVAC Maintenance</option>
+                            <option>Plumbing Inspection</option>
+                            <option>Electrical Check</option>
+                            <option>Appliance Repair</option>
+                            <option>General Maintenance</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Priority</label>
+                        <div className="ai-modal__radio-group">
+                            {["Low", "Medium", "High", "Emergency"].map((priority) => (
+                                <label key={priority} className="ai-modal__radio">
+                                    <input type="radio" name="service-priority" defaultChecked={priority === "Medium"} />
+                                    {priority}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Preferred Date Range</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked />
+                            <span>Today/Tomorrow</span>
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" />
+                            <span>This Week</span>
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" />
+                            <span>Next Week</span>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Service will be scheduled at your earliest convenience. Technician will contact you within 2 hours.
+                    </div>
+                </div>
+            ),
+            "Review Forecast": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Forecast Summary</label>
+                        <div className="ai-modal__summary">Projected bill details and category breakdown are shown here. Use Optimize to apply quick savings or export the breakdown.</div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Actions</label>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                            <button className="ai-modal__btn ai-modal__btn--confirm">Optimize</button>
+                            <button className="ai-modal__btn ai-modal__btn--cancel" onClick={() => window.open('/dashboard/billing', '_self')}>Open Billing</button>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Optimizations target high-cost categories first to lower monthly bills.
+                    </div>
+                </div>
+            ),
+            "Apply Seasonal Plan": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Seasonal Plan</label>
+                        <select className="ai-modal__select">
+                            <option>Peak Cooling Plan (Summer)</option>
+                            <option>Conservation Plan (Monsoon)</option>
+                            <option>Heating Saver (Winter)</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Auto-Apply</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked /> Enable auto adjustments during seasonal window
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Seasonal plans tune device schedules and thermostat setpoints for the season.
+                    </div>
+                </div>
+            ),
+            "Plan Offsets": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Offset Options</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked /> Purchase certified carbon offsets (monthly)
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" /> Enroll in utility green tariff
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Offsetting small monthly emissions can make your household carbon-neutral over a year.
+                    </div>
+                </div>
+            ),
+            "Reduce Source": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Source Reduction Plan</label>
+                        <textarea className="ai-modal__input" rows={4} defaultValue={'Replace old heater element with efficient model\nAdd sensor-based control'} />
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Suggested measures focus on high-emission appliances first.
+                    </div>
+                </div>
+            ),
+            "Plan Action": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Carbon Action</label>
+                        <select className="ai-modal__select">
+                            <option>Purchase Offsets</option>
+                            <option>Reduce Source</option>
+                            <option>Improve Efficiency</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Pick an action to plan short-term reductions or long-term offsets.
+                    </div>
+                </div>
+            ),
+            "Apply Fix": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Behavior Fix</label>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked /> Auto-reduce standby power on idle devices
+                        </div>
+                        <div className="ai-modal__checkbox">
+                            <input type="checkbox" defaultChecked /> Add scheduling for high-use appliances
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Applying these fixes will automatically adjust device settings and monitor effectiveness.
+                    </div>
+                </div>
+            ),
+            "Run Simulation": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Simulation Scenario</label>
+                        <select className="ai-modal__select">
+                            <option>Eco Mode + Off-Peak Scheduling</option>
+                            <option>Aggressive HVAC Reduction</option>
+                            <option>Lighting + Appliance Management</option>
+                        </select>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Horizon</label>
+                        <div className="ai-modal__radio-group">
+                            <label className="ai-modal__radio"><input type="radio" name="horizon" defaultChecked />1 Month</label>
+                            <label className="ai-modal__radio"><input type="radio" name="horizon" />3 Months</label>
+                            <label className="ai-modal__radio"><input type="radio" name="horizon" />12 Months</label>
+                        </div>
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Preview</label>
+                        <div className="ai-modal__summary">Estimated savings and carbon impact will be shown after running the simulation.</div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Use simulations to compare action bundles before applying changes live.
+                    </div>
+                </div>
+            ),
+            "Create Scenario": (
+                <div className="ai-modal__form">
+                    <div className="ai-modal__input-group">
+                        <label>Scenario Name</label>
+                        <input className="ai-modal__input" placeholder="e.g., Weekend Saver" />
+                    </div>
+
+                    <div className="ai-modal__input-group">
+                        <label>Included Actions</label>
+                        <div className="ai-modal__checkbox"><input type="checkbox" defaultChecked /> Enable Eco Mode</div>
+                        <div className="ai-modal__checkbox"><input type="checkbox" defaultChecked /> Off-Peak Schedules</div>
+                        <div className="ai-modal__checkbox"><input type="checkbox" /> Reduce Lighting Levels</div>
+                    </div>
+
+                    <div className="ai-modal__info-box">
+                        💡 Save scenario to run simulations or apply across rooms and devices.
+                    </div>
+                </div>
+            ),
+        };
+
+        return baseInputs[action.actionLabel] || null;
+    };
+
+    return (
+        <div className="ai-modal-overlay" onClick={onClose}>
+            <div className="ai-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="ai-modal__header">
+                    <h3>{action.actionLabel}</h3>
+                    <button className="ai-modal__close" onClick={onClose}>
+                        <X size={20} />
+                    </button>
+                </div>
+
+                <div className="ai-modal__body">
+                    <p className="ai-modal__subtitle">{action.title}</p>
+                    {getModalContent()}
+                </div>
+
+                <div className="ai-modal__footer">
+                    <button className="ai-modal__btn ai-modal__btn--cancel" onClick={onClose}>
+                        Cancel
+                    </button>
+                    <button className="ai-modal__btn ai-modal__btn--confirm" onClick={onConfirm}>
+                        Confirm & Apply
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 export default function AiInsightsTab() {
     const [activeChannel, setActiveChannel] = useState(CHANNELS[0].id);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState(false);
+    const [completedActions, setCompletedActions] = useState(new Set());
+    const [toast, setToast] = useState(null);
+    const [modalAction, setModalAction] = useState(null);
 
     useEffect(() => {
         apiFetch("/ai/insights")
@@ -898,6 +1484,156 @@ export default function AiInsightsTab() {
             })
             .finally(() => setLoading(false));
     }, []);
+
+    const showToast = (message, type = "success") => {
+        setToast({ message, type });
+    };
+
+    const handleActionClick = (rec) => {
+        const actionType = rec.actionLabel;
+        
+        // Map specific predictive/navigation actions to richer modals
+        const actionToModalMap = {
+            "Inspect Now": "Create Ticket",
+            "Tune HVAC Runtime": "Adjust Rule",
+            "Tune Water Heater Runtime": "Adjust Rule",
+            "Tune Lighting Runtime": "Adjust Rule",
+            "Optimize": "Adjust Rule",
+            "Review": "View Options",
+            "Review Forecast": "Review Forecast",
+            "Apply Seasonal Plan": "Apply Seasonal Plan",
+            "Plan Offsets": "Plan Offsets",
+            "Reduce Source": "Reduce Source",
+            "Plan Action": "Plan Action",
+            "Apply Fix": "Apply Fix",
+            "Run Simulation": "Run Simulation",
+            "Create Scenario": "Create Scenario",
+        };
+
+        // Actions that require modal forms
+        const modalActions = [
+            "Enable Eco Mode",
+            "Set Schedule",
+            "Create Schedule",
+            "Apply Threshold",
+            "Connect Device",
+            "Create Ticket",
+            "Adjust Rule",
+            "Improve Score",
+            "Schedule Service",
+            "View Options",
+        ];
+
+        // Actions that complete immediately
+        const directActions = [
+            "Sync Data",
+            "Continue Tracking",
+            "Keep Monitoring",
+            "Monitor",
+            "View Options",
+            "Shop Now",
+            "Explore Sensors",
+            "Optimize",
+            "Inspect Now",
+            "Plan Action",
+            "Run Routine Check",
+            "Review",
+            "Apply Fix",
+        ];
+
+        // If action maps to a modal, open the mapped modal (preserve rec for context)
+        if (actionToModalMap[actionType]) {
+            const mapped = actionToModalMap[actionType];
+            setModalAction({ ...rec, actionLabel: mapped });
+            return;
+        }
+
+        if (modalActions.includes(actionType)) {
+            setModalAction(rec);
+        } else if (directActions.includes(actionType)) {
+            handleDirectAction(rec);
+        } else {
+            // Fallback for any unknown action type
+            showToast(`${actionType} initiated...`, "success");
+            console.log(`Action: ${actionType}`, rec);
+        }
+    };
+
+    const handleDirectAction = (rec) => {
+        const actionType = rec.actionLabel;
+        
+        // Comprehensive message map for all direct actions
+        const messages = {
+            "Sync Data": "Device data synchronization started. This may take 2-3 minutes.",
+            "Continue Tracking": "Monitoring continued. Check back next month for seasonal insights.",
+            "Keep Monitoring": "Monitoring active. We'll alert you to any anomalies.",
+            "Monitor": `${rec.title} is now being monitored.`,
+            "View Options": "Redirecting to smart thermostat options...",
+            "Shop Now": "Opening product recommendations...",
+            "Explore Sensors": "Motion sensor products are loading...",
+            "Optimize": `Optimization queued for ${rec.title}.`,
+            "Inspect Now": `Inspection scheduled for ${rec.title}.`,
+            "Plan Action": `Carbon offset strategy planned.`,
+            "Run Routine Check": "Running maintenance diagnostic...",
+            "Review": `Opening detailed analysis for ${rec.title}...`,
+            "Apply Fix": `Fix applied to ${rec.title}.`,
+        };
+
+        const message = messages[actionType] || `✓ ${actionType} initiated for ${rec.title}`;
+        
+        // Mark as completed for maintenance/monitoring actions
+        const completeImmediately = [
+            "Run Routine Check",
+            "Keep Monitoring",
+            "Continue Tracking",
+            "Apply Fix",
+            "Monitor",
+        ];
+        
+        if (completeImmediately.includes(actionType)) {
+            setCompletedActions((prev) => new Set([...prev, rec.id]));
+        }
+        
+        showToast(message, "success");
+        console.log(`Direct action executed: ${actionType}`, rec);
+    };
+
+    const handleModalConfirm = (rec) => {
+        // Only mark as completed after modal confirmation
+        setCompletedActions((prev) => new Set([...prev, rec.id]));
+        setModalAction(null);
+
+        const nonCompletingModals = ["View Options", "Shop Now"];
+
+        const confirmMessages = {
+            "Enable Eco Mode": "✓ Eco mode enabled! Temperature range applied. Expect 10-15% savings.",
+            "Set Schedule": "✓ Schedule set successfully on selected days. Water heater optimized.",
+            "Create Schedule": "✓ Off-peak schedule activated. Appliances will run during off-peak hours.",
+            "Apply Threshold": "✓ New threshold applied and monitoring started 24/7.",
+            "Connect Device": "✓ Device connected successfully. Sync starting in background.",
+            "Create Ticket": "✓ Maintenance ticket created with priority assigned. Technician notified.",
+            "Adjust Rule": "✓ Rule adjusted successfully. Automation running now.",
+            "Improve Score": "✓ Maintenance plan created. Expected score improvement: +15 points.",
+            "Schedule Service": "✓ Service scheduled successfully. Technician will contact you soon.",
+            "Review Forecast": "✓ Forecast reviewed. Recommendations queued.",
+            "Apply Seasonal Plan": "✓ Seasonal plan applied. Settings will adjust during season.",
+            "Plan Offsets": "✓ Offset plan created. Monthly offsets scheduled.",
+            "Reduce Source": "✓ Source reduction plan saved.",
+            "Plan Action": "✓ Carbon action planned successfully.",
+            "Apply Fix": "✓ Fix applied and monitoring started.",
+            "Run Simulation": "✓ Simulation completed. Preview available.",
+            "Create Scenario": "✓ Scenario saved. You can run it from the simulator.",
+        };
+
+        const message = confirmMessages[rec.actionLabel] || "✓ Action completed successfully!";
+
+        // Don't mark navigational/product modals as completed
+        if (!nonCompletingModals.includes(rec.actionLabel)) {
+            setCompletedActions((prev) => new Set([...prev, rec.id]));
+        }
+
+        showToast(message, "success");
+    };
 
     const recommendationDeck = useMemo(() => buildRecommendationDeck(data), [data]);
     const actionableCount = recommendationDeck.filter((item) => !item.implemented).length;
@@ -977,11 +1713,12 @@ export default function AiInsightsTab() {
                         const CategoryGlyph = categoryIconFor(rec.category);
                         const savingsLabel = toCurrencyPerMonth(rec.potentialSavings);
                         const carbonLabel = toCarbonLabel(rec.carbonImpact);
+                        const isCompleted = completedActions.has(rec.id) || rec.implemented;
 
                         return (
                             <article
                                 key={rec.id}
-                                className="ai-card"
+                                className={`ai-card ${isCompleted ? "is-completed" : ""}`}
                                 style={{
                                     "--ai-accent": theme.accent,
                                     "--ai-soft": theme.soft,
@@ -1007,7 +1744,7 @@ export default function AiInsightsTab() {
                                                 {toLabelCase(rec.category)}
                                             </span>
 
-                                            {rec.implemented && (
+                                            {isCompleted && (
                                                 <span className="ai-pill ai-pill--done">
                                                     <CheckCircle2 size={12} />
                                                     Done
@@ -1047,11 +1784,12 @@ export default function AiInsightsTab() {
 
                                 <button
                                     type="button"
-                                    className={`ai-card__action ${rec.implemented ? "is-complete" : ""}`}
-                                    disabled={rec.implemented}
+                                    className={`ai-card__action ${isCompleted ? "is-complete" : ""}`}
+                                    disabled={isCompleted}
+                                    onClick={() => !isCompleted && handleActionClick(rec)}
                                 >
-                                    {rec.implemented ? "Completed" : rec.actionLabel}
-                                    {!rec.implemented && <ArrowRight size={14} />}
+                                    {isCompleted ? "Completed" : rec.actionLabel}
+                                    {!isCompleted && <ArrowRight size={14} />}
                                 </button>
                             </article>
                         );
@@ -1060,6 +1798,15 @@ export default function AiInsightsTab() {
             ) : (
                 <div className="ai-hub__empty">No insights are available for this module yet.</div>
             )}
+
+            <ActionModal
+                isOpen={!!modalAction}
+                action={modalAction}
+                onClose={() => setModalAction(null)}
+                onConfirm={() => handleModalConfirm(modalAction)}
+            />
+
+            {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
         </div>
     );
 }

@@ -6,11 +6,13 @@ import passport from "passport";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
+import mongoose from "mongoose";
 
 import env from "./config/env.js";
 import configurePassport from "./config/passport.js";
 import apiRoutes from "./routes/index.js";
 import { generalLimiter } from "./middleware/rateLimit.js";
+import { requireDatabase } from "./middleware/databaseReady.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import { logger } from "./utils/logger.js";
 
@@ -93,13 +95,17 @@ app.use(passport.initialize());
 configurePassport(passport);
 
 app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", uptime: process.uptime() });
+    res.json({
+        status: "ok",
+        uptime: process.uptime(),
+        database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+    });
 });
 
 // Serve uploaded files
 app.use("/api/uploads", express.static(uploadsDir));
 
-app.use("/api", generalLimiter, apiRoutes);
+app.use("/api", generalLimiter, requireDatabase, apiRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

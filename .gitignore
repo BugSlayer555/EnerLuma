@@ -19,3 +19,5 @@ dist/
 .env.development
 .env.test
 .env.production
+/.local-mongo-data/
+node_modules/.vite/
