@@ -1,6 +1,9 @@
 import User from "../models/User.js";
 import ApiError from "../utils/apiError.js";
 import { sanitizeUser } from "./authService.js";
+import UsageSnapshot from "../models/UsageSnapshot.js";
+import Bill from "../models/Bill.js";
+import Integration from "../models/Integration.js";
 
 /**
  * Update user profile (name, email, phone)
@@ -64,10 +67,19 @@ export async function changePassword(userId, { currentPassword, newPassword }) {
 }
 
 /**
- * Delete user account
+ * Delete user account (with cascade: removes all user-owned data)
  */
 export async function deleteAccount(userId) {
-    const user = await User.findByIdAndDelete(userId);
+    const user = await User.findById(userId);
     if (!user) throw new ApiError(404, "User not found");
-    return { message: "Account deleted successfully" };
+
+    // Cascade delete all user-owned data
+    await Promise.all([
+        UsageSnapshot.deleteMany({ owner: userId }),
+        Bill.deleteMany({ owner: userId }),
+        Integration.deleteMany({ owner: userId }),
+    ]);
+
+    await User.findByIdAndDelete(userId);
+    return { message: "Account and all associated data deleted successfully" };
 }

@@ -42,16 +42,30 @@ function LoginForm() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
             });
-            const data = await res.json();
+
+            const contentType = res.headers.get("content-type") || "";
+            const payload = contentType.includes("application/json")
+                ? await res.json()
+                : { error: await res.text() };
+
             if (!res.ok) {
-                setErrors({ general: data.error || "Login failed. Please try again." });
-                setLoading(false);
+                const isDbUnavailable =
+                    res.status === 503 ||
+                    (typeof payload.error === "string" && payload.error.toLowerCase().includes("database unavailable"));
+
+                setErrors({
+                    general: isDbUnavailable
+                        ? "Service is temporarily unavailable. Please try again in a moment."
+                        : payload.error || "Login failed. Please try again.",
+                });
                 return;
             }
-            localStorage.setItem("enerluma_token", data.token);
+
+            localStorage.setItem("enerluma_token", payload.token);
             navigate("/dashboard");
-        } catch (err) {
+        } catch (_err) {
             setErrors({ general: "Network error. Please check your connection." });
+        } finally {
             setLoading(false);
         }
     };

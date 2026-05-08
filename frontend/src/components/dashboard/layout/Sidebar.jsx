@@ -1,9 +1,9 @@
 import { layout, colors } from "../DashboardStyles";
 import { LogOut } from "lucide-react";
 
-export default function Sidebar({ navGroups, activeTab, onTabChange, onLogout }) {
+export default function Sidebar({ navGroups, activeTab, onTabChange, onLogout, className = "" }) {
     return (
-        <aside style={layout.sidebar} className="dash-sidebar">
+        <aside style={layout.sidebar} className={`dash-sidebar ${className}`}>
             {/* Logo */}
             <div style={layout.sidebarLogo}>
                 <div style={{ width: 24, height: 24, borderRadius: "50%", background: colors.primaryLight, display: "flex", alignItems: "center", justifyContent: "center" }}>

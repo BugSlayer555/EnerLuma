@@ -15,8 +15,14 @@ async function apiFetch(url) {
 }
 
 export default function AlertsTab({ usageEntries }) {
-    const [energyThreshold, setEnergyThreshold] = useState(300);
-    const [waterThreshold, setWaterThreshold] = useState(1000);
+    const [energyThreshold, setEnergyThreshold] = useState(() => {
+        const stored = localStorage.getItem("enerluma_energy_threshold");
+        return stored ? Number(stored) : 300;
+    });
+    const [waterThreshold, setWaterThreshold] = useState(() => {
+        const stored = localStorage.getItem("enerluma_water_threshold");
+        return stored ? Number(stored) : 1000;
+    });
     const [saved, setSaved] = useState(false);
     const [backendAlerts, setBackendAlerts] = useState([]);
 
@@ -31,6 +37,8 @@ export default function AlertsTab({ usageEntries }) {
 
     const handleSaveThresholds = (e) => {
         e.preventDefault();
+        localStorage.setItem("enerluma_energy_threshold", energyThreshold);
+        localStorage.setItem("enerluma_water_threshold", waterThreshold);
         setSaved(true);
         setTimeout(() => setSaved(false), 3000);
     };

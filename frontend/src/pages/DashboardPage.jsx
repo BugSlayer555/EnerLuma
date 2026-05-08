@@ -5,8 +5,6 @@ import {
     BarChart3,
     Zap,
     Droplets,
-    Upload,
-    History,
     LayoutDashboard,
     Plus,
     FileText,
@@ -25,8 +23,17 @@ import {
     Activity,
     Settings,
     Cpu,
-    Menu
+    Menu,
 } from "lucide-react";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    ResponsiveContainer,
+} from "recharts";
 import AutoSyncTab from "../components/dashboard/tabs/AutoSyncTab.jsx";
 import OverviewTab from "../components/dashboard/tabs/OverviewTab.jsx";
 import TopBar from "../components/dashboard/layout/TopBar.jsx";
@@ -852,7 +859,7 @@ function HistoryTab({ usageEntries, bills, onDeleteEntry, onRefresh }) {
                                             </td>
                                             <td style={tableStyles.td}>
                                                 <a
-                                                    href={`/api/${bill.filePath}`}
+                                                    href={bill.filePath ? `/api/uploads/${bill.filePath.split(/[\\/]/).pop()}` : "#"}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     style={{
@@ -892,6 +899,7 @@ function HistoryTab({ usageEntries, bills, onDeleteEntry, onRefresh }) {
 export default function DashboardPage() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("overview");
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [usageEntries, setUsageEntries] = useState([]);
     const [bills, setBills] = useState([]);
     const [integrations, setIntegrations] = useState([]);
@@ -1017,29 +1025,44 @@ export default function DashboardPage() {
             <style>{`
                 @keyframes spin { to { transform: rotate(360deg); } }
                 @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+                @keyframes slideInLeft { from { opacity: 0; transform: translateX(-100%); } to { opacity: 1; transform: translateX(0); } }
 
                 * { box-sizing: border-box; }
                 
+                .dash-mobile-btn { display: none; }
                 @media (max-width: 900px) {
                     .dash-sidebar { display: none !important; }
+                    .dash-sidebar.mobile-open { display: flex !important; position: fixed !important; top: 0; left: 0; height: 100vh; z-index: 1000; animation: slideInLeft 0.25s ease; box-shadow: 4px 0 24px rgba(0,0,0,0.15); }
+                    .dash-mobile-overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; backdrop-filter: blur(2px); }
                     .dash-content { margin-left: 0 !important; width: 100% !important; }
                     .dash-main { padding: 20px 16px !important; }
                     .dash-stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+                    .dash-mobile-btn { display: flex !important; }
                 }
                 @media (max-width: 600px) {
                     .dash-stat-grid { grid-template-columns: 1fr !important; }
                 }
             `}</style>
 
+            {/* Mobile sidebar overlay */}
+            {sidebarOpen && (
+                <div className="dash-mobile-overlay" onClick={() => setSidebarOpen(false)} />
+            )}
+
             <Sidebar
                 navGroups={navGroups}
                 activeTab={activeTab}
-                onTabChange={setActiveTab}
+                onTabChange={(tab) => { setActiveTab(tab); setSidebarOpen(false); }}
                 onLogout={handleLogout}
+                className={sidebarOpen ? "mobile-open" : ""}
             />
 
             <div style={layout.contentArea} className="dash-content">
-                <TopBar userName={userName} />
+                <TopBar
+                    userName={userName}
+                    onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+                    onLogout={handleLogout}
+                />
 
                 <main style={layout.mainContent} className="dash-main">
                     {!hidePageHeader && (
@@ -1065,6 +1088,19 @@ export default function DashboardPage() {
                     )}
 
                 <div style={{ animation: hidePageHeader ? "none" : "fadeInUp 0.5s ease 0.1s both" }}>
+                    {activeTab === "settings" && (
+                        <SettingsTab userName={userName} userEmail="" />
+                    )}
+                    {["energy", "water"].includes(activeTab) && (
+                        <AutoSyncTab
+                            integrations={integrations}
+                            onLinked={fetchData}
+                            onSync={fetchData}
+                            apiFetch={apiFetch}
+                            resourceType={activeTab}
+                            onUnlinked={fetchData}
+                        />
+                    )}
                     {integrations.length === 0 && ["overview", "alerts", "analytics", "ai", "sustainability"].includes(activeTab) ? (
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "80px 20px", textAlign: "center", background: colors.white, borderRadius: 24, border: `1px solid ${colors.border}` }}>
                             <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(32,178,170,0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24 }}>
@@ -1074,34 +1110,19 @@ export default function DashboardPage() {
                             <p style={{ fontSize: "1rem", color: colors.textSecondary, maxWidth: 400, lineHeight: 1.6, marginBottom: 32 }}>
                                 To see your personalized insights and data, you need to link your utility accounts first.
                             </p>
-                            <div style={{ display: "flex", gap: 16 }}>
-                                <span style={{ fontSize: "0.9rem", color: colors.textMuted, background: colors.primaryBg, padding: "8px 16px", borderRadius: 8, border: `1px solid ${colors.primaryLight}` }}>
-                                    Please go to the <strong>Energy</strong> or <strong>Water</strong> tab in the sidebar to link an account.
-                                </span>
+                            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center" }}>
+                                <button
+                                    onClick={() => setActiveTab("energy")}
+                                    style={{ ...formStyles.submitBtn, fontSize: "0.9rem" }}
+                                >
+                                    <Zap size={16} /> Link Energy Account
+                                </button>
                             </div>
                         </div>
                     ) : (
                         <>
                             {activeTab === "overview" && (
                                 <OverviewTab usageEntries={usageEntries} bills={bills} integrations={integrations} userId={userId} />
-                            )}
-                            {activeTab === "energy" && (
-                                <AutoSyncTab 
-                                    integrations={integrations} 
-                                    onLinked={fetchData} 
-                                    onSync={fetchData} 
-                                    apiFetch={apiFetch} 
-                                    resourceType="energy"
-                                />
-                            )}
-                            {activeTab === "water" && (
-                                <AutoSyncTab 
-                                    integrations={integrations} 
-                                    onLinked={fetchData} 
-                                    onSync={fetchData} 
-                                    apiFetch={apiFetch} 
-                                    resourceType="water"
-                                />
                             )}
                             {activeTab === "alerts" && (
                                 <AlertsTab usageEntries={usageEntries} />
@@ -1116,9 +1137,6 @@ export default function DashboardPage() {
                                 <SustainabilityTab />
                             )}
                         </>
-                    )}
-                    {activeTab === "settings" && (
-                        <SettingsTab userName={userName} userEmail={usageEntries.length > 0 ? "" : ""} />
                     )}
                 </div>
                 </main>

@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { RefreshCw, CheckCircle2, AlertCircle, Plus, Zap, Droplets } from "lucide-react";
+import { RefreshCw, CheckCircle2, AlertCircle, Plus, Zap, Droplets, Trash2 } from "lucide-react";
 import { cards, formStyles, tableStyles, colors } from "../DashboardStyles";
 
-export default function AutoSyncTab({ integrations, onLinked, onSync, apiFetch, resourceType }) {
+export default function AutoSyncTab({ integrations, onLinked, onSync, apiFetch, resourceType, onUnlinked }) {
     const [connecting, setConnecting] = useState(false);
     const [message, setMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [syncingId, setSyncingId] = useState(null);
+    const [unlinkingId, setUnlinkingId] = useState(null);
 
     // Form states
     const [providerId, setProviderId] = useState("");
@@ -60,6 +61,20 @@ export default function AutoSyncTab({ integrations, onLinked, onSync, apiFetch, 
             console.error("Sync failed:", err);
         } finally {
             setSyncingId(null);
+        }
+    };
+
+    const handleUnlink = async (integrationId) => {
+        if (!window.confirm("Are you sure you want to unlink this account? All synced data will remain.")) return;
+        setUnlinkingId(integrationId);
+        try {
+            await apiFetch(`/integrations/${integrationId}`, { method: "DELETE" });
+            onUnlinked?.();
+        } catch (err) {
+            console.error("Unlink failed:", err);
+            setMessage({ type: "error", text: "Failed to unlink: " + err.message });
+        } finally {
+            setUnlinkingId(null);
         }
     };
 
@@ -122,22 +137,46 @@ export default function AutoSyncTab({ integrations, onLinked, onSync, apiFetch, 
                                             </span>
                                         </td>
                                         <td style={tableStyles.td}>
-                                            <button 
-                                                onClick={() => handleSync(intg._id)}
-                                                disabled={syncingId === intg._id}
-                                                style={{ 
-                                                    background: "none", 
-                                                    border: "none", 
-                                                    color: colors.primaryMedium, 
-                                                    cursor: "pointer",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    gap: 4
-                                                }}
-                                            >
-                                                <RefreshCw size={14} className={syncingId === intg._id ? "spin" : ""} />
-                                                Sync Now
-                                            </button>
+                                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                                                <button 
+                                                    onClick={() => handleSync(intg._id)}
+                                                    disabled={syncingId === intg._id}
+                                                    style={{ 
+                                                        background: "none", 
+                                                        border: "none", 
+                                                        color: colors.primaryMedium, 
+                                                        cursor: "pointer",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: 4,
+                                                        fontSize: "0.82rem",
+                                                        fontWeight: 600,
+                                                    }}
+                                                >
+                                                    <RefreshCw size={14} className={syncingId === intg._id ? "spin" : ""} />
+                                                    Sync
+                                                </button>
+                                                <button
+                                                    onClick={() => handleUnlink(intg._id)}
+                                                    disabled={unlinkingId === intg._id}
+                                                    style={{
+                                                        background: "rgba(239,68,68,0.06)",
+                                                        border: "1px solid rgba(239,68,68,0.2)",
+                                                        color: colors.error,
+                                                        cursor: "pointer",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: 4,
+                                                        fontSize: "0.78rem",
+                                                        fontWeight: 600,
+                                                        borderRadius: 6,
+                                                        padding: "4px 10px",
+                                                    }}
+                                                >
+                                                    <Trash2 size={12} />
+                                                    {unlinkingId === intg._id ? "Unlinking..." : "Unlink"}
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
