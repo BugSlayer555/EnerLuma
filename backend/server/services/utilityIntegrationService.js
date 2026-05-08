@@ -83,7 +83,15 @@ export async function syncIntegration(integration) {
 
 export async function syncAllActiveIntegrations() {
     console.log("[Auto-Sync] Starting background utility sync...");
-    const integrations = await Integration.find({ status: { $ne: "error" } });
+    let integrations = [];
+
+    try {
+        integrations = await Integration.find({ status: { $ne: "error" } });
+    } catch (error) {
+        console.error("[Auto-Sync] Unable to load integrations. Skipping sync:", error.message);
+        return;
+    }
+
     let successCount = 0;
 
     for (const integration of integrations) {

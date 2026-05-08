@@ -27,6 +27,7 @@ const env = {
     appleTeamId: process.env.APPLE_TEAM_ID || "",
     appleKeyId: process.env.APPLE_KEY_ID || "",
     applePrivateKeyPath: process.env.APPLE_PRIVATE_KEY_PATH || "",
+    geminiApiKey: process.env.GEMINI_API_KEY || "",
 };
 
 if (env.nodeEnv === "production") {

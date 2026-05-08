@@ -1,6 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 
 import Loader from "./components/ui/Loader";
 import Cursor from "./components/ui/Cursor";
@@ -9,10 +7,10 @@ import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 
 import LandingPage from "./pages/LandingPage";
-
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import AuthCallback from "./pages/auth/AuthCallback";
+import AIChatbot from "./components/ui/AIChatbot";
 
 // Import new pages
 import AboutPage from "./pages/AboutPage";
@@ -36,6 +34,7 @@ export default function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <AIChatbot />
     </BrowserRouter>
   );
 }

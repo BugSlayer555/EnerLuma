@@ -28,7 +28,32 @@ const allowedOrigins = new Set([
     env.frontendUrl,
     "http://localhost:5173",
     "http://localhost:5174",
+    "http://localhost:5175",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
 ]);
+
+function isAllowedOrigin(origin) {
+    if (!origin) {
+        return true;
+    }
+
+    if (allowedOrigins.has(origin)) {
+        return true;
+    }
+
+    if (env.nodeEnv !== "production") {
+        try {
+            const url = new URL(origin);
+            return ["localhost", "127.0.0.1", "::1"].includes(url.hostname);
+        } catch {
+            return false;
+        }
+    }
+
+    return false;
+}
 
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
@@ -42,7 +67,7 @@ app.use(
 app.use(
     cors({
         origin(origin, callback) {
-            if (!origin || allowedOrigins.has(origin)) {
+            if (isAllowedOrigin(origin)) {
                 callback(null, true);
                 return;
             }
