@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Outfit:wght@200;300;400;500&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,200;1,200&display=swap');
 
 :root {
-  --el-bg-1: #EAF4F8;
-  --el-bg-2: #D9EEF2;
-  --el-bg-3: #C8EDF3;
-  --el-bg-4: #F7FCFF;
-  --el-bg-gradient: linear-gradient(180deg, #EAF4F8 0%, #C8EDF3 100%);
-  --el-beam-1: #DFFFFF;
-  --el-beam-2: #B3FBFF;
-  --el-beam-3: #7BE8EA;
-  --el-beam-spark: #A8FFF8;
+  --el-bg-1: #FFFFFF;
+  --el-bg-2: #F8FDFF;
+  --el-bg-3: #F0F9FA;
+  --el-bg-4: #F8FCFD;
+  --el-bg-gradient: linear-gradient(180deg, #FFFFFF 0%, #F0F9FA 100%);
+  --el-beam-1: #E6FFFF;
+  --el-beam-2: #D1F9FF;
+  --el-beam-3: #A3F1F3;
+  --el-beam-spark: #CFFFFB;
   --el-accent: #56E0E0;
   --el-accent-light: #8AF2F0;
   --el-accent-heavy: #32C7C5;
